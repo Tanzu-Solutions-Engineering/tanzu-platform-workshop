@@ -1,7 +1,7 @@
 # tanzu-platform-workshop
 Enablement workshop for Tanzu Platform for Kubernetes
 
-[**Stage 1: Installation of  Platform for Kubernetes**](Stage-1-Base-Install.md)
+[**Stage 1: Installation of Platform for Kubernetes**](Stage-1-Base-Install.md)
 
 [**Stage 2: Platform Engineering Essentials**](Stage-2-Platform-Engineering.md)
 
