@@ -2,7 +2,5 @@
 
 * CI Pipelines
 * ContainerTasks
-* Dockerfiles
+* Dockerfiles / Helm Charts
 * Multi-module Apps
-
-??? Helm Charts
