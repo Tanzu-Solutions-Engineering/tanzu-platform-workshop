@@ -1,0 +1,34 @@
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: "lab-tanzu-platform-developer-experience"
+spec:
+  title: "Tanzu Platform Developer Experience"
+  description: "The workshop covers the developer experience of deploying applications to the Tanzu Platform."
+  publish:
+    image: "$(image_repository)/lab-tanzu-platform-developer-experience-files:$(workshop_version)"
+  workshop:
+    files:
+    - image:
+        url: "$(image_repository)/lab-tanzu-platform-developer-experience-files:$(workshop_version)"
+      includePaths:
+      - /workshop/**
+      - /exercises/**
+      - /README.md
+  session:
+    namespaces:
+      budget: medium
+    applications:
+      terminal:
+        enabled: true
+        layout: split
+      editor:
+        enabled: true
+      console:
+        enabled: false
+      docker:
+        enabled: false
+      registry:
+        enabled: false
+      vcluster:
+        enabled: false
