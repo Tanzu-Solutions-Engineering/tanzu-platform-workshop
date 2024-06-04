@@ -2,6 +2,8 @@
 
 * CI Pipelines
 
+Walk through Docker image for running `tanzu deploy` tasks. Show sample integration into Github Workflows.
+
 * ContainerTasks
 
 Per Will's example (https://github.com/warroyo/custom-http-route-task), walk through the process of adding a container
