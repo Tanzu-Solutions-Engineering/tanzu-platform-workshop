@@ -15,6 +15,20 @@ spec:
       - /workshop/**
       - /exercises/**
       - /README.md
+    packages:
+    - name: tanzu-cli
+      files:
+      - githubRelease:
+          slug: vmware-tanzu/tanzu-cli
+          tagSelection:
+            semver:
+              constraints: ">=1.3.0 <1.4.0"
+          # only download specific assets (optional; v0.12.0+)
+          assetNames: ["tanzu-cli-linux-amd64.tar.gz"]
+          disableAutoChecksumValidation: true
+          unpackArchive:
+            path: tanzu-cli-linux-amd64.tar.gz
+
   session:
     namespaces:
       budget: medium
