@@ -1,20 +1,29 @@
 # Platform Engineer Hands-on Lab
 
 ## Register TKGS Supervisor in designated Tanzu Platform for k8s project
+Official pubic documentation pending
 
+[vSphere with Tanzu documentation to register Supervisor in TMC](https://docs.vmware.com/en/VMware-vSphere/8.0/vsphere-with-tanzu-installation-configuration/GUID-ED4417DC-592C-454A-8292-97F93BD76957.html#install-the-tanzu-mission-control-agent-on-the-supervisor-1)
+
+Process:
+- Step 1: Access the GUI: `Setup & Configuration > Kubernetes Management > TKG Registrations > Register TKG Instance` to get the registration url
+- Step 2: Go to VCenter: `workload management > Supervisors > Configure > Tanzu Mission Control Registration`, and add that registration url.
 
 ## Prepare a Cluster Group with required capabilities
 
 #### Create Cluster Group
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html)
+
 Access the GUI: `Infrastructure > Kubedrnetes Clusters > Create Cluster Group > Choose a name`
 
 #### What are capabilities and what the Platform Engineer needs to do with them
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/concepts-about-spaces.html#capabilities--platform-apis-and-features-1)
+
 (Insert image or link to diagram here)
 
 #### Add capabilities to Cluster Group
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html#add-packages)
+
 Access the GUI: `Application Spaces > Capabilities > Available`. We will add all capabilities one by one, keeping the defaults:
 - Capabilities needed by the GSLB ingress Profile an its traits
 	- Egress -> this will automatically pull ingress/multicloud-ingress and service mesh observability since the 3 of them are in the same Carvel package (tcs) today
@@ -37,12 +46,16 @@ Access the GUI: `Application Spaces > Capabilities > Available`. We will add all
         - Add username, password and URL
 
 #### (Optionl) Remove needed capability to test error scenario
-Remove Crossplane capability from the Cluster Group: if not choosing it the bitnami package will fail
+Remove Crossplane capability from the Cluster Group: if not choosing it the bitnami package will fail:
 	- When that capability deployment fails, space scheduling will stay in WARNING
 	- Once you add crossplane, bitnami package will reconcyle.
 	- After that Space should go ready after .... 1 or 2 minutes
 
 ## Create a TKGS cluster in your Cluster Group
+Official pubic documentation pending
+
+Access the GUI: `Infrastructure > Kuberentes Clusters > Clusters > Add Cluster > Create Tanzu Kubernetes Grid Cluster`.
+
 #### understand how it's onboarded to the Platform
 
 ## Create Availability Targets
