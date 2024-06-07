@@ -8,6 +8,7 @@
     - Compute capacity for 2x TKGS clusters with 1 CP node and 3 worker nodes with 4VCPU & 16GBRAM per VM per attendee
     - At least 8 VM IPs available for all those k8s nodes per attendee
     - At least 6 AVI VIPs available for those 2 clusters and 1 Space/App per attendee (1 VIP for CP, 2 VIP for ingress per cluster)
+    - Supervisor Namespace created with Storage Policy and VM Classes associated to it
 - AWS Route53 Zone
     - Domain registered/delegated to Route53 zone
 - Onboard all attendees on designated Tanzu Platform for k8s CSP org an project
