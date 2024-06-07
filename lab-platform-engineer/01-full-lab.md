@@ -3,7 +3,7 @@
 ## Share Environment details and confirm pre-requisites
 The workshop owner should share with the attendees:
 - Designated Tanzu Platform for k8s URL, Org and Project
-- vSphere environment url, credentials and Supervisor name used to register in Tanzu Platform
+- vSphere environment url, credentials, Supervisor name used to register in Tanzu Platform, and Supervisor namespace
 
 All workshop participants to verify they are all set with steps in [Workshop Attendee pre-requisites](../lab-platform-engineer/00-prerequisites.md#workshop-attendee-pre-requisites)
 
@@ -67,18 +67,44 @@ Access the GUI: `Infrastructure > Kuberentes Clusters > Clusters > Add Cluster >
     - The management cluster is the Supervisor cluster that the workshop owner provided you.
     - Provisioner: click to show a drop down menu and choose the name of the Supervisor Namespace that the workshop owner provided you.
 - Step 2: Name and assign
-    - Cluster name: pick a name.
+    - Cluster name: pick a name. Tip: use something unique in it like your name and use a suffix with a number (you may create 2 clusters)
     - Cluster Group: click to show a drop down menu and choose the Cluster Group you created earlier.
     - Cluster class: click to show a drop down menu and choose `tanzukubernetesclusterclass`.
     - Labels: DO NOT SKIP!
         - Choose a couple of labels to have options later to target your clusters. Example: `test: true` and `vsphere: 8.0.2c`
 - Step 3: Configure network and storage settings
+    - Under Allowed storage clases, click on Add Storage Class and select the storage class from the drop down menu.
+    - Under Default storage classe, do the same.
+    - Leave all other defaults untouched.
 - Step 4: Control plane
+    - Kubernetes version: choose v1.28.8 (recommended) or 1.27.11 - the rest of them are not compatible with the platform.
+    - OS version: choose either photon or ubuntu, both should work fine.
+    - Instance type: choose `best-effort-large` (4VCPU & 16GBMem) or bigger.
+    - Strage class: choose the same storage class you chose earlier.
+    - Leave all other defaults untouched.
 - Step 5: Configure default volumnes
+    - No need to add anything.
 - Step 6: Conigure node pool
+    - Worker count: 3
+    - Instance type: choose `best-effort-large` (4VCPU & 16GBMem) or bigger.
+    - Storage class: choose the same storage class you chose earlier.
+    - OS version: choose either photon or ubuntu, both should work fine.
+    - Failure domain: chooe `vmware-system-legacy`
+    - Leave all other defaults untouched
 - Step 7: Additional cluster configuration
+    - No need to add anything.
+- Click Create.
 
-#### Understand how the TKGS cluster is onboarded to the Platform
+#### Confirm TKGS cluster is onboarded to the Platform
+1. Confirm the Cluster is Healthy and Ready
+    - This is the TMC layer, does not provide information about the UCP onboarding
+    - Access the GUI: `Infrastructure > Kubernetes Clusters > Clusters` and confirm it's `Healthy` and `Ready`.
+    - CLI path: `tanzu operations cluster get <cluster-name> -p <supervisor-namespace> -m <supervisor-name >
+2. Confirm the Cluster is properly onboarded to UCP
+    - Access the GUI: `Setup & Configuration > Kubernetes Management` and confirm it is `Attached` and the Colector status is `Online`
+    - CLI path: 
+
+#### Inspect Packages and Agents intalled
 
 ## Create Availability Targets
 
