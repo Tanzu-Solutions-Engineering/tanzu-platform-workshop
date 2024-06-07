@@ -1,5 +1,13 @@
 # Platform Engineer Hands-on Lab
 
+## Share Environment details and confirm pre-requisites
+The workshop owner should share with the attendees:
+- Designated Tanzu Platform for k8s URL, Org and Project
+- vSphere environment url, credentials and Supervisor name used to register in Tanzu Platform
+
+All workshop participants to verify they are all set with steps in [Workshop Attendee pre-requisites](../lab-platform-engineer/00-prerequisites.md#workshop-attendee-pre-requisites)
+
+
 ## Register TKGS Supervisor in designated Tanzu Platform for k8s project
 Official pubic documentation pending
 
@@ -47,16 +55,30 @@ Access the GUI: `Application Spaces > Capabilities > Available`. We will add all
 
 #### (Optionl) Remove needed capability to test error scenario
 Remove Crossplane capability from the Cluster Group: if not choosing it the bitnami package will fail:
-	- When that capability deployment fails, space scheduling will stay in WARNING
-	- Once you add crossplane, bitnami package will reconcyle.
-	- After that Space should go ready after .... 1 or 2 minutes
+- When that capability deployment fails, space scheduling will stay in WARNING
+- Once you add crossplane, bitnami package will reconcyle.
+- After that Space should go ready after .... 1 or 2 minutes
 
 ## Create a TKGS cluster in your Cluster Group
 Official pubic documentation pending
 
-Access the GUI: `Infrastructure > Kuberentes Clusters > Clusters > Add Cluster > Create Tanzu Kubernetes Grid Cluster`.
+Access the GUI: `Infrastructure > Kuberentes Clusters > Clusters > Add Cluster > Create Tanzu Kubernetes Grid Cluster`:
+- Step 1: Select the management cluster and provisioner
+    - The management cluster is the Supervisor cluster that the workshop owner provided you.
+    - Provisioner: click to show a drop down menu and choose the name of the Supervisor Namespace that the workshop owner provided you.
+- Step 2: Name and assign
+    - Cluster name: pick a name.
+    - Cluster Group: click to show a drop down menu and choose the Cluster Group you created earlier.
+    - Cluster class: click to show a drop down menu and choose `tanzukubernetesclusterclass`.
+    - Labels: DO NOT SKIP!
+        - Choose a couple of labels to have options later to target your clusters. Example: `test: true` and `vsphere: 8.0.2c`
+- Step 3: Configure network and storage settings
+- Step 4: Control plane
+- Step 5: Configure default volumnes
+- Step 6: Conigure node pool
+- Step 7: Additional cluster configuration
 
-#### understand how it's onboarded to the Platform
+#### Understand how the TKGS cluster is onboarded to the Platform
 
 ## Create Availability Targets
 
