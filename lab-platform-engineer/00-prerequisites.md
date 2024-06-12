@@ -13,7 +13,8 @@
     - Domain registered/delegated to Route53 zone
 - Tanzu Platform for Kubernetes Org + Group + Project
     - AWS Account, EKS Credential and GSLB Credential configured
-    - AWS EKS Cluster
+    - AWS EKS Overflow Clusters (labeled with `workshop-overflow: true`)
+    - AT for Overflow Clusters
 - Onboard all attendees on designated Tanzu Platform for k8s CSP org and project
 
 ## Workshop Attendee pre-requisites

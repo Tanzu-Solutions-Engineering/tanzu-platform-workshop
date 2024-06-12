@@ -168,6 +168,20 @@ tanzu-system                 vss-k8s-collector                                 v
 
 
 ## Create Availability Targets
+[Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-manage-availability-targets.html)
+
+#### Look at existing Availability Target pointing to our EKS overflow clusters
+Using a simple matchingExpresion looking for clusters with a label `workshop-overflow`
+
+#### Create an Availability Target that targets our TKGS cluster
+We will use the yaml/CLI apprach to define & create the Availability Target to have more flexibility and to use a single matchExpression with two elements in order to have it work as an AND logical operator, which is not currently supported in the UI
+
+#### Create an Availability Target that targets two clusters
+
+
+
+We will create Availability Targets using a yaml declaration and the CLI since at the moment the UI is
+
 
 ## Configure a GSLB via custom Profile
 
