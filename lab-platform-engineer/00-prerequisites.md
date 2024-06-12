@@ -1,7 +1,7 @@
 # Platform Engineer Lab Prerequisites
 
 ## Workshop Owner pre-requisites
-- vSphere 8.02c environment
+- vSphere 8.02c environment(s)
     - Workload Management enabled with AVI
     - Supervisor cluster v1.27.5+vmware.1-fips.1
     - ContentLibrary synced with TKrs 1.27.11 and 1.28.8 available
@@ -11,7 +11,10 @@
     - Supervisor Namespace created with Storage Policy and VM Classes associated to it
 - AWS Route53 Zone
     - Domain registered/delegated to Route53 zone
-- Onboard all attendees on designated Tanzu Platform for k8s CSP org an project
+- Tanzu Platform for Kubernetes Org + Group + Project
+    - AWS Account, EKS Credential and GSLB Credential configured
+    - AWS EKS Cluster
+- Onboard all attendees on designated Tanzu Platform for k8s CSP org and project
 
 ## Workshop Attendee pre-requisites
 - kubectl CLI v1.28.8 installed in workstation - [kubectl CLI install guide](https://v1-28.docs.kubernetes.io/releases/download/)
