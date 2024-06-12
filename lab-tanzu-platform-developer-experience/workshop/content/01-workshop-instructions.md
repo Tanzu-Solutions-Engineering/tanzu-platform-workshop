@@ -9,20 +9,106 @@ title: Workshop Instructions
 > - Space provisioned by educates workshop session setup script with simple spring-dev profile (no SCG)
 
 1. `tanzu login`, attendee copies link (since browser can't be launched in Educates) and enters credentials in new browser tab
+```terminal:execute
+command: tanzu login
+cascade: true
+```
+```terminal:execute
+command: kubectl config set-context --current --namespace=default
+hidden: true
+```
+
 2. `tanzu project use <pre-provisioned-project>`.  Quickly review what projects are, and maybe show `tanzu project list` to see all the projects you could access.
+```execute
+tanzu project list
+```
+```terminal:input
+text: "tanzu project use "
+endl: false
+```
+
 3. `tanzu space use <generated-space>`.  Quickly review spaces and `tanzu space list` to see your spaces.
+```execute
+tanzu space list
+```
+```section:begin
+title: (Optional) Create Space in Tanzu Hub
+```
+
+Instructions on how to setup a new space in Tanzu Hub.
+
+```section:end
+```
+```terminal:input
+text: "tanzu space use "
+endl: false
+```
 4. `tanzu build config --build-plan-source-type=ucp --containerapp-registry <registry-host>/apps/{name}`
+```execute
+tanzu build config --build-plan-source-type=ucp --containerapp-registry $REGISTRY_HOST/inclusion
+```
 > **_NOTE:_**  Need a container registry.  Do we provision one as part of the workshop or use a cloud one?  Also might want to mention here that this might be specified by the platform engineering team in the future so that developers wouldn't even need to know this.
 
 5. `git clone https://github.com/timosalm/emoji-inclusion`
 > **_NOTE:_**  Should we make a different version with no Backstage or TAP manifests?
+```execute
+git clone https://github.com/timosalm/emoji-inclusion inclusion
+```
 
 6. `tanzu app init` and user enters info.
+```execute
+tanzu app init
+```
+```terminal:input
+text: inclusion
+```
+```terminal:input
+text: inclusion
+```
 7. `tanzu app init --help` to see that these could be specified on the command line.
+
+9. `tanzu build` to build container image and generate YAML
+```execute
+tanzu build -o deployment
+```
+
 8. User adds HttpRoute object file at .tanzu/config/httproute.yaml.
 > **_NOTE:_**  Default to HTTP since HTTPS is limited at the moment, and also potentially allows us to go into more detail about that in a later step?
 
+```editor:append-lines-to-file
+file: ~/deployment/apps.tanzu.vmware.com.ContainerApp/inclusion/kubernetes-carvel-package/output/httproute.yaml
+description: Add HTTPRoute resource
+text: |
+    apiVersion: gateway.networking.k8s.io/v1beta1
+    kind: HTTPRoute
+    metadata:
+      name: inclusion-route
+      annotations:
+        healthcheck.gslb.tanzu.vmware.com/service: inclusion
+        healthcheck.gslb.tanzu.vmware.com/path: /actuator/health
+        healthcheck.gslb.tanzu.vmware.com/port: "8080"
+    spec:
+      parentRefs:
+      - group: gateway.networking.k8s.io
+        kind: Gateway
+        name: default-gateway
+        sectionName: {{session_namespace}}-inclusion
+      rules:
+      - backendRefs:
+        - group: ""
+          kind: Service
+          name: inclusion
+          port: 8080
+          weight: 1
+        matches:
+        - path:
+            type: PathPrefix
+            value: /
+```
 9. `tanzu app deploy` and user monitors deployment.
+```execute
+tanzu deploy --from-build deployment
+```
 10. Open browser tab to take user to their space to see the deployed app info, and Space URL.  Have user click on URL to see their app running.
 11. Explore the Space UI a bit to show off some of the info provided.
 12. Show the `tanzu.yaml` file and how it is a pointer to another directory `.tanzu/config`.

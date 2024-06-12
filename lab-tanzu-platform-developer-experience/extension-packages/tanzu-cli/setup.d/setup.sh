@@ -16,3 +16,6 @@ cp -r $PACKAGE_DIR/.config/tanzu ~/.config/
 
 mkdir -p ~/.cache
 cp -r $PACKAGE_DIR/.cache/tanzu ~/.cache/
+
+tanzu plugin install --group vmware-tanzucli/essentials
+tanzu plugin install --group vmware-tanzu/platform-engineer
