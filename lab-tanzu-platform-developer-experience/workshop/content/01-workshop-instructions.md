@@ -113,7 +113,13 @@ tanzu deploy --from-build deployment
 10. Open browser tab to take user to their space to see the deployed app info, and Space URL.  Have user click on URL to see their app running.
 11. Explore the Space UI a bit to show off some of the info provided.
 12. Show the `tanzu.yaml` file and how it is a pointer to another directory `.tanzu/config`.
-13. Open `.tanzu/config/emoji-inclusion.yaml` to see the settings we specified with `tanzu app init`.
+```editor:open-file
+file: ~/tanzu.yml
+```
+13. Open `.tanzu/config/inclusion.yaml` to see the settings we specified with `tanzu app init`.
+```editor:open-file
+file: ~/.tanzu/config/inclusion.yaml
+```
 14. `tanzu app config` to see configurable options.  Explain some of the common items:
     1.  `tanzu app config build path set` to change the path to the source code (but don't run this)
     2.  `tanzu app config build path set non-secret-env BP_JVM_VERSION=21` to add environment variables that impact CNB operations.  Show link to Packeto buildpack for Java configuration option https://paketo.io/docs/howto/java/#install-a-specific-jvm-version.  Notice the `emoji-inclusion.yaml` file got updated.  `tanzu app build --output-dir /tmp/build` to see the buildpack output change to JDK 21.  Mention this didn't update the running app, but we'll cover that capability more in a later step.
@@ -121,16 +127,37 @@ tanzu deploy --from-build deployment
     4.  `tanzu app contact set <field>=<value>` and explain how this lets you add arbitrary contact info about the app.  `tanzu app contact set email=me@here.com`, `tanzu app contact set team slack` and have it prompt you for the "team" and "slack" values.  Go to the `emoji-inclusion.yaml` and see how that updates the yaml.  `kubectl explain containerapp.spec.contact` to show this is an arbitrary map of whatever you want today, but mention some keys might eventually be used by the Tanzu Platform UI.
     5.  Mention there are other options here we'll explore in subsequent sections.
 15. `tanzu app list` to see your running app.
+```execute
+tanzu app list
+```
 16. Have the user _manually_ type `tanzu app get` and then hit `<TAB>` to show autocompletion in the CLI.  Hit Enter after it autocompletes and you can see some info about your currently deployed app.  Point out in the `tanzu app get` output the "source image" reference.  Refer back to the `tanzu build config` command we executed way back and how that image path was generated from the build config.
 17. Remind the user when we executed the `tanzu app config build path set non-secret-env` earlier and point out the environment variables show from the `tanzu app get` command.  Notice the variable we set for the build isn't shown yet because we haven't deployed.  This could be a spot where we introduce the concept of the "at-rest" version of the app config files vs. the "applied" version of the app config in Tanzu Platform.
 18. Now, let's get our local build synced to the platform with `tanzu deploy --from-build /tmp/build` and notice that it uses the already built image we did earlier so it's faster.
 > **_NOTE:_**  It might be nice to have the inclusion app show the JDK version somewhere so it's easy to see if this change was applied or not.
 19.  Introduce services.  `tanzu service` command to show things we can do with services.
+```execute
+tanzu service --help
+```
 20.  `tanzu service type list` to show available catalog of services.  Mention platform team can control this catalog and could potentially expose other types of services in the future (cloud provider, custom services, etc).
+```execute
+tanzu service type list
+```
 21.  `tanzu service create PostgreSQLInstance/my-db` to create a new service instance.
+```execute
+tanzu service create PostgreSQLInstance/my-db
+```
 22.  `tanzu service list` to see created services.
+```execute
+tanzu service list
+```
 23.  `tanzu service get PostgreSQLInstance/my-db` to get some details about our service.  Highlight the "type spec" and mention these are configurable items the platform team allows for these service types (like storageGB).  Mention we can specify those values using the `tanzu service create PostgreSQLInstance/my-db --parameter storageGB=??` format, but don't execute that.
+```execute
+tanzu service get PostgreSQLInstance/my-db
+```
 24.  `tanzu service bind PostgreSQLInstance/my-db ContainerApp/emoji-inclusion --as db`
+```execute
+tanzu service bind PostgreSQLInstance/my-db ContainerApp/inclusion --as db
+```
 25.  Refesh app tab and notice the service is now bound and the change to the emoji view.
 26.  Explain how this service is only available for apps in this space to use directly.  We're going to switch to a "shared" database instance that has been pre-provisioned for us by rebinding our app to a secret.
     1.  Add a secret to the UCP with the shared DB credentials and coordinates called `shared-db`.
@@ -138,6 +165,9 @@ tanzu deploy --from-build deployment
     3.  `tanzu service bind Secret/shared-db ContainerApp/emoji-inclusion --as db` to bind to the shared instance.
     4.  Refresh the app and notice all the different emojis that start to show up.
 27.  `tanzu service delete PostgreSQLInstance/my-db` to clean up the unneeded DB now.
+```execute
+tanzu service delete PostgreSQLInstance/my-db
+```
 28. `tanzu app config servicebinding set db=postgresql` to add metadata to ContainerApp about needed service bindings.  Open up `emoji-inclusion.yaml` to show how the "alias" is set to "db" and the allowable types is set only to "postgresql".  `tanzu service type list` again to show where that "postgresql" binding type is coming from.
 29. Review spaces and scheduling to explain replicas and how they are different from individual deployment scale.
 30. `tanzu app scale set cpu=400 memory=678` for vertical scale.  `tanzu deploy --from-build /tmp/build` and `tanzu app get emoji-inclusion` to see change.
