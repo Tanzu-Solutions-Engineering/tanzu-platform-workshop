@@ -45,7 +45,7 @@ endl: false
 ```
 4. `tanzu build config --build-plan-source-type=ucp --containerapp-registry <registry-host>/apps/{name}`
 ```execute
-tanzu build config --build-plan-source-type=ucp --containerapp-registry $REGISTRY_HOST/inclusion
+tanzu build config --build-plan-source-type=ucp --containerapp-registry $PUBLIC_REGISTRY_HOST/inclusion
 ```
 > **_NOTE:_**  Need a container registry.  Do we provision one as part of the workshop or use a cloud one?  Also might want to mention here that this might be specified by the platform engineering team in the future so that developers wouldn't even need to know this.
 
@@ -65,6 +65,7 @@ text: inclusion
 ```terminal:input
 text: inclusion
 ```
+**Press Enter to confirm buildpack selection**
 7. `tanzu app init --help` to see that these could be specified on the command line.
 
 9. `tanzu build` to build container image and generate YAML
@@ -92,7 +93,7 @@ text: |
       - group: gateway.networking.k8s.io
         kind: Gateway
         name: default-gateway
-        sectionName: {{session_namespace}}-inclusion
+        sectionName: {{ session_namespace }}-inclusion
       rules:
       - backendRefs:
         - group: ""
