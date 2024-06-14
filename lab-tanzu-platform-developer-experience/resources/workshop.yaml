@@ -44,6 +44,14 @@ spec:
       value: /home/eduk8s/.config/tanzu/kube/config
     - name: PUBLIC_REGISTRY_HOST
       value: public-registry-$(session_name).$(ingress_domain)
+    - name: TANZU_CLI_SPACE_CREATE_TOKEN
+      value: REPLACEME
+    - name: TANZU_PLATFORM_PROJECT
+      value: AMER-East
+    - name: TANZU_PLATFORM_PROFILES
+      value: spring-dev.tanzu.vmware.com,custom-networking.aws-work.grogcsave.net
+    - name: TANZU_PLATFORM_AVAILABILITY_TARGETS
+      value: cdelashmutt-dev
     ingresses:
     - name: public-registry
       host: $(session_name)-registry
