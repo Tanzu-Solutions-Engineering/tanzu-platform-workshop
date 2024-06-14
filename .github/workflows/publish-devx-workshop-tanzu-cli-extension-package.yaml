@@ -64,4 +64,5 @@ jobs:
         chmod 755 imgpkg
 
         tanzu_cli_version=$(grep -oP 'tanzu-cli==\K.*' lab-tanzu-platform-developer-experience/extension-packages/tanzu-cli/requirements.txt)
-        ./imgpkg push -i ghcr.io/${{ github.repository }}/lab-tanzu-platform-developer-experience-tanzu-cli-extension-package:$tanzu_cli_version -f extension-package/
+        LOWER_REPO=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+        ./imgpkg push -i ghcr.io/$LOWER_REPO/lab-tanzu-platform-developer-experience-tanzu-cli-extension-package:$tanzu_cli_version -f extension-package/
