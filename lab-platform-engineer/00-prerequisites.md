@@ -1,7 +1,7 @@
 # Platform Engineer Lab Prerequisites
 
 ## Workshop Owner pre-requisites
-- vSphere 8.02c environment(s)
+- vSphere environment(s) with vCenter v8.0.2c (8.0.2.00300)
     - Workload Management enabled with AVI
     - Supervisor cluster v1.27.5+vmware.1-fips.1
     - ContentLibrary synced with TKrs 1.27.11 and 1.28.8 available

@@ -2,14 +2,26 @@
 
 ## Share Environment details and confirm pre-requisites
 The workshop owner should share with the attendees:
-- Designated Tanzu Platform for k8s URL, Org and Project
-- vSphere environment url, credentials, Supervisor name used to register in Tanzu Platform, and Supervisor namespace
-- Route53 Hosted Zone ID, and designated subdomain
+- Designated Tanzu Platform for k8s URL, Org and Project.
+- vSphere environment url, credentials, Supervisor name used to register in Tanzu Platform, and Supervisor namespace name.
+- Route53 Credential ID, Hosted Zone ID, and designated subdomain.
 
 All workshop participants to verify they are all set with steps in [Workshop Attendee pre-requisites](../lab-platform-engineer/00-prerequisites.md#workshop-attendee-pre-requisites)
 
+## Log in on the Tanzu Platform for Kubernetes 
+On the browser, open a new tab/window and go to the Tanzu Platform for k8s URL you've been given. Log in. Then make sure to select the Organization, and later the Project you've been assigned.
+
+Once that's done, open a terminal and run this commands, use the Organziation ID you've been given:
+```
+export TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID=XXXX
+tanzu login
+```
+
 
 ## Register TKGS Supervisor in designated Tanzu Platform for k8s project
+
+> Note: This step of the workshop may be skipped if several attendees are sharing environments with the same Supervisor
+
 Official pubic documentation pending
 
 [vSphere with Tanzu documentation to register Supervisor in TMC](https://docs.vmware.com/en/VMware-vSphere/8.0/vsphere-with-tanzu-installation-configuration/GUID-ED4417DC-592C-454A-8292-97F93BD76957.html#install-the-tanzu-mission-control-agent-on-the-supervisor-1)
@@ -18,12 +30,17 @@ Process:
 - Step 1: Access the Hub GUI: `Setup & Configuration > Kubernetes Management > TKG Registrations > Register TKG Instance` to get the registration url
 - Step 2: Go to VCenter: `workload management > Supervisors > Configure > Tanzu Mission Control Registration`, and add that registration url.
 
+There is an alternative process to be followed via CLI with a yaml. (Insert info here)
+
 ## Prepare a Cluster Group with required capabilities
 
 #### Create Cluster Group
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html)
 
-Access the Hub GUI: `Infrastructure > Kubedrnetes Clusters > Create Cluster Group > Choose a name`
+Access the Hub GUI: `Infrastructure > Kubedrnetes Clusters > Create Cluster Group > Choose a name`.
+
+Make sure to enable Tanzu Application Engine.
+
 
 #### What are capabilities and what the Platform Engineer needs to do with them
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/concepts-about-spaces.html#capabilities--platform-apis-and-features-1)
@@ -33,26 +50,52 @@ Access the Hub GUI: `Infrastructure > Kubedrnetes Clusters > Create Cluster Grou
 #### Add capabilities to Cluster Group
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html#add-packages)
 
-Access the Hub GUI: `Application Spaces > Capabilities > Available`. We will add all capabilities one by one, keeping the defaults:
+To do this from the Hub GUI, go to: `Application Spaces > Capabilities > Available`. We can only add capabilities one by one, and curerntly you can only select a specific version, which will actually pin that version in the installed packages, which can cause issues when new Capability versions are released and their pacages bumped in the Platform (UCP).
+
+Therefore we will do this via CLI
+
+We need to install all capabilities that we are going to need in the Spaces we want to create. Spaces request capabilities via Profiles and looking at the profiles we need to use in the workshop, these are the capabilities we want to look at:
 - Capabilities needed by the GSLB ingress Profile an its traits
-	- Certificate Manager
-	- Egress -> this will automatically pull ingress/multicloud-ingress and service mesh observability since the 3 of them are in the same Carvel package (tcs) today
+	- Certificate Manager (several depend on this capability)
+	- Egress
 	- Ingress
 - Capabilities needed by the spring-dev profile: observability and carvel-package traits, and other capabilities
 	- Observability
-	- Service Mesh Observability (already added earlier as part of tcs)
+	- Service Mesh Observability
 	- Mutual TLS
 	- Bitnami
-	- Container Aapp.tanzu.vmware.com
-	- Service Binding
+	- Container Apps
+	- Service Binding (Tanzu Service Binding Dependency)
 	- Tanzu Service Binding
 	- Gateway API
 	- Spring Cloud Gateway.tanzu.vmware.com (can be skipped if not needed by app)
-	- Crossplane (needed by bitnami)
-- Additional capabilities
-	- Registry Pull Only Credentials Installer
-		- Rename to make it fit the char number limitation: reg-pull-only-creds
-        - Add username, password and URL
+	- Crossplane (Bitnami's dependency)
+> Note: Egress, Ingress and Srvice Mesh Observability capabilities are all provided by the `tcs` package today
+
+To install the necessary capabilities run these commands
+```
+# select project
+tanzu project use
+# follow the interactive menu to select the project you've been assigned to
+
+# select cluster group 
+tanzu operations clustergroup use
+# follow the interactive menu to select the cluster gorup we just created
+
+# install capabilities
+tanzu package install cert-manager.tanzu.vmware.com -p cert-manager.tanzu.vmware.com -v '>0.0.0'
+tanzu package install tcs.tanzu.vmware.com -p tcs.tanzu.vmware.com -v '>0.0.0'
+tanzu package install observability.tanzu.vmware.com -p observability.tanzu.vmware.com -v '>0.0.0'
+tanzu package install mtls.tanzu.vmware.com -p mtls.tanzu.vmware.com -v '>0.0.0'
+tanzu package install crossplane.tanzu.vmware.com -p crossplane.tanzu.vmware.com -v '>0.0.0'
+tanzu package install bitnami.services.tanzu.vmware.com -p bitnami.services.tanzu.vmware.com -v '>0.0.0'
+tanzu package install container-apps.tanzu.vmware.com -p container-apps.tanzu.vmware.com -v '>0.0.0'
+tanzu package install servicebinding.tanzu.vmware.com -p servicebinding.tanzu.vmware.com -v '>0.0.0'
+tanzu package install tanzu-servicebinding.tanzu.vmware.com -p tanzu-servicebinding.tanzu.vmware.com -v '>0.0.0'
+tanzu package install k8sgateway.tanzu.vmware.com -p k8sgateway.tanzu.vmware.com -v '>0.0.0'
+tanzu package install spring-cloud-gateway.tanzu.vmware.com -p spring-cloud-gateway.tanzu.vmware.com -v '>0.0.0'
+```
+
 
 #### (Optionl) Remove needed capability to test error scenario
 Remove Crossplane capability from the Cluster Group: if not choosing it the bitnami package will fail:
