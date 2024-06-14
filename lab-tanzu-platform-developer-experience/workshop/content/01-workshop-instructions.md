@@ -93,7 +93,7 @@ text: |
       - group: gateway.networking.k8s.io
         kind: Gateway
         name: default-gateway
-        sectionName: "{{ session_namespace }}-inclusion"
+        sectionName: {{ ENV_SESSION_NAMESPACE }}-inclusion
       rules:
       - backendRefs:
         - group: ""
