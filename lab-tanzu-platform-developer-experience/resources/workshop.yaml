@@ -18,20 +18,11 @@ spec:
     packages:
     - name: tanzu-cli
       files:
-      - githubRelease:
-          slug: vmware-tanzu/tanzu-cli
-          tagSelection:
-            semver:
-              constraints: ">=1.3.0 <1.4.0"
-          # only download specific assets (optional; v0.12.0+)
-          assetNames: ["tanzu-cli-linux-amd64.tar.gz"]
-          disableAutoChecksumValidation: true
-          unpackArchive:
-            path: tanzu-cli-linux-amd64.tar.gz
-
+      - image:
+          url: ghcr.io/timosalm/tanzu-platform-workshop/lab-tanzu-platform-developer-experience-tanzu-cli-extension-package:v1.3.0
   session:
     namespaces:
-      budget: medium
+      budget: large
     applications:
       terminal:
         enabled: true
@@ -41,8 +32,25 @@ spec:
       console:
         enabled: false
       docker:
-        enabled: false
+        enabled: true
       registry:
-        enabled: false
+        enabled: true
       vcluster:
         enabled: false
+    env:
+    - name: TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID
+      value: 77aee83b-308f-4c8e-b9c4-3f7a6f19ba75
+    - name: KUBECONFIG
+      value: /home/eduk8s/.config/tanzu/kube/config
+    - name: PUBLIC_REGISTRY_HOST
+      value: public-registry-$(session_name).$(ingress_domain)
+    ingresses:
+    - name: public-registry
+      host: $(session_name)-registry
+      port: 5000
+      protocol: http
+      headers:
+      - name: Authorization
+        value: "Basic REGISTRY_BASIC_AUTH_CREDENTIALS"
+      authentication:
+        type: none
