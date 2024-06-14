@@ -11,11 +11,6 @@ title: Workshop Instructions
 1. `tanzu login`, attendee copies link (since browser can't be launched in Educates) and enters credentials in new browser tab
 ```terminal:execute
 command: tanzu login
-cascade: true
-```
-```terminal:execute
-command: kubectl config set-context --current --namespace=default
-hidden: true
 ```
 
 2. `tanzu project use <pre-provisioned-project>`.  Quickly review what projects are, and maybe show `tanzu project list` to see all the projects you could access.
@@ -42,6 +37,11 @@ Instructions on how to setup a new space in Tanzu Hub.
 ```terminal:input
 text: "tanzu space use "
 endl: false
+```
+
+Only because of educates workshop
+```terminal:execute
+command: kubectl config set-context --current --namespace=default
 ```
 4. `tanzu build config --build-plan-source-type=ucp --containerapp-registry <registry-host>/apps/{name}`
 ```execute
