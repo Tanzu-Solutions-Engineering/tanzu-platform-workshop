@@ -258,11 +258,14 @@ tanzu availability-target apply -f at-tkgs.yaml
 
 
 
-We will create Availability Targets using a yaml declaration and the CLI since at the moment the UI is
-
-
 ## Configure a GSLB via custom Profile
+In order to configure a Space with the right Ingress and GSLB settings for apps running on the Space, we need to create a Profile that configures the Ingress Trait. And later on, developers (at the moment) must create the HTTPRoute resources with specifics of the subdomain, ports and paths to be used to route traffic to the application.
+Ingress Trait and HTTPRoute objects are the primary inputs that are used to setup networking for exposing an application.
+- The ingress trait installation brings up ingress operator pod in the Space namespace on the app cluster. This operator is responsible for programing Gateway object reading inputs from the Trait and the HTTPRoute
+- ISTIO uses Gateway to dynamically bring up the gateway proxy services (deployment and service) to allow public traffic into the Space.
 
+Here's the Ingress and GSLB Architecture:
+![Ingress and GSLB Architecture](./IngressGSLB.png)
 
 
 ## Create a Space for developers to deploy apps on TKGS
