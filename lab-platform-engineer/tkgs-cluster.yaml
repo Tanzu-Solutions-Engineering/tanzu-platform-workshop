@@ -1,0 +1,68 @@
+fullName:
+  managementClusterName: h2o-4-24214
+  name: jaime-tkgs-demo
+  orgId: 436d149c-b60f-4979-a58b-f2c38dc5b1b4 # this is the project ID and not the CSP org ID
+  provisionerName: appeng-1
+meta:
+  labels:
+    prod: "true"
+    vsphere: 8.0.2c
+spec:
+  clusterGroupName: jaime-run
+  tmcManaged: true
+  topology:
+    clusterClass: tanzukubernetescluster
+    controlPlane:
+      metadata: {}
+      osImage:
+        arch: amd64
+        name: photon
+        version: "5"
+      replicas: 1
+    network:
+      pods:
+        cidrBlocks:
+        - 172.20.0.0/16
+      serviceDomain: cluster.local
+      services:
+        cidrBlocks:
+        - 10.96.0.0/16
+    nodePools:
+    - info:
+        name: md-0
+      spec:
+        class: node-pool
+        failureDomain: vmware-system-legacy
+        metadata: {}
+        osImage:
+          arch: amd64
+          name: photon
+          version: "5"
+        overrides:
+        - name: vmClass
+          value: best-effort-large
+        - name: storageClass
+          value: vc01cl01-t0compute
+        replicas: 3
+    variables:
+    - name: defaultStorageClass
+      value: vc01cl01-t0compute
+    - name: storageClass
+      value: vc01cl01-t0compute
+    - name: storageClasses
+      value:
+      - vc01cl01-t0compute
+    - name: user
+      value:
+        passwordSecret:
+          key: ssh-passwordkey
+          name: jaime-tkgs-lcm-03-ssh-password-hashed
+        sshAuthorizedKey: |
+          ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDPe6I8InJAneO2S6YCNqS8sUlYS0pIINclHOrN7wmCZek1oGoNiRLFGlOlF6BXprd87/xuW+dTRMMqBUGHdSUrFMesZFtNfkcGiy8PNy0N+1VATYr9Thxf9a24LyUei4DHXp5IiSUma665uar+kbQ6tji5fjRatYfK7iSp6bTX1Hk0OMrRpLKmFmdSbOXmHl1KregHrxv2hHFCkGuZF7ZrdzvC0yVF8iSDdLWgILqdMc2HMol7ifZQzZJWIdBvLGgtBepJLeuKXPSX/UeCoBSvWpABmJw2wVaoIRiNjqW5uDt62l33vVwKLCQwdcaXRSVq/C79OROZR4E2oxk6hT6oHUVVoWkbjHotDuJ7gJAzOAwiMvs1xSDsFLHm4+W07MPMP42Zv6KbZS/B7/H0WItXd3Tm2P1fWqysb3nT/ZB1GA9bqlr7ZfFJdYA7ocH/AewvfuQ+pG+boYFgUV4aI9e8KKX3TcOicA61DkszwOTSZDPYxPGTHQkQ29NjIaUwiC4d1JkuRalV98mOCCmgVaefEYNyol9XBZckAvULzp5oO2fl7XuUBhgTKQnjOrr1jd2XycidXpszwvQizhu701VXUAAPas5pRsn/zL1Q4b7iA8ouCShcU5MAI+LcZlf+WRyp3MSVr092Fw1iruIN/GrH9szBjpE6f6MeofURsQpWFQ==
+    - name: vmClass
+      value: best-effort-large
+    version: v1.28.8+vmware.1-fips.1-tkg.2
+type:
+  kind: TanzuKubernetesCluster
+  package: vmware.tanzu.manage.v1alpha1.managementcluster.provisioner.tanzukubernetescluster
+  version: v1alpha1

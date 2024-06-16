@@ -41,6 +41,14 @@ Access the Hub GUI: `Infrastructure > Kubedrnetes Clusters > Create Cluster Grou
 
 Make sure to enable Tanzu Application Engine.
 
+Alternatively you can do this via CLI. Follow this commands using the `cluster-group.yaml` sample file included in this folder of the repo, make sure to change the `fullName.name`:
+```
+tanzu project use 
+# follow the interactive menu to select the project you've been assigned to
+
+tanzu operations clustergroup create -f cluster-group.yaml
+```
+
 
 #### What are capabilities and what the Platform Engineer needs to do with them
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/concepts-about-spaces.html#capabilities--platform-apis-and-features-1)
@@ -55,11 +63,12 @@ To do this from the Hub GUI, go to: `Application Spaces > Capabilities > Availab
 Therefore we will do this via CLI
 
 We need to install all capabilities that we are going to need in the Spaces we want to create. Spaces request capabilities via Profiles and looking at the profiles we need to use in the workshop, these are the capabilities we want to look at:
-- Capabilities needed by the GSLB ingress Profile an its traits
+- Capabilities needed by the GSLB ingress Profile an its traits and capabilities
 	- Certificate Manager (several depend on this capability)
 	- Egress
 	- Ingress
-- Capabilities needed by the spring-dev profile: observability and carvel-package traits, and other capabilities
+	- Gateway API
+- Additional Capabilities needed by the spring-dev profile: observability and carvel-package traits, and other capabilities
 	- Observability
 	- Service Mesh Observability
 	- Mutual TLS
@@ -67,23 +76,23 @@ We need to install all capabilities that we are going to need in the Spaces we w
 	- Container Apps
 	- Service Binding (Tanzu Service Binding Dependency)
 	- Tanzu Service Binding
-	- Gateway API
 	- Spring Cloud Gateway.tanzu.vmware.com (can be skipped if not needed by app)
 	- Crossplane (Bitnami's dependency)
-> Note: Egress, Ingress and Srvice Mesh Observability capabilities are all provided by the `tcs` package today
+> Note: Egress, Ingress and Service Mesh Observability capabilities are all provided by the same `tcs` meta package today
 
 To install the necessary capabilities run these commands
 ```
 # select project
-tanzu project use
+tanzu project use 
 # follow the interactive menu to select the project you've been assigned to
 
 # select cluster group 
 tanzu operations clustergroup use
 # follow the interactive menu to select the cluster gorup we just created
 
-# install capabilities
+# install capabilities - version is mandatory: you can pin a specific version or use the '>' operator
 tanzu package install cert-manager.tanzu.vmware.com -p cert-manager.tanzu.vmware.com -v '>0.0.0'
+tanzu package install k8sgateway.tanzu.vmware.com -p k8sgateway.tanzu.vmware.com -v '>0.0.0'
 tanzu package install tcs.tanzu.vmware.com -p tcs.tanzu.vmware.com -v '>0.0.0'
 tanzu package install observability.tanzu.vmware.com -p observability.tanzu.vmware.com -v '>0.0.0'
 tanzu package install mtls.tanzu.vmware.com -p mtls.tanzu.vmware.com -v '>0.0.0'
@@ -92,10 +101,8 @@ tanzu package install bitnami.services.tanzu.vmware.com -p bitnami.services.tanz
 tanzu package install container-apps.tanzu.vmware.com -p container-apps.tanzu.vmware.com -v '>0.0.0'
 tanzu package install servicebinding.tanzu.vmware.com -p servicebinding.tanzu.vmware.com -v '>0.0.0'
 tanzu package install tanzu-servicebinding.tanzu.vmware.com -p tanzu-servicebinding.tanzu.vmware.com -v '>0.0.0'
-tanzu package install k8sgateway.tanzu.vmware.com -p k8sgateway.tanzu.vmware.com -v '>0.0.0'
 tanzu package install spring-cloud-gateway.tanzu.vmware.com -p spring-cloud-gateway.tanzu.vmware.com -v '>0.0.0'
 ```
-
 
 #### (Optionl) Remove needed capability to test error scenario
 Remove Crossplane capability from the Cluster Group: if not choosing it the bitnami package will fail:
@@ -114,8 +121,9 @@ Access the Hub GUI: `Infrastructure > Kuberentes Clusters > Clusters > Add Clust
     - Cluster name: pick a name. Tip: use something unique in it like your name and use a suffix with a number (you may create 2 clusters)
     - Cluster Group: click to show a drop down menu and choose the Cluster Group you created earlier.
     - Cluster class: click to show a drop down menu and choose `tanzukubernetesclusterclass`.
-    - Labels: DO NOT SKIP!
-        - Choose a couple of labels to have options later to target your clusters. Example: `test: true` and `vsphere: 8.0.2c`
+    - Labels: DO NOT SKIP! Choose a couple of labels to have options later to target your clusters. Examples:
+        - `vsphere: 8.0.2c` -> to identify it as a TKGS/VCF cluster with version
+        - `test-jaime: true` -> to identify it as one of my test clusters (change to somehting unique for you)
 - Step 3: Configure network and storage settings
     - Under Allowed storage clases, click on Add Storage Class and select the storage class from the drop down menu.
     - Under Default storage classe, do the same.
@@ -139,30 +147,47 @@ Access the Hub GUI: `Infrastructure > Kuberentes Clusters > Clusters > Add Clust
     - No need to add anything.
 - Click Create.
 
+Alternatively you can do this via CLI. Follow this commands using the `tkgs-cluster.yaml` sample file included in this folder of the repo, make sure to adjust: all the `fullName` variables, the `spec.clusterGroupName` and all references to storageClass at minimu:
+```
+tanzu project use <project-name>
+tanzu operations apply -f tkgs-cluster.yaml
+```
+
+
 #### Confirm TKGS cluster is onboarded to the Platform
 1. Confirm the Cluster is Healthy and Ready
     - This is the TMC layer, does not provide information about the UCP onboarding
     - Access the Hub GUI: `Infrastructure > Kubernetes Clusters > Clusters` and confirm it's `Healthy` and `Ready`.
     - CLI path: check status conditions
         ```
+        tanzu project use <project-name>
         tanzu operations cluster get <cluster-name> -p <supervisor-namespace> -m <supervisor-name > | yq .status
         ```
 2. Confirm the Cluster is properly onboarded to UCP
     - Access the Hub GUI: `Setup & Configuration > Kubernetes Management` and confirm it is `Attached` and the Colector status is `Online`
     - CLI path: check status conditions
         ```
-        tanzu ops clustergroup use <cluster-group-name>
+        tanzu operations clustergroup use <cluster-group-name>
         alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
         tk get kubernetesclusters <cluster-name> -oyaml | yq .status
         ```
 
+#### Confirm via UCP that capabilities defined in cluster group are provided by the
+
+To check the cluster has all the capabilities we initially defined at cluster-group level, run the following commands:
+```
+tanzu project use <project-name>
+tanzu operations clustergroup use <cluster-group-name>
+alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
+tk get kubernetesclusters <cluster-name> -oyaml | yq .status.capabilities
+```
 
 #### Inspect Packages and Agents intalled
 1. Acccess the target cluster. Two ways:
     1. Access the Hub GUI: `Infrastructure > Kuberentes Clusters > Clusters > Click on the cluster name > Actions > Access this cluster`
         - Download the Kubeconfig. Export the file (adjust path) and teste it with these commands
         ```
-        tanzu project use
+        tanzu project use <project-name>
         export KUBECONFIG=/full/path/to/kconfig/kubeconfig-<cluster-name>>.yml
         kubectl get no -owide
         ```
@@ -173,7 +198,7 @@ Access the Hub GUI: `Infrastructure > Kuberentes Clusters > Clusters > Add Clust
 
 2. Check the following namespaces
 ```
- > kubectl get ns
+kubectl get ns
 # make sure these namespaces exist - they are the additional namespaces created by UCP/TMC
 NAME                           STATUS   AGE
 cert-manager                   Active   15h   # added from capabilities
@@ -214,12 +239,22 @@ tanzu-system                 vss-k8s-collector                                 v
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-manage-availability-targets.html)
 
 #### Look at existing Availability Target pointing to our EKS overflow clusters
-Using a simple matchingExpresion looking for clusters with a label `workshop-overflow`
+- Access the Hub GUI: `Application Spaces > Availability Targets > type "workshop+ENTER" > Click on "View Details" in the workshop-overflow AT`.
+- See the list of clusters: these are all EKS clusters we have available in our project for extra compute for our Spaces. More on this later
+- On the top right click on `Actions > View YAML`. Scroll down to `spec.affinity.clusterAffinity`
+- Observe the matchingExpresion looking for clusters with a label `workshop-overflow`
+
 
 #### Create an Availability Target that targets our TKGS cluster
-We will use the yaml/CLI apprach to define & create the Availability Target to have more flexibility and to use a single matchExpression with two elements in order to have it work as an AND logical operator, which is not currently supported in the UI
+We will use the yaml/CLI apprach to define & create the Availability Target to have more flexibility and to use a single matchExpression with two elements in order to have it work as an AND logical operator, which is not currently supported in the UI.
 
-#### Create an Availability Target that targets two clusters
+Check the `at-tkgs.yaml` file in this folder of the repo and notice to elements in the matchExpressions array: we want this availability target to match clusters that have the first label AND the second label. Let's keep the `vsphere` label and edit the other one to be something unique for you that describes your clusters. Then create the AT following these commands:
+```
+tanzu project use <project-name>
+tanzu availability-target apply -f at-tkgs.yaml
+```
+
+#### (Optional) Create an Availability Target that targets the TKGS cluster and the EKS overflow clusters
 
 
 
@@ -227,5 +262,7 @@ We will create Availability Targets using a yaml declaration and the CLI since a
 
 
 ## Configure a GSLB via custom Profile
+
+
 
 ## Create a Space for developers to deploy apps on TKGS

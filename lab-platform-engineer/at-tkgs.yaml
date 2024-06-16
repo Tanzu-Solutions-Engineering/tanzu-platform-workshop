@@ -1,0 +1,18 @@
+apiVersion: spaces.tanzu.vmware.com/v1alpha1
+kind: AvailabilityTarget
+metadata:
+  name: my-tkgs
+  description: "Availability Target Multi Expression AND"
+  namespace: default
+spec:
+   affinity:
+      clusterAffinity:
+         clusterSelectorTerms:
+         - matchExpressions:
+            - key: test-jaime
+              operator: Exists
+              values: []
+            - key: vsphere
+              operator: Exists
+              values: []
+   description: ""

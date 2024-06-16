@@ -1,0 +1,11 @@
+type:
+   kind: ClusterGroup
+   package: vmware.tanzu.manage.v1alpha1.clustergroup
+   version: v1alpha1
+fullName:
+   name: "jaime-cg-demo"
+meta:
+   description: "testing creation of a TAE-enabled cluster group"
+spec:
+   integrations:
+      - TANZU_APPLICATION_ENGINE # TAE-enabled
