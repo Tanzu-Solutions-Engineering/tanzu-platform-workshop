@@ -9,12 +9,14 @@ spec:
     image: "$(image_repository)/lab-tanzu-platform-developer-experience-files:$(workshop_version)"
   workshop:
     files:
-    - image:
-        url: "$(image_repository)/lab-tanzu-platform-developer-experience-files:$(workshop_version)"
+    - git:
+        url: https://github.com/Tanzu-Solutions-Engineering/tanzu-platform-workshop
+        ref: origin/dev-experience
       includePaths:
-      - /workshop/**
-      - /exercises/**
-      - /README.md
+      - /lab-tanzu-platform-developer-experience/workshop/**
+      - /lab-tanzu-platform-developer-experience/exercises/**
+      - /lab-tanzu-platform-developer-experience/README.md
+      newRootPath: lab-tanzu-platform-developer-experience
     packages:
     - name: tanzu-cli
       files:
