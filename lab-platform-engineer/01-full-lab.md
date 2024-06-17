@@ -9,7 +9,7 @@ The workshop owner should share with the attendees:
 All workshop participants to verify they are all set with steps in [Workshop Attendee pre-requisites](../lab-platform-engineer/00-prerequisites.md#workshop-attendee-pre-requisites)
 
 ## Log in on the Tanzu Platform for Kubernetes 
-On the browser, open a new tab/window and go to the Tanzu Platform for k8s URL you've been given. Log in. Then make sure to select the Organization, and later the Project you've been assigned.
+On the browser, open a new tab/window and go to the Tanzu Platform for k8s URL you've been given at the begining of the workshop. Log in. Then make sure to select the Organization, and later the Project you've been assigned.
 
 Once that's done, open a terminal and run this commands, use the Organziation ID you've been given:
 ```
@@ -258,14 +258,178 @@ tanzu availability-target apply -f at-tkgs.yaml
 
 
 
-## Configure a GSLB via custom Profile
+## Configure Ingress and GSLB
+
+#### Current Ingress and GSLB Architecture
+
 In order to configure a Space with the right Ingress and GSLB settings for apps running on the Space, we need to create a Profile that configures the Ingress Trait. And later on, developers (at the moment) must create the HTTPRoute resources with specifics of the subdomain, ports and paths to be used to route traffic to the application.
 Ingress Trait and HTTPRoute objects are the primary inputs that are used to setup networking for exposing an application.
 - The ingress trait installation brings up ingress operator pod in the Space namespace on the app cluster. This operator is responsible for programing Gateway object reading inputs from the Trait and the HTTPRoute
-- ISTIO uses Gateway to dynamically bring up the gateway proxy services (deployment and service) to allow public traffic into the Space.
+- SRS(syncresourcesets) syncs the lb details and httproute details up to UCP, then the GSLB controller looks at those and updates Route53
+- SRS is basically a crd that tells a controller (srs controller running in UCP) to collect data from the downstream spaces
+- Istio uses Gateway to dynamically bring up the gateway proxy services (deployment and service) to allow public traffic into the Space.
 
 Here's the Ingress and GSLB Architecture:
 ![Ingress and GSLB Architecture](./IngressGSLB.png)
 
+> Note: This architecture is in rapid evolution and will be changed & improved very soon.
+
+#### Create Custom Networking Profile
+[Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/getting-started-create-app-envmt.html#create-custom-networking-profile-2)
+
+Access the Hub GUI: `Application Spaces > Profiles > Create Profile > Step by Step`:
+- Step 1: Name your Profile
+    - Choose a uniuque name, distinctive from other networking profiles for other networking profiles configured for other domain names. Example `networking.mydomain.com`:
+- Step 2: Choose required traits:
+    - `egress.tanzu.vmware.com`, `multicloud-cert-manager.tanzu.vmware.com`, and `multicloud-ingress.tanzu.vmware.com`. This will allow us to deploy the related packages in the k8s clusters with specific configuration for the Spaces that use this profile. More on this when we create a Space.
+- Step 3: Configure the `multicloud-ingress` trait:
+    - The Listerners define the prefixes we can use later in the HTTPRoute resources to define HTTP, HTTPS, or other listerner with corresponding ports and secrets if required.
+    - Set the `Gslb Dns ZoneId` using the Route53 Zone ID you've been given at the begining of the workshop.
+    - Set the `Gslb Authentication CredentialRef` using the Credential ID you've been given.
+    - Set tht `Domain` to the domain name assigned as well.
+    - The `Name` is used to name the IstioGatewway CRD that will be created in your Space. 
+    - You can leave all other defaults unchanged. More on ClusterIssuer in the advance topics.
+- Step 4: Configure Additional Capabilities:
+    - We don't need to do anything here for this specific profile, since the Capabilities reqried by the traits we selected are already pre-selected. But if we required additional capabiities on our custom profiles, this is the place where we will select them.
+- Step 5: Review Summary and Create
+
+
+Alternatively you can create the Profile via CLI.
+- Use the `custom-networking-profile.yaml` sample file included in this folder of the repo and, following the same guidelines as described above for the GUI approach, make sure to adjust:
+    - `metadata.name`
+    - The following specs under the `multicloud-ingress.tanzu.vmware.com` trait inline configuration: `domain`, `gslb.authentication.credentialRef` and `gslb.authentication.zoneId` following the same suggestions provided above in the GUI based approach.
+- Then run the following commands:
+```
+tanzu project use <project-name>
+tanzu deploy --only custom-networking-profile.yaml
+```
+
+#### Check Profile is in Ready state
+
+Access the Hub GUI: `Application Spaces > Profiles > Find your profile and click on View Details`. You should see the Profile as `READY` in green, and with all `Traits to be installed` as `Resolved`.
+
+> Note: This doesn't confirm yet that the Traits Packages are deployed and configured succesfully anywhere. More on this in the next section.
+
+
 
 ## Create a Space for developers to deploy apps on TKGS
+
+#### Create Space in the Project
+[Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/getting-started-create-app-envmt.html#create-a-space-in-your-project-4)
+
+Access the Hub GUI: `Application Spaces > Spaces > Create Space > Step by Step`:
+- Step 1: Name your Space:
+    - Choose a uniuque name, the convention we will use in this workshop is to provide some notion of the apps lifecycle. Example `myname-prod`:
+- Step 2: Select the Profiles:
+    - Choose the Custom Networking Profile you have created earlier
+    - Choose the Spring-dev profile which include all other Traits and Capabilities you will need in this workshop
+- Step 3: Select Avaiability Targets:
+    - Click on `Add Availability Target` and choose the AT we created earlier which targets the TKGS cluster. Set # Replicas to `1`. This will be our vsphere/TKGS Fault Domain
+    - Click on `Add Availability Target` and choose the `workshop-overflow` AT also with `1` replica. This will be our EKS Fault Domain
+    - Notice that we can configure each AT in Active or Passive mode. We will leave both in Active mode so that the Space is scheduled in both Fault Domains and the Route53 records for both Fault Domains are also created 
+- Step 4: Click on Create Space.
+
+While in the GUI, click on your newly created space to see details: It may take a few seconds for the space to go from `ERROR` (red), through `WARNING` (yellow), to `READY` (green). Click on the top-right `Refresh` link to update.
+
+Alternatively you can create the Space via CLI.
+- Use the `space.yaml` sample file included in this folder of the repo and, following the same guidelines as described above for the GUI approach, make sure to adjust:
+    - `metadata.name`
+    - Under `spec.profiles` change the second profile name to match your Custom Networking Profile you created
+    - Under `spec.availabilityTargets` change the name of the second AT to match the AT we created earlier targetting our TKGS clusters.
+- Then run the following commands:
+```
+tanzu project use <project-name>
+tanzu deploy --only space.yaml
+```
+While in the CLI we can also validate that the Space is in ready state. Let's run a few commands
+```
+# set alias to target the UCP contexts
+alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
+
+# get status of our space
+tk get space <space-name> -oyaml | yq .status
+# key elements to understand from the status outout
+# availabilityTargets: -> per AT the number of readyReplicas must match the number of replicas, otherwise the Space is having issues finding a k8s cluster that meets the criteria and/or scheduling the space 
+# conditions:
+#  - type: Progressing -> we will see one of this per replica of the Space.
+#    message: ManagedNamespaceSet "myname-prod-588d6d66b5" has successfully progressed. -> this ManagedNamespaceSet is a k8s CRD that has a set of ManagedNamespaces which equate to the actual namespaces created in the tartget k8s clusters.
+#  - type: Ready >  > self explanatory condition that illustrates the space being sucessfully scheduled or not
+#    message: successfully scheduled 
+# providedCapabilities: -> lists all the capabilities required by our space and to be statisfied by the target clusters to ensure scheduling of each Space replica.
+# resolvedProfiles: -> all profiles defined in the Space
+
+# We can get info from the generated ManagedNamespaceSet and ManagedNamespace resources
+tk get managednamespaceset myname-prod-588d6d66b5 -o yaml
+# for each space replica inthat managednamespaceset, we can find a managednamespace resource, with an extra suffix in the name
+tk get myname-prod-588d6d66b5-2cjrc -oyaml .status
+# key elements from the status outout
+#  conditions: -> self explanatory to show scheduling status and readiness for this space replica
+#  - type: Scheduled
+#    message: found a matching cluster
+#  - type: TraitsInstalled
+#    message: Traits Installed
+#  - type: Ready
+#    message: Ready
+#  placement:
+#    cluster:
+#      clusterGroup: jaime-cg-demo -> clsuter group the target k8s cluser belongs to, with all required capabilities
+#      name: jaime-tkgs-demo -> target cluster that matched criteria and resources for scheduling of this space replica
+#      namespace: default
+#    namespace: myname-prod-588d6d66b5-2cjrc -> actual name of the namespace in the target cluster created to deploy this space replica
+#  providedCapabilities: -> lists all the capabilities required by our space and to be statisfied by this target clusters to ensure scheduling of this replica
+```
+
+#### Inspect resources created in the target clusters(s)
+1. Let's access our TKGS cluster the same way we did earlier in this workshop in the [Inspect Packages and Agents intalled](/lab-platform-engineer/01-full-lab.md#inspect-packages-and-agents-intalled) section.
+
+2. Check the new namespaces
+```
+kubectl get ns
+# we should now see two new namespaces that match with the managedspace resource name
+NAME                                    STATUS   AGE
+myname-prod-588d6d66b5-2cjrc            Active   56m  # this is the namespace where the apps will be deployed
+myname-prod-588d6d66b5-2cjrc-internal   Active   56m  # this is an auxiliary namespace that includes the traits packages and their configuration
+```
+
+3. Check contents of the app namespace
+```
+kubectl get pod,svc -n jaime-wkshp-tests-588d6d66b5-2cjrc
+# we should only see the multicloiud-ingress-operator pod since no apps have been deployed yet
+NAME                                              READY   STATUS    RESTARTS   AGE
+pod/multicloud-ingress-operator-784c6d947-wxprf   1/1     Running   0          63m
+```
+
+4. Check the packages in the auxiliar namespace
+```
+kubectl get pkgi -n myname-prod-588d6d66b5-2cjrc-internal
+# we should see all namespace-bound packages spacific to the tratis we selected in all Profiles of our Space
+NAME                                              PACKAGE NAME                                PACKAGE VERSION   DESCRIPTION           AGE
+carvel-package-installer.tanzu.vmware.com-9b887   carvel-package-installer.tanzu.vmware.com   0.1.10            Reconcile succeeded   61m
+egress.tanzu.vmware.com-c796b                     egress.tanzu.vmware.com                     0.0.5             Reconcile succeeded   61m
+multicloud-cert-manager.tanzu.vmware.com-7c669    multicloud-cert-manager.tanzu.vmware.com    2.0.0             Reconcile succeeded   61m
+multicloud-ingress.tanzu.vmware.com-6db87         multicloud-ingress.tanzu.vmware.com         0.1.5             Reconcile succeeded   61m
+observability.tanzu.vmware.com-6d469              observability-traits.tanzu.vmware.com       1.0.2             Reconcile succeeded   61m
+```
+
+#### (Optional) Troubleshooting a Space inn non-ready state
+
+
+#### Rplicating Spaces for Resiliency
+
+With this setup we have configured a Space with incresed resiliency across two separate Fault Domains, effectively replicating the space across two "regions".
+
+Additional details in the [Increase Applicaiton Resiliency docs docs](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-app-resilience.html) for this.
+
+
+
+
+## Deploy a simple application to the Space to validate it's ready
+
+#### Deploy pre-built application
+
+#### Inspect resources created in the target clusters(s)
+
+#### Inspect DNS and Ingress configuration and fix load balancing
+
+
+If you reached this part of the Lab successfully and your Space is in a healthy state, CONGRATULATIONS! your job as a Patform Engineer is done (for now) and your Application Development friends have now a ready to go and replicable Space where to deploy their applications.

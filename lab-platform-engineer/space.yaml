@@ -1,0 +1,21 @@
+ apiVersion: spaces.tanzu.vmware.com/v1alpha1
+ kind: Space
+ metadata:
+   name: name-prod
+ spec:
+   template:
+     spec:
+       profiles:
+       - name: spring-dev.tanzu.vmware.com
+       - name: networking.mydomain.com
+       resources:
+         limits:
+           cpu: 5000m
+           memory: 10Gi
+   availabilityTargets:
+   - name: amy-tkgs
+     replicas: 1
+   - name: workshop-overflow
+     replicas: 1
+   updateStrategy:
+     type: RollingUpdate

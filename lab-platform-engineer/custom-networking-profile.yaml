@@ -1,0 +1,35 @@
+---
+apiVersion: spaces.tanzu.vmware.com/v1alpha1
+kind: Profile
+metadata:
+  name: networking.mydomain.com
+spec:
+  description: "My custom networking setup"
+  traits:
+  - name: egress.tanzu.vmware.com
+    alias: egress
+  - name: multicloud-cert-manager.tanzu.vmware.com
+    alias: multicloud-cert-manager
+  - name: multicloud-ingress.tanzu.vmware.com
+    alias: multicloud-ingress.tanzu.vmware.com
+    values:
+      inline:
+        multicloud-ingress.tanzu.vmware.com:
+          name: default-gateway
+          domain: "myapps.mydomain.com"
+          gslb:
+            authentication:
+              credentialRef: Router53-Credential-ID
+            dns:
+              zoneId: Router53-Zone-ID
+          listenerTemplates:
+          - namePrefix: https-
+            port: 443
+            protocol: HTTPS
+            tls:
+              secretRef: prod-certs
+          - namePrefix: http-
+            port: 80
+            protocol: HTTP
+            tls:
+              secretRef: ""
