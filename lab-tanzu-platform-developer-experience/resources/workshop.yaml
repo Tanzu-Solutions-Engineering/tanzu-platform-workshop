@@ -7,6 +7,61 @@ spec:
   description: "The workshop covers the developer experience of deploying applications to the Tanzu Platform."
   publish:
     image: "$(image_repository)/lab-tanzu-platform-developer-experience-files:$(workshop_version)"
+  environment:
+    objects:
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: kapp-installer
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: Role
+      metadata:
+        name: kapp-installer-role
+      rules:
+      - apiGroups: ['*']
+        resources: ['*']
+        verbs: ['*']
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        name: kapp-installer-role-rolebinding
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: Role
+        name: kapp-installer-role
+      subjects:
+      - kind: ServiceAccount
+        name: kapp-installer
+        namespace: $(workshop_namespace)
+    - apiVersion: secretgen.k14s.io/v1alpha1
+      kind: Password
+      metadata:
+        name: postgres-existing-secret
+      spec:
+        length: 12
+        secretTemplate:
+          type: Opaque
+          stringData:
+            postgres-password: $(value)
+            password: $(value)
+            replication-password: $(value)
+    - apiVersion: kappctrl.k14s.io/v1alpha1
+      kind: App
+      metadata:
+        name: postgres
+      spec:
+        serviceAccountName: kapp-installer
+        syncPeriod: 720h
+        noopDelete: true
+        fetch:
+        - git:
+            url: https://github.com/cdelashmutt-pivotal/workshop-postgres-package
+            ref: origin/main
+        template:
+        - ytt: {}
+        deploy:
+        - kapp: {}
+
   workshop:
     files:
     - git:
