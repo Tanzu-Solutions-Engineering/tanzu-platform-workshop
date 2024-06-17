@@ -77,7 +77,7 @@ We can see that the Cloud Native Buildpacks for Java and Spring are being used t
 Once the deploy is completed, you can navigate to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see the URL for your application under the "Space URL" section of the upper middle of the page.  Click on the URL to see your application's UI.
 
 {{< note >}}
-Your application might take a minute to start up and become healthy.  If the URL doesn't work immediately, give it a minute and try again.
+Your application might take a minute to start up, become healthy and for the app DNS record to propigate to your workstation's DNS servers.  If the URL doesn't work immediately, give it a minute and try again.
 {{< /note >}}
 
 Excellent!  With minimal fuss and no knowledge of Kubernetes, you were able to deploy a containerized application in just a few minutes.  Now, let's move on to the next section to explore this process in a little more depth.
