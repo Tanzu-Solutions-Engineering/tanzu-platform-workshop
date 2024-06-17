@@ -30,6 +30,11 @@ Finally, our platform team has configured Cloud Native Buildpacks as the only bu
 ```execute
 ```
 
+We could have also specified all these values as parameters to the `tanzu app init` call.  Look at the help output for the command to see the options you can specify.
+```execute
+tanzu app init --help
+```
+
 We can also add manifests for objects that will be deployed along with our application.  Since we want to be able to access our application externally to the cluster it is deployed on, let's define a manifest that will expose our application to the outside world.
 
 ```editor:append-lines-to-file
@@ -74,10 +79,10 @@ tanzu deploy -y
 
 We can see that the Cloud Native Buildpacks for Java and Spring are being used to create a container image for our application, and manifests are getting generated for our application using the best practices from our Platform Engineering and DevOps teams.  The build will take a couple minutes, so just wait until the process completes.
 
-Once the deploy is completed, you can navigate to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see the URL for your application under the "Space URL" section of the upper middle of the page.  Click on the URL to see your application's UI.
-
 {{< note >}}
-Your application might take a minute to start up, become healthy and for the app DNS record to propigate to your workstation's DNS servers.  If the URL doesn't work immediately, give it a minute and try again.
+Your application might take a minute to start up, become healthy and for the app DNS record to propigate to your workstation's DNS servers.  If the URL for your app belwo doesn't work immediately, give it a minute and try again.
 {{< /note >}}
+
+Once the deploy is completed, you can navigate to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see the URL for your application under the "Space URL" section of the upper middle of the page.  Click on the URL to see your application's UI.  After you see the app page with an emoji in the center, go back to the Tanzu Platform tab for your space and explore the different tabs for your application.  The *Applications* tab shows a list of all the application services we have deployed to our space.  You can click on the name of the "inclusion" application to see some more details about the application.  That view will be sparse for now, but we'll look at it again when we work with services later on.  Explore the *Ingress & Egress* tab and click the chevron next to your application host name in the *Ingress* list.  You can see some information about the route we currently have mapped to the application.
 
 Excellent!  With minimal fuss and no knowledge of Kubernetes, you were able to deploy a containerized application in just a few minutes.  Now, let's move on to the next section to explore this process in a little more depth.
