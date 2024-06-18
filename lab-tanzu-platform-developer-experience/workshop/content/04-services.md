@@ -64,6 +64,10 @@ Now, we'll apply this secret to the Tanzu Platform Universal Control Plane (or U
 kubectl apply -f db-secret.yaml
 ```
 
+{{< note >}}
+The requirement of having to apply a _Secret_ to your space manually will likely change in subsequent releases of the Tanzu Platform for Kubernetes.  The intent is to give developers support in the CLI to automate the creation of these externally managed services without having to understand what a Kubernetes Secret is.
+{{< /note >}}
+
 Now, let's unbind our application from the small database we provisioned before so that we can bind to the shared database.
 ```execute
 tanzu service unbind PostgreSQLInstance/my-db ContainerApp/inclusion
