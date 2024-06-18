@@ -1,4 +1,5 @@
 #@ load("@ytt:data", "data")
+---
 apiVersion: training.educates.dev/v1beta1
 kind: Workshop
 metadata:
@@ -59,7 +60,13 @@ spec:
             url: https://github.com/cdelashmutt-pivotal/workshop-postgres-package
             ref: origin/main
         template:
-        - ytt: {}
+        - ytt: 
+            inline:
+              paths:
+                values.yaml: |
+                  #@data/values
+                  ---
+                  ingress_domain: $(ingress_domain)
         deploy:
         - kapp: {}
 
