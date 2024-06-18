@@ -35,7 +35,7 @@ tanzu app config build non-secret-env set BP_JVM_VERSION=21
 
 If we have a look back the `inclusion.yaml` file, we can see it was updated for us by the CLI with the value of 21 for the `BP_JVM_VERSION` build environment variable.
 ```editor:select-matching-text
-file: ~/inclusion/.tanzu/config/inclusion.yaml
+file: ~/inclusion/.tanzu/config/inclusion.yml
 text: "name: BP_JVM_VERSION"
 before: 0
 after: 1
@@ -56,7 +56,7 @@ tanzu app config non-secret-env LOGGING_COM_EXAMPLE_EMOJIINCLUSION=DEBUG
 ```
 Again, this change won't take effect until we deploy again, but you can see the configuration update in our application's manifest.
 ```editor:select-matching-text
-file: ~/inclusion/.tanzu/config/inclusion.yaml
+file: ~/inclusion/.tanzu/config/inclusion.yml
 text: "name: LOGGING_COM_EXAMPLE_EMOJIINCLUSION"
 before: 0
 after: 1
@@ -74,7 +74,7 @@ tanzu app contact set team slack
 
 Let's have a peek back at our application configuration file to see how it has been modified with these additional values.
 ```editor:open-file
-file: ~/.tanzu/config/inclusion.yaml
+file: ~/inclusion/.tanzu/config/inclusion.yml
 ```
 
 Now, we looked in the Tanzu Platform UI earlier to get some details about our application.  Let's use the CLI to do the same.  First, let's get a list of the applications (just one, really!) running in our space.
