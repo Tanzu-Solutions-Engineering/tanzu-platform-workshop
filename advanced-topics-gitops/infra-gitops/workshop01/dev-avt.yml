@@ -1,0 +1,21 @@
+apiVersion: spaces.tanzu.vmware.com/v1alpha1
+kind: AvailabilityTarget
+metadata:
+  name: dev-tkg
+  description: "Avt for dev tkgs clusters"
+  namespace: default
+spec:
+   affinity:
+      clusterAffinity:
+         clusterSelectorTerms:
+         - matchExpressions:
+            - key: dev
+              operator: Exists
+              values: []
+            - key: tkg
+              operator: Exists
+              values: []
+            - key: gitops
+              operator: Exists
+              values: []
+   description: ""

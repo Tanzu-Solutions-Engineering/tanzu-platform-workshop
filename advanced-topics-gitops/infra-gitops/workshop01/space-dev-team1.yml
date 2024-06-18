@@ -1,0 +1,19 @@
+ apiVersion: spaces.tanzu.vmware.com/v1alpha1
+ kind: Space
+ metadata:
+   name: dev-team1
+ spec:
+   template:
+     spec:
+       profiles:
+       - name: spring-dev.tanzu.vmware.com
+       - name: networking.workshop.aws.warroyo.com
+       resources:
+         limits:
+           cpu: 5000m
+           memory: 10Gi
+   availabilityTargets:
+   - name: dev-tkg
+     replicas: 1
+   updateStrategy:
+     type: RollingUpdate
