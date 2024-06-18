@@ -36,17 +36,14 @@ spec:
         name: kapp-installer
         namespace: $(workshop_namespace)
     - apiVersion: secretgen.k14s.io/v1alpha1
-      kind: Password
+      kind: Secret
       metadata:
         name: postgres-existing-secret
-      spec:
-        length: 12
-        secretTemplate:
-          type: Opaque
-          stringData:
-            postgres-password: $(value)
-            password: $(value)
-            replication-password: $(value)
+      type: Opaque
+      stringData:
+        postgres-password: #@ data.values.tanzu_platform.db_password
+        password: #@ data.values.tanzu_platform.db_password
+        replication-password: #@ data.values.tanzu_platform.db_password
     - apiVersion: kappctrl.k14s.io/v1alpha1
       kind: App
       metadata:

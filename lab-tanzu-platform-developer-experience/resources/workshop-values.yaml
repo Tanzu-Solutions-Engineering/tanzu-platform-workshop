@@ -5,4 +5,5 @@ tanzu_platform:
   project: AMER-East
   profiles: spring-dev.tanzu.vmware.com,custom-networking.aws-work.grogcsave.net
   availability_targets: cdelashmutt-dev
+  db_password: ""
   space_creation_token: ""
