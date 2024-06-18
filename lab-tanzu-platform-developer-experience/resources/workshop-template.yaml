@@ -1,3 +1,4 @@
+#@ load("@ytt:data", "data")
 apiVersion: training.educates.dev/v1beta1
 kind: Workshop
 metadata:
@@ -95,20 +96,20 @@ spec:
       vcluster:
         enabled: false
     env:
-    - name: TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID
-      value: 77aee83b-308f-4c8e-b9c4-3f7a6f19ba75
     - name: KUBECONFIG
       value: /home/eduk8s/.config/tanzu/kube/config
     - name: PUBLIC_REGISTRY_HOST
       value: public-registry-$(session_name).$(ingress_domain)
-    - name: TANZU_CLI_SPACE_CREATE_TOKEN
-      value: REPLACEME
+    - name: TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID
+      value: #@ data.values.tanzu_platform.org
     - name: TANZU_PLATFORM_PROJECT
-      value: AMER-East
+      value: #@ data.values.tanzu_platform.project
     - name: TANZU_PLATFORM_PROFILES
-      value: spring-dev.tanzu.vmware.com,custom-networking.aws-work.grogcsave.net
+      value: #@ data.values.tanzu_platform.profiles
     - name: TANZU_PLATFORM_AVAILABILITY_TARGETS
-      value: cdelashmutt-dev
+      value: #@ data.values.tanzu_platform.availability_targets
+    - name: TANZU_CLI_SPACE_CREATE_TOKEN
+      value: #@ data.values.tanzu_platform.space_creation_token
     ingresses:
     - name: public-registry
       host: $(session_name)-registry
