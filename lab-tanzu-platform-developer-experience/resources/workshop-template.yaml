@@ -64,7 +64,7 @@ spec:
                   #@data/values
                   ---
                   ingress_domain: $(ingress_domain)
-                  host_suffix: -$(workshop_name)
+                  host_suffix: -$(environment_name)
         deploy:
         - kapp: {}
 

@@ -52,7 +52,7 @@ text: |
         name: shared-postgres
     type: Opaque
     stringData:
-        host: postgres-test-{{< param workshop_name >}}.{{< param ingress_domain >}}
+        host: postgres-test-{{< param environment_name >}}.{{< param ingress_domain >}}
         port: 5432
         database: postgres
         username: postgres
