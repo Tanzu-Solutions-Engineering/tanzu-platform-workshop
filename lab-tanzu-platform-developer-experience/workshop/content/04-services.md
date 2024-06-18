@@ -53,19 +53,54 @@ text: |
     type: Opaque
     stringData:
         host: postgres-test-{{< param environment_name >}}.{{< param ingress_domain >}}
-        port: 5432
+        port: "5432"
         database: postgres
         username: postgres
         password: {{< param DB_PASSWORD >}}
 ```
 
-26.  Explain how this service is only available for apps in this space to use directly.  We're going to switch to a "shared" database instance that has been pre-provisioned for us by rebinding our app to a secret.
-    1.  Add a secret to the UCP with the shared DB credentials and coordinates called `shared-db`.
-    2.  `tanzu service unbind PostgreSQLInstance/my-db ContainerApp/emoji-inclusion` to remove the binding.
-    3.  `tanzu service bind Secret/shared-db ContainerApp/emoji-inclusion --as db` to bind to the shared instance.
-    4.  Refresh the app and notice all the different emojis that start to show up.
-27.  `tanzu service delete PostgreSQLInstance/my-db` to clean up the unneeded DB now.
+Now, we'll apply this secret to the Tanzu Platform Universal Control Plane (or UCP).  We're able to do this because we've pointed out `KUBE_CONFIG` environment variable in this session to the config file managed by the Tanzu CLI for it's use to talk to Tanzu Platform.  Tanzu Platform's Spaces are _not_ defined in Kubernetes cluster themselves, but they use the Kubernetes resource model (CRDs, objects, etc) to manage deployments to Availability Target clusters which _are_ real Kubernetes clusters.  Our platform engineering team can control what resources we can apply to our Space, and we've been allowed to apply Kubernetes-style *Secret* objects.  Let's apply the secret to our space.
+```execute
+kubectl apply -f db-secret.yaml
+```
+
+Now, let's unbind our application from the small database we provisioned before so that we can bind to the shared database.
+```execute
+tanzu service unbind PostgreSQLInstance/my-db ContainerApp/inclusion
+```
+
+And to help preserve resources, let's delete that small database instance since we won't need it any more.
 ```execute
 tanzu service delete PostgreSQLInstance/my-db
 ```
-28. `tanzu app config servicebinding set db=postgresql` to add metadata to ContainerApp about needed service bindings.  Open up `emoji-inclusion.yaml` to show how the "alias" is set to "db" and the allowable types is set only to "postgresql".  `tanzu service type list` again to show where that "postgresql" binding type is coming from.
+
+Now, we can bind our application to the secret for the shared database we applied to our space.
+```execute
+tanzu service bind Secret/shared-postgres ContainerApp/inclusion --as db
+```
+
+Great!  The platform will restart our application to get it to pickup on the new binding.  Let's refresh our application and see that the emoji has changed again for our app.  And as other users use the shared database, you'll start to see more emoji's show up.  You can go to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see the URL for your application if you accidentally closed the tab for it.  Click on the "Space URL" link at the upper middle of the page.
+
+Remember in the section where we dove deeper into the application configuration and added contact metadata to our app?  We can also add information for application operators who need to deploy our app to other environments about the service bindings our application supports.  We can use `tanzu app config servicebinding` command to add information about the name of the binding and the types of services we support.  First, let's display the service catalog in our platform again.
+
+```execute
+tanzu service type list
+```
+
+Notice that the output shows a `TYPE` column and a `BINDING TYPE` column.  We want to make sure to specify the value of the `BINDING TYPE` for the `TYPE` of service we allow.  So, since we support the `PostgreSQLInstance` service type, we'll want to specify `postgresql` in our `tanzu app config servicebinding` command.  Let's add a servicebinding reference with the alias `db` and binding type of `postgresql` to our application configuration.
+```execute
+tanzu app config servicebinding set db=postgresql
+```
+
+Now, have a look at the `inclusion/.tanzu/config/inclusion.yml` file to see the new binding reference.
+```editor:select-matching-text
+file: ~/inclusion/.tanzu/config/inclusion.yml
+text: "  - name: db"
+before: 0
+after: 2
+```
+We can see the reference to our accepted service binding!  If our application supports multiple types of databases, we could add more types to the yaml file directly, or we can call the `tanzu app config servicebinding set db=<new-type>` command again replacing the `<new-type>` text with the additional binding type we support.
+
+Fantastic!  We were able to create a Postgres service instance for our application that has all the policies and best practices defined for our environment and delete the database when we didn't need it anymore.  We were also able to inject information about that service into our application using service bindings, and remove the binding when we no longer needed it.  We were able to add in an externally managed service via a Secret and bind that information into our application.  We were also able to add information about the bindings and types our application supports for application operators that deploy our application to other environments.  And we were able to do all that with no code changes to our application!
+
+Let's move on to explore scaling our application with Tanzu Platform for Kubernetes.
