@@ -39,7 +39,7 @@ tanzu space use {{< param  session_name >}}
 Finally, we need to set one final configuration to get started.  We need to specify the container registry to be used for storing the application containers and deployment manifests built for you by Tanzu Platform.  In our environment, our platform engineers have configured the platform with a build plan stored in the Universal Control Plane (or UCP) that uses Cloud Native Buildpacks, and applies some common conventions for Spring applications.  However our business unit has its own container registry service, so we need to configure the Tanzu CLI to know where that registry is.  Luckily, we already have the location of this registry in an environment variable, and we've already logged into that registry using the Docker CLI.  So lets execute the following command to configure the Tanzu CLI to use our registry.
 
 ```execute
-tanzu build config --build-plan-source-type=ucp --containerapp-registry $PUBLIC_REGISTRY_HOST/inclusion
+tanzu build config --build-plan-source-type=ucp --containerapp-registry $PUBLIC_REGISTRY_HOST/{name}
 ```
 
 Tanzu Platform can be configured in a variety of ways for builds and we're planning expanding those options in the future.  For example, your platform team could eventually configure a default registry and server side builds so that you might not even need to know about container registries in the future.

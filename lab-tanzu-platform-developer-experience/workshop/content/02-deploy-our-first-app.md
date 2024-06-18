@@ -19,15 +19,21 @@ tanzu app init
 ```
 
 With no parameters, the `tanzu app init` command prompts us for the key bits of info it needs.  The first thing it needs is the name of the app.  It defaults to the name of the directory we're running the command from, and you can accept the default by pressing enter.
-```execute
+```terminal:execute
+description: Confirm default application name
+command: ""
 ```
 
 The command next needs to know where the source code for our application is.  Since we're in the directory for our application source code, we can just hit enter to accept the default of the current directory.
-```execute
+```terminal:execute
+description: Confirm default application source directory
+command: ""
 ```
 
 Finally, our platform team has configured Cloud Native Buildpacks as the only build option for our platform, so let's accept that as our build type by pressing enter.
-```execute
+```terminal:execute
+description: Confirm Cloud Native Buildpacks as build type
+command: ""
 ```
 
 We could have also specified all these values as parameters to the `tanzu app init` call.  Look at the help output for the command to see the options you can specify.
