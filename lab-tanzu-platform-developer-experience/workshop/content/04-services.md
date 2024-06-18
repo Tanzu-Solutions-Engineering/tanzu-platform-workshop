@@ -41,7 +41,23 @@ Let's refresh our application and see that the emoji has now changed for our app
 
 The Postgres service we are using is provisioned using automation for us in the platform.  But what if we have a database that is managed by another team, or an existing database that we need to keep using?  Don't worry!  We can still use the service binding mechanism to simplify this process.  We're going to switch to a shared Postgres database that all the workshop attendees can use together.  And if we are careful about how e format the information for the binding, we can even still use the Spring Cloud Bindings library to automatically configure the application for us.
 
-If we have a look at the [Postgres section in the Spring Cloud Bindings README.md](https://github.com/spring-cloud/spring-cloud-bindings?tab=readme-ov-file#postgresql-rdbms), we can see that we need to include a `username`, and `password` setting.  We then can either specify a `jdbc-url` setting or the `host`, `port`, `database` values.  We can optionally add in additional configuration with the `sslmode`, `sslrootcert`, and `options` values if we need to fine tune the connection.  
+If we have a look at the [Postgres section in the Spring Cloud Bindings README.md](https://github.com/spring-cloud/spring-cloud-bindings?tab=readme-ov-file#postgresql-rdbms), we can see that we need to include a `username`, and `password` setting.  We then can either specify a `jdbc-url` setting or the `host`, `port`, `database` values.  We can optionally add in additional configuration with the `sslmode`, `sslrootcert`, and `options` values if we need to fine tune the connection.  Let's create a secret with the info to connect to the shared database.
+```editor:append-lines-to-file
+file: ~/inclusion/db-secret.yaml
+description: Create a secret manifest for the shared database
+text: |
+    apiVersion: v1
+    kind: Secret
+    metadata:
+        name: shared-postgres
+    type: Opaque
+    stringData:
+        host: postgres-test.$(ingress_domain)
+        port: 5432
+        database: postgres
+        username: postgres
+        password: 
+```
 
 26.  Explain how this service is only available for apps in this space to use directly.  We're going to switch to a "shared" database instance that has been pre-provisioned for us by rebinding our app to a secret.
     1.  Add a secret to the UCP with the shared DB credentials and coordinates called `shared-db`.
