@@ -117,6 +117,8 @@ spec:
       value: #@ data.values.tanzu_platform.availability_targets
     - name: TANZU_CLI_SPACE_CREATE_TOKEN
       value: #@ data.values.tanzu_platform.space_creation_token
+    - name: DB_PASSWORD
+      value: #@ data.values.tanzu_platform.db_password
     ingresses:
     - name: public-registry
       host: $(session_name)-registry
