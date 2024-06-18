@@ -52,11 +52,11 @@ text: |
         name: shared-postgres
     type: Opaque
     stringData:
-        host: postgres-test.$(ingress_domain)
+        host: postgres-test-$(workshop_name).$(ingress_domain)
         port: 5432
         database: postgres
         username: postgres
-        password: 
+        password: {{< param DB_PASSWORD >}}
 ```
 
 26.  Explain how this service is only available for apps in this space to use directly.  We're going to switch to a "shared" database instance that has been pre-provisioned for us by rebinding our app to a secret.
