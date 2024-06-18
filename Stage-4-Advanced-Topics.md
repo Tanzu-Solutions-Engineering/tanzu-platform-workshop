@@ -4,11 +4,12 @@
 
 * CI Pipelines
 
-Walk through Docker image for running `tanzu deploy` tasks. Show sample integration into Github Workflows.
+[Using CI Pipelines](advanced-topics/ci-pipelines.md)
+
 
 * ContainerTasks
 
-Per Will's example (https://github.com/warroyo/custom-http-route-task), walk through the process of adding a container
+Per Will's example (https://github.com/warroyo/custom-http-route-task), demonstrate the process of adding a container
 task to the build process. As a reference, create the task for adding an HttpRoute to the deployment.
 
 * Using remote Docker Daemons
@@ -29,7 +30,7 @@ Show use of PreProvisioned for binding to external services through secrets
 
 * Helm Charts / Dockerfiles
 
-Bob's clustergroup mutation webhook policy https://chat.google.com/room/AAAA7-TLcC0/qtEJEIWujdU/QZVuuRDL-PE?cls=10
+[Using Helm Charts and Dockerfiles](advanced-topics/helm-charts-dockerfiles.md)
 
 * Multi-module Apps
 
