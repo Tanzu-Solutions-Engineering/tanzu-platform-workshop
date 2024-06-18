@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -e
+set -x
+set -eo pipefail
 
 if [ -n "$TANZU_CLI_SPACE_CREATE_TOKEN" ]; then
 TANZU_API_TOKEN=$TANZU_CLI_SPACE_CREATE_TOKEN tanzu context create space-admin --type tanzu --endpoint https://api.tanzu.cloud.vmware.com
