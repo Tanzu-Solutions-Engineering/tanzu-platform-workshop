@@ -81,6 +81,9 @@ spec:
   session:
     namespaces:
       budget: large
+      security:
+        token:
+          enabled: false
     applications:
       terminal:
         enabled: true
