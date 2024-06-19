@@ -88,12 +88,6 @@ tanzu project use
 tanzu operations clustergroup create -f cluster-group.yaml
 ```
 
-
-#### What are capabilities and what the Platform Engineer needs to do with them
-[Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/concepts-about-spaces.html#capabilities--platform-apis-and-features-1)
-
-(Insert image or link to diagram here)
-
 #### Add capabilities to Cluster Group
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html#add-packages)
 
