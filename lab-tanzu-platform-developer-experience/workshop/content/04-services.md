@@ -124,7 +124,7 @@ tanzu service delete PostgreSQLInstance/my-db
 
 Now, we can bind our application to the secret of the shared database we applied to our space.
 ```execute
-tanzu service bind Secret/shared-postgres ContainerApp/inclusion --as db
+tanzu service bind PreProvisionedService/shared-postgres ContainerApp/inclusion --as db
 ```
 
 Great! The platform will restart our application to get it to pick up on the new binding. Let's refresh our application and see that the emoji has changed again for our app.  And as other users use the shared database, you'll start to see more emojis show up. You can go to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see the URL for your application if you accidentally closed the tab for it. Click on the "Space URL" link at the upper middle of the page.
