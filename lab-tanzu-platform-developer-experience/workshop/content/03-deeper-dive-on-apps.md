@@ -78,9 +78,9 @@ session: 2
 
 You can see that `tanzu build` is invoking the Cloud Native Buildpacks, and you should be able to see in the output that version 21 of the Java Virtual Machine was installed instead of version 17.  The line in the output you are looking for contains the text `BellSoft Liberica JDK 21.0.3`.
 
-You can also specify contact information about your application that is included with your deployment.  This information currently isn't used by the platform, but some of this information may be surfaced in the future. 
+We can also specify contact information about your application that is included with your deployment.  This information currently isn't used by the platform, but some of this information may be surfaced in the future.  It's a great way to communicate to application operators how to get in contact with the development team if they have questions or issues when deploying.
 
-Adding contact info can be done with the `tanzu app contact set` command. The command allows you to specify arbitrary NAME=VALUE pairs to add whatever contact info you want that will travel along with your application as it is promoted through its lifecycle.  Let's add an email address contact record for our application.
+Adding contact information can be done with the `tanzu app contact set` command. The command allows you to specify arbitrary NAME=VALUE pairs to add whatever contact info you want that will travel along with your application as it is promoted through its lifecycle.  Let's add an email address contact record for our application.
 ```execute
 tanzu app config contact set email=me@here.com
 ```
@@ -100,13 +100,14 @@ after: 3
 ```
 
 We had a look at the Tanzu Platform UI earlier to get some details about our application. Let's use the CLI to do the same.  
+
 First, let's get a list of the applications (just one, really!) running in our space.
 ```execute
 tanzu app list
 ```
 You can see in the output our `inclusion` application is deployed in our space. 
 
-Let's get more details about our application. The **Tanzu CLI supports tab completion for commands**, and resource names. Let's use it to get details for our application without having to type the whole name.  Type the command below (or click the command), then **select to top terminal session, and press the TAB key**.  Once you see the name of your app autocompleted, then you can press **Enter**. 
+Let's get more details about our application. The Tanzu CLI supports **tab completion** for commands, and resource names. Let's use it to get details for our application without having to type the whole name.  Type the command below (or click the command), then **select to top terminal session, and press the TAB key**.  Once you see the name of your app autocompleted, then you can press **Enter**. 
 ```terminal:input
 text: "tanzu app get "
 endl: false
@@ -128,6 +129,4 @@ tanzu app get inclusion
 
 Fantastic!  We explored in more detail how the CLI manages on-disk configurations for our application, allows us to split up the build and deploy steps if desired, allows us to configure the way the container image is built, and allows us to set environment variables for the running application container.
 
-An application is rarely solely made up of just your custom code.  
-Applications often need access to pre-built services like messaging servers, and databases.  
-In the next section, we'll explore how Tanzu Platform for Kubernetes makes it easy for you to use these types of services and others that your platform team and service providers have curated for you.
+An application is rarely solely made up of just your custom code.  Applications often need access to pre-built services like messaging servers, and databases.  In the next section, we'll explore how Tanzu Platform for Kubernetes makes it easy for you to use these types of services and others that your platform team and service providers have curated for you.

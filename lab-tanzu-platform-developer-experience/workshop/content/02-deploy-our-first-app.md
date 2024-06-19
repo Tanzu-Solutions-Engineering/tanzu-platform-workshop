@@ -87,7 +87,7 @@ tanzu deploy -y
 We can see that the Cloud Native Buildpacks for Java and Spring are being used to create a container image with best practices for our application, and manifests are getting generated for our application using the best practices from our Platform Engineering and DevOps teams. The container build will take a couple of minutes, so just wait until the process completes.
 
 {{< note >}}
-Your application might take a minute to start up, become healthy and for the app DNS record to propagate to your workstation's DNS servers. If the URL for your app below doesn't work immediately, give it a minute and try again.
+Your application might take a minute to start up, become healthy and for the app DNS record to propagate to your workstation's DNS servers. If the URL for your app that you get from Tanzu Platform below doesn't work immediately, give it a minute and try again.
 {{< /note >}}
 
 Once the deployment is completed, you can navigate to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see the URL for your application under the "Space URL" section of the upper middle of the page. 
