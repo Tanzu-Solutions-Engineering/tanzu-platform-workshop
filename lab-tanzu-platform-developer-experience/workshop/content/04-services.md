@@ -56,7 +56,7 @@ Click on the "Space URL" link at the upper middle of the page.
 The PostgreSQL service we are using is provisioned using automation for us in the platform. But what if we have a database that is managed by another team, or an existing database that we need to keep using? Don't worry! We can still use the service binding mechanism to simplify this process. We're going to switch to a shared PostgreSQL database that all the workshop attendees can use together.  
 And if we are careful about how ee format the information for the binding, we can even still use the Spring Cloud Bindings library to automatically configure the application for us.
 
-If we have a look at the [PostgreSQL section in the Spring Cloud Bindings README.md](https://github.com/spring-cloud/spring-cloud-bindings?tab=readme-ov-file#postgresql-rdbms), we can see that we need to include a `username`, and `password` setting.  We then can either specify a `jdbc-url` setting or the `host`, `port`, `database` values.  We can optionally add in additional configuration with the `sslmode`, `sslrootcert`, and `options` values if we need to fine tune the connection. Let's create a secret with the info to connect to the shared database.
+If we have a look at the [PostgreSQL section in the Spring Cloud Bindings README.md](https://github.com/spring-cloud/spring-cloud-bindings?tab=readme-ov-file#postgresql-rdbms), we can see that we need to include a `username`, and `password` setting.  We then can either specify a `jdbc-url` setting or the `host`, `port`, `database` values.  We can optionally add in additional configuration with the `sslmode`, `sslrootcert`, and `options` values if we need to fine-tune the connection. Let's create a secret with the info to connect to the shared database.
 ```editor:append-lines-to-file
 file: ~/inclusion/db-secret.yaml
 description: Create a secret manifest for the shared database
@@ -67,11 +67,13 @@ text: |
         name: shared-postgres
     type: Opaque
     stringData:
+        type: postgresql
         host: postgres-test-{{< param environment_name >}}.{{< param ingress_domain >}}
         port: "5432"
         database: postgres
         username: postgres
         password: {{< param DB_PASSWORD >}}
+        provider: oss-helm
 ```
 
 Now, we'll apply this secret to the Tanzu Platform Universal Control Plane (or UCP). We're able to do this because we've pointed out `KUBE_CONFIG` environment variable in this session to the config file managed by the Tanzu CLI for its use to talk to Tanzu Platform. Tanzu Platform's Spaces are _not_ defined in Kubernetes cluster themselves, but they use the Kubernetes resource model (CRDs, objects, etc) to manage deployments to Availability Target clusters which _are_ real Kubernetes clusters. Our platform engineering team can control what resources we can apply to our Space, and we've been allowed to apply Kubernetes-style *Secret* objects.  Let's apply the secret to our space.
