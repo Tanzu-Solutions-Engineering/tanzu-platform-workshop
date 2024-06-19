@@ -88,15 +88,15 @@ tanzu app config contact set email=me@here.com
 We can also add multiple entries and have the CLI prompt us for the information. Let's add *team* and *slack* entries to our contact info.  
 You can enter arbitrary strings for each key.
 ```execute
-tanzu app config contact set team
-```
-```terminal:input
-text: slack
+tanzu app config contact set team slack
 ```
 
 Let's have a peek back at our application configuration file to see how it has been modified with these additional values.
-```editor:open-file
+```editor:select-matching-text
 file: ~/inclusion/.tanzu/config/inclusion.yml
+text: "contact:"
+before: 0
+after: 3
 ```
 
 We had a look at the Tanzu Platform UI earlier to get some details about our application. Let's use the CLI to do the same.  
