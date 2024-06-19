@@ -106,12 +106,11 @@ tanzu app list
 ```
 You can see in the output our `inclusion` application is deployed in our space. 
 
-Let's get more details about our application. The **Tanzu CLI supports tab completion for commands**, and resource names. Let's use it to get details for our application without having to type the whole name.  Type the command below (or click the command), then **select to top terminal session, and press the TAB key**.  
+Let's get more details about our application. The **Tanzu CLI supports tab completion for commands**, and resource names. Let's use it to get details for our application without having to type the whole name.  Type the command below (or click the command), then **select to top terminal session, and press the TAB key**.  Once you see the name of your app autocompleted, then you can press **Enter**. 
 ```terminal:input
 text: "tanzu app get "
 endl: false
 ```
-You should see the name of our application automatically completed for us. You can complete many of the commands of the Tanzu CLI with the <TAB> key. 
 
 Notice in the output there is a "Source Image" listed. This is a container image that was built for our application by `tanzu build` and then pushed to the registry we specified back in the first section automatically. 
 
