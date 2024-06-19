@@ -50,7 +50,7 @@ Process:
 
 There is an alternative process to be followed via CLI with a yaml. (Insert info here)
 
-## Prepare a Cluster Group with required capabilities
+## Tanzu Platform Concepts and Relationships to keep handy
 As a Platform Engineer we need to be able to configure the Platform and prepare repeatable and configurable environmments for the application team to deploy applications into. These are the Spaces. But they are not the only construct that Platform Engineers need to get familiar with. Throughout this lab we will get introuced to all of them through the lens of the Platform Engineer. At a high level we need to know what these are:
 - Cluster Groups: are groupings of Kubernetes Clusters with provided Capabilities installed on those Clusters. They enable platform engineers to curate what combination of Capabilities will be provided by their platform.
 - Capabilities: are named groups that describe the APIs and features available from the Platform.
@@ -70,6 +70,8 @@ Here's a conceptual diagram with how these relate to each other:
 More on this in the [Tanzu Application Engine Conceptual Overview documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/concepts-about-spaces.html)
 
 In a day in the life of a Platform Engineer we will start by creating a Cluster Group, to structure the underlying Kubernetes infrastructure and define the Capabilities we want to install and expose to the Application teams.
+
+## Prepare a Cluster Group with required capabilities
 
 #### Create Cluster Group
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html)
@@ -189,7 +191,6 @@ Alternatively you can do this via CLI. Follow this commands using the `tkgs-clus
 tanzu project use <project-name>
 tanzu operations apply -f tkgs-cluster.yaml
 ```
-
 
 #### Confirm TKGS cluster is onboarded to the Platform
 1. Confirm the Cluster is Healthy and Ready
