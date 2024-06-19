@@ -54,12 +54,12 @@ after: 1
 
 We can also use `tanzu app config` to set environment variables that would be applied to the running application once it is deployed.  Let's turn up the logging for our application based on Spring Boot by specifying an application configuration property for logging via an environment variable.
 ```execute
-tanzu app config non-secret-env set LOGGING_COM_EXAMPLE_EMOJIINCLUSION=DEBUG
+tanzu app config non-secret-env set LOGGING_LEVEL_COM_EXAMPLE_EMOJIINCLUSION=DEBUG
 ```
 Again, this change won't take effect until we deploy again, but you can see the configuration update in our application's manifest.
 ```editor:select-matching-text
 file: ~/inclusion/.tanzu/config/inclusion.yml
-text: "name: LOGGING_COM_EXAMPLE_EMOJIINCLUSION"
+text: "name: LOGGING_LEVEL_COM_EXAMPLE_EMOJIINCLUSION"
 before: 0
 after: 1
 ```
@@ -115,7 +115,7 @@ endl: false
 
 Notice in the output there is a "Source Image" listed. This is a container image that was built for our application by `tanzu build` and then pushed to the registry we specified back in the first section automatically. 
 
-Also, notice that we see an environment variable set for our app, but we don't see the environment variable named `LOGGING_COM_EXAMPLE_EMOJIINCLUSION` that we set for logging earlier in this section.
+Also, notice that we see an environment variable set for our app, but we don't see the environment variable named `LOGGING_LEVEL_COM_EXAMPLE_EMOJIINCLUSION` that we set for logging earlier in this section.
 
 Although we have built a new version of our application with those values set, we haven't deployed it to the platform yet.  We've only modified the configuration for the application locally. We can apply the updated container image and manifests now using a modified form of the `tanzu deploy` command.
 ```execute
