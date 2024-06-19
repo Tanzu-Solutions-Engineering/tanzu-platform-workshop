@@ -18,17 +18,13 @@ Click on this command to download a Kubernetes config file for our cluster.
 ```execute
 AT_NAME=$(tanzu space get {{< param  session_name >}} -o json | jq -r ".status.availabilityTargets[0].name")
 CLUSTER_NAME=$(tanzu availability-target get $AT_NAME -o json | jq -r ".status.clusters[0].name")
-tanzu cluster kubeconfig get $CLUSTER_NAME --export-file $HOME/at-cluster-kube.config
+tanzu operations cluster kubeconfig get $CLUSTER_NAME -t eks > $HOME/at-cluster-kube.config
 ```
 
 We could have instead navigated to the Tanzu Platform UI, and go to the "Infrastructure" -> "Kubernetes Clusters" section, and then choose the "Clusters" tab to view the clusters we have access to.  Then we could click on the name of the cluster we want to access, and then click on the "Actions" button in the upper right side of the window, and choose "Access this cluster".  That would allow us to download a Kubernetes config file to access our cluster.
 
 We also don't know what the namespace is for our application since the platform manages all that for us.  We'll execute the following command to get the namespace.
 ```execute
-AT_NAME=$(tanzu space get {{< param  session_name >}} -o json | jq -r ".status.availabilityTargets[0].name")
-CLUSTER_NAME=$(tanzu availability-target get $AT_NAME -o json | jq -r ".status.clusters[0].name")
-tanzu cluster kubeconfig get $CLUSTER_NAME --export-file $HOME/at-cluster-kube.config
-```
 tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
 MANAGED_NAMESPACE=$(KUBECONFIG=$HOME/.config/tanzu/kube/config k get ManagedNamespace -l spaces.tanzu.vmware.com/space-name={{< param  session_name >}} -o json | jq -r ".items[0].status.placement.namespace")
 tanzu space use {{< param  session_name >}}
@@ -36,12 +32,12 @@ tanzu space use {{< param  session_name >}}
 
 Now that we have a Kubernetes configuration file to access our cluster, we can view the logs for our application.
 ```execute
-kubectl --kubeconfig $HOME/at-cluster-kube.config logs deployment/spring-music -n $MANAGED_NAMESPACE
+kubectl --kubeconfig $HOME/at-cluster-kube.config logs deployment/inclusion -n $MANAGED_NAMESPACE
 ```
 
-And we can stop viewing the logs by pressing <Ctrl-C>.
+And we can stop viewing the logs by pressing Ctrl-C.
 ```execute
-<Ctrl-C>
+<ctrl+c>
 ```
 
 Let's view a summary of what we've covered in the next section.

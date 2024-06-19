@@ -35,10 +35,10 @@ tanzu app get inclusion
 
 We need to apply these "on-disk" changes to the running application.  We need to cause the installation values for our app to get regenerated and applied to the platform so we need to call the `tanzu deploy` command again.
 ```execute
-tanzu deploy
+tanzu deploy -y
 ```
 
-Now, when we look at the running application config again, we'll see our increased resources.
+Wait until the deploy is finished.  When we look at the running application config again, we'll see our increased resources.
 ```execute
 tanzu app get inclusion
 ```
@@ -50,17 +50,19 @@ tanzu app config scale set replicas=2
 
 Again, the previous command just changed the on-disk config, so we need to call the `tanzu deploy` command again to get the installation values regenerated and applied to the platform.
 ```execute
-tanzu deploy
+tanzu deploy -y
 ```
 
-When we look at the running application config again, we'll see replica count is now 2.
+Wait until the deploy is finished.  When we look at the running application config again, we'll see replica count is now 2.
 ```execute
 tanzu app get inclusion
 ```
 
-These vertical and horizontal scale configurations are now applied to the individual cluster your application is running on.  But we can get even _more_ reslience for our applications by having them scheduled across multiple clusters.  Scheduling your application across multiple clusters is governed by the configuration of the space your application is part of.  If you look at https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/configuration, you will see your space configuration.  If you have a look at the "Space Scheduling" section, you will see how many availability targets and replicas are defined for your space.  These settings govern how many clusters your application is scheduled on.  
+These vertical and horizontal scale configurations are now applied to the individual cluster your application is running on.  But we can get even _more_ reslience for our applications by having them scheduled across multiple clusters.  
 
-In our case, your platform engineers have given you a development space to use that might have lower reslience that what is defined for production application spaces.  However, for production applications, platform engineers can have multiple clusters deployed in a single availablity target, or spread across multiple availability targets and your application can automatically be distributed across those clusters.  And those availability targets could even span multiple cloudsto achieve even higher reslience for your application.
+Scheduling your application across multiple clusters is governed by the configuration of the space your application is part of.  If you look at https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/configuration, you will see your space configuration.  If you have a look at the "Space Scheduling" section, you will see the availability targets and replicas defined for your space.  These settings govern how many clusters your space is replicated to.
+
+In our case, your platform engineers have given you a development space to use that has lower reslience that what is defined for production application spaces.  For production applications, platform engineers can have multiple clusters deployed in a single availablity target, or spread your space across multiple availability targets and then your applications are distributed across those clusters.  Those availability targets could even span multiple clouds to achieve even higher reslience for your application.
 
 {{< note >}}
 Currently, multi-cluster scheduling works well for application containers but it doesn't automatically ensure that data replication is occurring for any data services your application might need to use.  If your application needs data to be replicated resiliently across targets today, your service operators will need to create a data service for you with those capabilities.
