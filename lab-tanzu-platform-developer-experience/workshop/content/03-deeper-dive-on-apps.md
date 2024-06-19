@@ -52,21 +52,6 @@ before: 0
 after: 1
 ```
 
-Now, that change we just made won't take affect until the next build of our application container.  All we have done at this point is just update our configuration files.
-We can make it take effect by again building and deploying a new container for our application with the `tanzu deploy` command. 
-
-We can also break up that flow into **two separate steps** if we wish.
-We can call a `tanzu build` and then deploy the built application with `tanzu deploy` without building it again. This can be extremely useful if we want to integrate this build process into our own CI pipeline tools.
-
-Let's kick off just the build for our container in our second terminal window.
-```terminal:execute
-command: |
-  cd inclusion
-  tanzu build --output-dir ~/build
-session: 2
-```
-You can see that `tanzu build` is invoking the Cloud Native Buildpacks, and you should be able to see in the output that version 21 of the Java Virtual Machine was installed instead of version 17.  The line in the output you are looking for contains the text `BellSoft Liberica JDK 21.0.3`.
-
 We can also use `tanzu app config` to set environment variables that would be applied to the running application once it is deployed.  Let's turn up the logging for our application based on Spring Boot by specifying an application configuration property for logging via an environment variable.
 ```execute
 tanzu app config non-secret-env set LOGGING_COM_EXAMPLE_EMOJIINCLUSION=DEBUG
@@ -79,8 +64,23 @@ before: 0
 after: 1
 ```
 
-You can specify contact information about your application that is included with your deployment.  
-This information currently isn't used by the platform, but some of this information may be surfaced in the future. Adding contact info can be done with the `tanzu app contact set` command. The command allows you to specify arbitrary NAME=VALUE pairs to add whatever contact info you want that will travel along with your application as it is promoted through its lifecycle.  Let's add an email address contact record for our application.
+Remember, all we have done at this point is just update our on-disk configuration files.  We could make these changes take effect by building and deploying a new container for our application with the `tanzu deploy` command like we did at the begining of the workshop.
+
+We can also break up that flow into **two separate steps** if we wish.  We can call a `tanzu build` and then deploy the built application with `tanzu deploy` without building it again. This can be extremely useful if we want to integrate this build process into our own CI pipeline tools.
+
+Let's kick off just the build for our container in our second terminal window.
+```terminal:execute
+command: |
+  cd inclusion
+  tanzu build --output-dir ~/build
+session: 2
+```
+
+You can see that `tanzu build` is invoking the Cloud Native Buildpacks, and you should be able to see in the output that version 21 of the Java Virtual Machine was installed instead of version 17.  The line in the output you are looking for contains the text `BellSoft Liberica JDK 21.0.3`.
+
+You can also specify contact information about your application that is included with your deployment.  This information currently isn't used by the platform, but some of this information may be surfaced in the future. 
+
+Adding contact info can be done with the `tanzu app contact set` command. The command allows you to specify arbitrary NAME=VALUE pairs to add whatever contact info you want that will travel along with your application as it is promoted through its lifecycle.  Let's add an email address contact record for our application.
 ```execute
 tanzu app config contact set email=me@here.com
 ```
@@ -114,8 +114,9 @@ endl: false
 
 Notice in the output there is a "Source Image" listed. This is a container image that was built for our application by `tanzu build` and then pushed to the registry we specified back in the first section automatically. 
 
-Also, notice that we don't see the environment variables we set earlier in this section.  
-Remember, that's because although we have built a new version of our application with those values set, we haven't deployed it to the platform yet.  We've only modified the configuration for the application locally. We can apply the updated container image and manifests now using a modified form of the `tanzu deploy` command.
+Also, notice that we see an environment variable set for our app, but we don't see the environment variable named `LOGGING_COM_EXAMPLE_EMOJIINCLUSION` that we set for logging earlier in this section.
+
+Although we have built a new version of our application with those values set, we haven't deployed it to the platform yet.  We've only modified the configuration for the application locally. We can apply the updated container image and manifests now using a modified form of the `tanzu deploy` command.
 ```execute
 tanzu deploy --from-build ~/build -y
 ```
