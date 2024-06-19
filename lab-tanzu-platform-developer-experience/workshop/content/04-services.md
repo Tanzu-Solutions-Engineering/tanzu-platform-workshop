@@ -78,7 +78,7 @@ text: |
         provider: oss-helm
 ```
 {{< note >}}
-Both `type` and `provider` entries are part of the [ServiceBinding [specification](https://github.com/servicebinding/spec?tab=readme-ov-file#provisioned-service) and are used by the Spring Cloud Bindings library to detect for which type of data service the credentials are.
+Both `type` and `provider` entries are part of the [ServiceBinding specification](https://github.com/servicebinding/spec?tab=readme-ov-file#provisioned-service) and are used by the Spring Cloud Bindings library to detect for which type of data service the credentials are.
 {{< /note >}}
 
 To bind our application to this secret, we have to configure an additional resource of type [`PreProvisionedService`](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/concepts-about-services.html#pre-provisioned-service) that enables applications within a Space to access services that have been pre-provisioned outside of that Space.
