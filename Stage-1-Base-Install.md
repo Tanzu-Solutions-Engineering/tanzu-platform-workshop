@@ -47,7 +47,7 @@ This section will assume that the default run cluster group is being used. In th
 
 1. follow the UI steps to create a cluster in the run cluster group with basic labels. add a label `demo: true`  to the cluster when creating. [docs](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/getting-started-set-up-infra.html#create-an-eks-cluster-in-the-run-cluster-group-11).
 
-![](images/2024-06-18-16-26-34.png)
+![](images/2024-06-19-10-45-59.png)
 
 ## Setup Availability targets
 
@@ -56,7 +56,7 @@ Create an availability target that matches the label created for the cluster in 
 1. Create  a new availablity target where the label matches `demo: true`. [docs](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-manage-availability-targets.html)
 
 
-![](images/2024-06-18-16-30-38.png)
+![](images/2024-06-19-10-49-14.png)
 
 ## Create a profile
 
@@ -66,7 +66,7 @@ Create an availability target that matches the label created for the cluster in 
 2. select the networking traits
 3. update the values for the ingress trait
 
-![](images/2024-06-18-16-32-48.png)
+![](images/2024-06-19-10-50-04.png)
 
 ## Create a space
 
@@ -75,4 +75,4 @@ Create a space that uses the availability target and some pre-existing profiles 
 1. [create a space](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/getting-started-create-app-envmt.html#create-a-space-in-your-project-4) 
 2. select the spring dev profile and the custom networking profile. 
 
-![](images/2024-06-18-16-34-25.png)
+![](images/2024-06-19-10-50-46.png)
