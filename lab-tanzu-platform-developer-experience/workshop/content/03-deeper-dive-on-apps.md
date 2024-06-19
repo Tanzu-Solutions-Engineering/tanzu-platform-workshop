@@ -65,7 +65,7 @@ command: |
   tanzu build --output-dir ~/build
 session: 2
 ```
-You can see that `tanzu build` is invoking the Cloud Native Buildpacks, and you should be able to see in the output that version 21 of the Java Virtual Machine was installed instead of version 17.
+You can see that `tanzu build` is invoking the Cloud Native Buildpacks, and you should be able to see in the output that version 21 of the Java Virtual Machine was installed instead of version 17.  The line in the output you are looking for contains the text `BellSoft Liberica JDK 21.0.3`.
 
 We can also use `tanzu app config` to set environment variables that would be applied to the running application once it is deployed.  Let's turn up the logging for our application based on Spring Boot by specifying an application configuration property for logging via an environment variable.
 ```execute
