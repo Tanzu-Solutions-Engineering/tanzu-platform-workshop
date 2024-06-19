@@ -65,7 +65,6 @@ spec:
                   #@data/values
                   ---
                   ingress_domain: $(ingress_domain)
-                  ingress_secret: $(ingress_secret)
                   host_suffix: -$(environment_name)
         deploy:
         - kapp: {}
