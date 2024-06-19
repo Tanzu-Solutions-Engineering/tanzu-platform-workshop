@@ -107,7 +107,6 @@ tanzu app list
 You can see in the output our `inclusion` application is deployed in our space. 
 
 Let's get more details about our application. The **Tanzu CLI supports tab completion for commands**, and resource names. Let's use it to get details for our application without having to type the whole name.  Type the command below (or click the command), then **select to top terminal session, and press the <TAB> key**.  
-**TODO: Not working for me**
 ```terminal:input
 text: "tanzu app get "
 endl: false
