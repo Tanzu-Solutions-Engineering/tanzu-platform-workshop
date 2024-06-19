@@ -8,7 +8,7 @@ The workshop owner should share with the attendees:
 
 All workshop participants to verify they are all set with steps in [Workshop Attendee pre-requisites](../lab-platform-engineer/00-prerequisites.md#workshop-attendee-pre-requisites)
 
-## Log in on the Tanzu Platform for Kubernetes 
+## Log in the Tanzu Platform for Kubernetes 
 On the browser, open a new tab/window and go to the Tanzu Platform for k8s URL you've been given at the begining of the workshop. Log in. Then make sure to select the Organization, and later the Project you've been assigned.
 
 Once that's done, open a terminal and run this commands, use the Organziation ID you've been given:
@@ -16,6 +16,24 @@ Once that's done, open a terminal and run this commands, use the Organziation ID
 export TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID=XXXX
 tanzu login
 ```
+
+The Tanzu CLI and the plugins we use interact with the Tanzu Platform Unified Control Plane as a K8s API. The the CLI keeps the KUBECONFIG configuration and the contexts to interact with thsi UCP in `~/.config/tanzu/kube/config`. When we run the the use sub-commands of project, space and clustergroup plugins, we are adjusting the context to point to the right level of the hierarchy of resources in UCP:
+```
+Organization
+|
+ -- Projects
+    |
+     -- Spaces / Cluster Groups
+```
+More on this in the [documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-and-manage-cli-contexts.html)
+
+During this workshop we will also use `kubectl` to access some UCP resources. To be able to do that you can set your `KUBECONFIG` environment variable to point to that `~/.config/tanzu/kube/config` file. Or even create an alias to only use that `KUBECONFIG` when you need to check UCP resources, and leave the default KUBECONFIG (`~/.kube/config`) fore regular use of kubectl to access the k8s clusters:
+```
+alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
+```
+
+Throughout this lab of the workshop you will see how there are many resources that are created at UCP level, and automatically copied over, and kept in sync, in the k8s clusters where applications will run. At a high level:
+![UCP and k8s clusters](./ucpsync.png)
 
 
 ## Register TKGS Supervisor in designated Tanzu Platform for k8s project
@@ -33,6 +51,25 @@ Process:
 There is an alternative process to be followed via CLI with a yaml. (Insert info here)
 
 ## Prepare a Cluster Group with required capabilities
+As a Platform Engineer we need to be able to configure the Platform and prepare repeatable and configurable environmments for the application team to deploy applications into. These are the Spaces. But they are not the only construct that Platform Engineers need to get familiar with. Throughout this lab we will get introuced to all of them through the lens of the Platform Engineer. At a high level we need to know what these are:
+- Cluster Groups: are groupings of Kubernetes Clusters with provided Capabilities installed on those Clusters. They enable platform engineers to curate what combination of Capabilities will be provided by their platform.
+- Capabilities: are named groups that describe the APIs and features available from the Platform.
+    - In order to curate the APIs available to users, Spaces require Capabilities (indirectly, via profiles). This has the effect of determining precisely which Kubernetes APIs will be exposed to users and their tools in a given Space.
+    - In order to support the APIs required to run the applications and handle the resources within a Space, Clusters provide Capabilities. A Cluster that provides Capabilities ensures the Custom Resource Definitions (CRDs) and their respective controllers are available to the applications that run in a Space on that cluster.
+- Availability Targets:  are groupings of Clusters that allow users to define where their application will be scheduled
+    - Spaces include Availability Targets to describe where they should be scheduled. This has the effect of determining which clusters, in a specific physical or logical location, should be used as a target for the Space.
+- Profiles: are groupings of required Capabilities that have a consistent, semantic meaning within an organization. They enable platform builders to curate what workload characteristics will be supported by their platform and for users to reference those characteristics without knowing details about how they are implemented.
+    - Spaces include Profiles to describe the characteristics (in the form of Capabilities) of the Space. This has the effect of adding required Capabilities to the Space and influencing where it is scheduled; Spaces transitively require all Capabilities that are required by any Profiles a Space includes.
+- Traits: are collections of Kubernetes resources that are deployed into Spaces when they are created. They deliver required, pre-configured, and consistent content to Spaces.
+    - Profiles include Traits to deploy reusable content into Spaces when they are scheduled. This has the effect of automating the configuration and creation of Kubernetes resources, for users.
+
+
+Here's a conceptual diagram with how these relate to each other:
+![Require and Provide Capabilities](./requireprovidecapabilities.png)
+
+More on this in the [Tanzu Application Engine Conceptual Overview documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/concepts-about-spaces.html)
+
+In a day in the life of a Platform Engineer we will start by creating a Cluster Group, to structure the underlying Kubernetes infrastructure and define the Capabilities we want to install and expose to the Application teams.
 
 #### Create Cluster Group
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html)
@@ -191,10 +228,12 @@ tk get kubernetesclusters <cluster-name> -oyaml | yq .status.capabilities
         export KUBECONFIG=/full/path/to/kconfig/kubeconfig-<cluster-name>>.yml
         kubectl get no -owide
         ```
+        This would work for all type of clusters
     1. Leverage vsphere plugin. Type the password when prompted.
         ```
         kubectl vsphere login --server <supervisor-ip> --insecure-skip-tls-verify -u administrator@vsphere.local --tanzu-kubernetes-cluster-name <cluster-name> --tanzu-kubernetes-cluster-namespace <supervisor-namespace>
         ```
+        This works only for TKGS clusters
 
 2. Check the following namespaces
 ```
@@ -423,7 +462,7 @@ Additional details in the [Increase Applicaiton Resiliency docs docs](https://do
 
 
 
-## Deploy a simple application to the Space to validate it's ready
+## Deploy a simple application to the Space to smokte-test our setup
 
 #### Deploy pre-built application
 
