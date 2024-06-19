@@ -54,8 +54,9 @@ spec:
         noopDelete: true
         fetch:
         - git:
-            url: https://github.com/cdelashmutt-pivotal/workshop-postgres-package
-            ref: origin/main
+            url: https://github.com/Tanzu-Solutions-Engineering/tanzu-platform-workshop
+            ref: origin/dev-experience
+            subPath: lab-tanzu-platform-developer-experience/carvel-packages/postgres-package
         template:
         - ytt: 
             inline:
@@ -64,6 +65,7 @@ spec:
                   #@data/values
                   ---
                   ingress_domain: $(ingress_domain)
+                  ingress_secret: $(ingress_secret)
                   host_suffix: -$(environment_name)
         deploy:
         - kapp: {}
