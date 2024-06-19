@@ -53,19 +53,21 @@ tanzu service bind PostgreSQLInstance/my-db ContainerApp/inclusion --as db
 Let's refresh our application and see that the emoji and the text in the header have changed for our app (from "powered by H2" to "powered by POSTGRESQL").  You can go to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see the URL for your application if you accidentally closed the tab for it.  
 Click on the "Space URL" link at the upper middle of the page.
 
-The PostgreSQL service we are using is provisioned using automation for us in the platform. But what if we have a database that is managed by another team, or an existing database that we need to keep using? Don't worry! We can still use the service binding mechanism to simplify this process. We're going to switch to a shared PostgreSQL database that all the workshop attendees can use together.  
-And if we are careful about how ee format the information for the binding, we can even still use the Spring Cloud Bindings library to automatically configure the application for us.
+The PostgreSQL service we are using is provisioned using automation for us in the platform. But what if we have a database that is managed by another team, or an existing database that we need to keep using? Don't worry! We can still use the service binding mechanism to simplify this process. We're going to switch to a shared PostgreSQL database that all the workshop attendees can use together.
+If we are careful about how we format the information for the binding, we can even still use the Spring Cloud Bindings library to automatically configure the application for us.
 
-If we have a look at the [PostgreSQL section in the Spring Cloud Bindings README.md](https://github.com/spring-cloud/spring-cloud-bindings?tab=readme-ov-file#postgresql-rdbms), we can see that we need to include a `username`, and `password` setting.  We then can either specify a `jdbc-url` setting or the `host`, `port`, `database` values.  We can optionally add in additional configuration with the `sslmode`, `sslrootcert`, and `options` values if we need to fine-tune the connection. Let's create a secret with the info to connect to the shared database.
+If we have a look at the [PostgreSQL section in the Spring Cloud Bindings README.md](https://github.com/spring-cloud/spring-cloud-bindings?tab=readme-ov-file#postgresql-rdbms), we can see that we need to include a `username`, and `password` setting.  We then can either specify a `jdbc-url` setting or the `host`, `port`, `database` values.  We can optionally add in additional configuration with the `sslmode`, `sslrootcert`, and `options` values if we need to fine-tune the connection. 
+
+Let's create a secret with the info to connect to the shared database.
 ```editor:append-lines-to-file
-file: ~/inclusion/db-secret.yaml
+file: ~/inclusion/.tanzu/config/preprovisioned-db-secret.yaml
 description: Create a secret manifest for the shared database
 text: |
     apiVersion: v1
     kind: Secret
     metadata:
         name: shared-postgres
-    type: Opaque
+    type: servicebinding.io/postgresql
     stringData:
         type: postgresql
         host: postgres-test-{{< param environment_name >}}.{{< param ingress_domain >}}
@@ -75,10 +77,35 @@ text: |
         password: {{< param DB_PASSWORD >}}
         provider: oss-helm
 ```
+{{< note >}}
+Both `type` and `provider` entries are part of the [ServiceBinding [specification](https://github.com/servicebinding/spec?tab=readme-ov-file#provisioned-service) and are used by the Spring Cloud Bindings library to detect for which type of data service the credentials are.
+{{< /note >}}
 
-Now, we'll apply this secret to the Tanzu Platform Universal Control Plane (or UCP). We're able to do this because we've pointed out `KUBE_CONFIG` environment variable in this session to the config file managed by the Tanzu CLI for its use to talk to Tanzu Platform. Tanzu Platform's Spaces are _not_ defined in Kubernetes cluster themselves, but they use the Kubernetes resource model (CRDs, objects, etc) to manage deployments to Availability Target clusters which _are_ real Kubernetes clusters. Our platform engineering team can control what resources we can apply to our Space, and we've been allowed to apply Kubernetes-style *Secret* objects.  Let's apply the secret to our space.
+To bind our application to this secret, we have to configure an additional resource of type [`PreProvisionedService`](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/concepts-about-services.html#pre-provisioned-service) that enables applications within a Space to access services that have been pre-provisioned outside of that Space.
+A reference to our Secret is configured as a Binding Connector which allows us to define multiple endpoints for a service, e.g. for a database that provides dedicated endpoints for read-write and read-only access.
+```editor:append-lines-to-file
+file: ~/inclusion/.tanzu/config/preprovisioned-db.yaml
+description: Create a PreProvisionedService resource configuration
+text: |
+    apiVersion: services.tanzu.vmware.com/v1
+    kind: PreProvisionedService
+    metadata:
+        name: shared-postgres
+    spec:
+        bindingConnectors:
+        - name: read-write
+          description: Read-write available in all availability targets
+          type: postgres
+          secretRef:
+            name: shared-postgres
+```
+
+Now, we could apply those additional resources via `tanzu deploy --from-build ~/build`, but as for any other resources, we can also directly interact with the so-called Tanzu Platform Universal Control Plane (or UCP) via kubectl.
+This is possible thanks to the [kcp project](https://github.com/kcp-dev/kcp), a Kubernetes-like control plane, UCP is based on.
+
+We're able to do this because we've pointed out `KUBE_CONFIG` environment variable in this session to the config file managed by the Tanzu CLI for its use to talk to Tanzu Platform. Tanzu Platform's Spaces are _not_ defined in Kubernetes cluster themselves, but they use the Kubernetes resource model (CRDs, objects, etc) to manage deployments to Availability Target clusters which _are_ real Kubernetes clusters. Our platform engineering team can control what resources we can apply to our Space, and we've been allowed to apply Kubernetes-style *Secret* objects.  Let's apply the secret to our space.
 ```execute
-kubectl apply -f db-secret.yaml
+kubectl apply -f ~/inclusion/.tanzu/config/
 ```
 
 {{< note >}}
