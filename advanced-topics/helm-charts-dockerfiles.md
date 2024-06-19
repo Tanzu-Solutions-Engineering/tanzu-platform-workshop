@@ -27,8 +27,10 @@ tanzu space use {bar}
 
 1. From Tanzu Platfrom UI -> Application Spaces -> Spaces -> {your space}
 2. Make sure your space shows Ready
+
 ![Space Ready](../images/helm-space-tile.png)
-3. Expand your space by clicking on view details then select Space Configuration.  Examine the Profiles to verify you see the fluxcd-helm.tanzu.vmware.com, my-custom-networking and gateway-api Profiles.
+3. Expand your space by clicking on view details then select Space Configuration.  Examine the Profiles to verify you see **at least** the following Profiles `fluxcd-helm.tanzu.vmware.com my-custom-networking gateway-api`
+
 ![Space Configuration](../images/helm-space-configuration.png)
 
 Bob's clustergroup mutation webhook policy https://chat.google.com/room/AAAA7-TLcC0/qtEJEIWujdU/QZVuuRDL-PE?cls=10
