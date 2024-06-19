@@ -50,7 +50,7 @@ This means that our database configuration will be automatically injected and be
 tanzu service bind PostgreSQLInstance/my-db ContainerApp/inclusion --as db
 ```
 
-Let's refresh our application and see that the emoji and the text in the header have changed for our app (from "powered by H2" to "powered by POSTGRESQL").  You can go to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see the URL for your application if you accidentally closed the tab for it.  
+Let's refresh our application and see that the emoji and the text in the header have changed for our app (from "powered by H2" to "powered by POSTGRESQL").  If you don't see a change immediately, retry after waiting for 1 minute or so.  Changes to the application are rolled out gracefully, and load is not shifted to the new version of your application until it is healthy.  You can go to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see the URL for your application if you accidentally closed the tab for it.  
 Click on the "Space URL" link at the upper middle of the page.
 
 The PostgreSQL service we are using is provisioned using automation for us in the platform. But what if we have a database that is managed by another team, or an existing database that we need to keep using? Don't worry! We can still use the service binding mechanism to simplify this process. We're going to switch to a shared PostgreSQL database that all the workshop attendees can use together.
