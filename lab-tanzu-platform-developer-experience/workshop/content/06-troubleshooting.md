@@ -32,7 +32,7 @@ tanzu space use {{< param  session_name >}}
 
 Now that we have a Kubernetes configuration file to access our cluster, we can view the logs for our application.
 ```execute
-kubectl --kubeconfig $HOME/at-cluster-kube.config logs deployment/inclusion -n $MANAGED_NAMESPACE
+kubectl --kubeconfig $HOME/at-cluster-kube.config logs deployment/inclusion -n $MANAGED_NAMESPACE -f
 ```
 
 And we can stop viewing the logs by pressing Ctrl-C.
