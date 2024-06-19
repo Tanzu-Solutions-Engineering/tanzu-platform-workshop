@@ -29,6 +29,7 @@ tanzu space use {bar}
 2. Make sure your space shows Ready
 
 ![Space Ready](../images/helm-space-tile.png)
+
 3. Expand your space by clicking on view details then select Space Configuration.  Examine the Profiles to verify you see **at least** the following Profiles `fluxcd-helm.tanzu.vmware.com my-custom-networking gateway-api`
 
 ![Space Configuration](../images/helm-space-configuration.png)
