@@ -1,8 +1,9 @@
 ---
 title: Services
 ---
-It's fairly typical that an application relies on some externally managed resources like databases, OAuth servers, caches, messaging servers and others to run.  
-Tanzu Platform for Kubernetes provides a way for platform teams to consolidate all the services that have the best support in your organization into a single catalog and enables application developers to consume those services by simply binding them to their applications.  
+![Image showing an application with an arrow representing a ServiceBinding to a Postgres Database](./images/services.png)
+
+It's fairly typical that an application relies on some externally managed resources like databases, OAuth servers, caches, messaging servers and others to run.  Tanzu Platform for Kubernetes provides a way for platform teams to consolidate all the services that have the best support in your organization into a single catalog and enables application developers to consume those services by simply binding them to their applications.  
 
 Let's explore binding platform-managed and externally-managed services to our application.
 
@@ -10,6 +11,8 @@ All of the service management commands are grouped under the `tanzu service` cat
 ```execute
 tanzu service --help
 ```
+
+![Image showing a Space containing a list of service types](./images/service-type-list.png)
 
 We can use the Tanzu CLI to have a look at the catalog of service types our platform team and service providers have made available for us.  This list is a curated list, and could be sourced from in cluster deployments, cloud-provider SaaS services, or really anything.  The nice thing is that you don't have to care how those services are managed.  You can consume them all in the same way using the flow we'll go through next.  
 
@@ -37,6 +40,8 @@ In the output, we can see a section called `PostgreSQLInstance type spec`.  Thes
 
 For example, maybe we want to have a database that allows more than 1 GB of storage. We could have called the create command like this (don't execute this) `tanzu service create PostgreSQLInstance/my-db --parameter storageGB=10` to have created a PostgreSQL instance with 10GB of storage. Each service type will have different configuration options exposed, so you might need to talk with your platform team to find out all the options.
 
+![Image showing a Service binding connected to an application and Postgres service and a set of secret values getting injected into the application](./images/service-binding.png)
+
 At this point, we have a PostgreSQL database, but our app doesn't know anything about it. We can change that by *binding* our database instance to our application. Binding associates the instance of a service with an application, and injects information about that service using [Service Bindings for Kubernetes](https://servicebinding.io/).  The specification standardizes how service information is injected into workloads via a specific directory structure and files mounted into a container application.
 
 [Many libraries](https://servicebinding.io/application-developer/) know how to interpret this standardized information, and some like [Steeltoe](https://docs.steeltoe.io/api/v3/connectors/) and [Spring Cloud Bindings](https://github.com/spring-cloud/spring-cloud-bindings) can automatically inject configuration to make consuming those services very easy.
@@ -49,6 +54,8 @@ tanzu service bind PostgreSQLInstance/my-db ContainerApp/inclusion --as db
 Let's refresh our application and see that the emoji and the text in the header have changed for our app (from "powered by H2" to "powered by POSTGRESQL"). ![Image showing change to Inclusion app to show "powered by PostgreSQL" instead of "powered by H2"](../images/inclusion-postgres-binding.png)
 
 If you don't see a change immediately, retry after waiting for 1 minute or so.  Changes to the application are rolled out gracefully, and load is not shifted to the new version of your application until it is healthy.  You can go to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see the URL for your application if you accidentally closed the tab for it.  Click on the "Space URL" link at the upper middle of the page.
+
+![Image showing a Service binding connected to an application and PreProvisonedService object and a set of secret values getting injected into the application.  The application is shown connected to an externally managed Postgres database](./images/preprovisioned-service.png)
 
 The PostgreSQL service we are using is provisioned using automation for us in the platform. But what if we have a database that is managed by another team, or an existing database that we need to keep using? Don't worry! We can still use the service binding mechanism to simplify this process. We're going to switch to a shared PostgreSQL database that all the workshop attendees can use together.  If we are careful about how we format the information for the binding, we can even still use the Spring Cloud Bindings library to automatically configure the application for us.
 

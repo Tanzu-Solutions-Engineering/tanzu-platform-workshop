@@ -56,13 +56,15 @@ We can also use `tanzu app config` to set environment variables that would be ap
 ```execute
 tanzu app config non-secret-env set LOGGING_LEVEL_COM_EXAMPLE_EMOJIINCLUSION=DEBUG
 ```
-Again, this change won't take effect until we deploy again, but you can see the configuration update in our application's manifest.
+Again, we can see the configuration update in our application's manifest.
 ```editor:select-matching-text
 file: ~/inclusion/.tanzu/config/inclusion.yml
 text: "name: LOGGING_LEVEL_COM_EXAMPLE_EMOJIINCLUSION"
 before: 0
 after: 1
 ```
+
+![Image showing ContainerApp lifecycle](./images/containerapp-lifecyle.png)
 
 Remember, all we have done at this point is just update our on-disk configuration files.  We could make these changes take effect by building and deploying a new container for our application with the `tanzu deploy` command like we did at the begining of the workshop.
 

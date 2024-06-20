@@ -1,6 +1,8 @@
 ---
 title: Deploy our First App
 ---
+![Image showing an App deployed to a Space](./images/deploy-an-app.png)
+
 Now that we have the CLI configured, let's get our first app running on Tanzu Platform.
 
 We'll be using a sample application to go through the workshop.  Let's clone the project into our workshop environment.
@@ -79,7 +81,7 @@ text: |
 Adding an external ingress to your application in this way is not the planned future for route management. Eventually, the platform will support CLI commands to create and map routes to applications. This step is necessary until the platform has first-class support for route management.
 {{< /note >}}
 
-**Now, let's deploy our application.**
+Now, let's deploy our application.
 ```execute
 tanzu deploy -y
 ```

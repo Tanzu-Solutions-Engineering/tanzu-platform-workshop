@@ -1,6 +1,8 @@
 ---
 title: Scalability and Resiliency
 ---
+![Image showing an application with specific memory and CPU settings, multiple container replicas, and distributed across multiple clusters](./images/vertical-replicas-multi-at.png)
+
 Tanzu Platform for Kubernetes makes it simple to scale your application resources vertically and horizontally for performance and resilience. We'll explore the different options for scaling your applications.
 
 First, let's have a look at our application details.
