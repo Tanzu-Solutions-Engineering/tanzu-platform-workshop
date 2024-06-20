@@ -40,7 +40,7 @@ Throughout this lab of the workshop you will see how there are many resources th
 
 > Note: This step of the workshop may be skipped if several attendees are sharing environments with the same Supervisor
 
-Official pubic documentation pending
+[Official Documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-register-supervisor-cluster.html)
 
 [vSphere with Tanzu documentation to register Supervisor in TMC](https://docs.vmware.com/en/VMware-vSphere/8.0/vsphere-with-tanzu-installation-configuration/GUID-ED4417DC-592C-454A-8292-97F93BD76957.html#install-the-tanzu-mission-control-agent-on-the-supervisor-1)
 
@@ -144,7 +144,7 @@ Remove Crossplane capability from the Cluster Group: if not choosing it the bitn
 - After that Space should go ready after .... 1 or 2 minutes
 
 ## Create a TKGS cluster in your Cluster Group
-Official pubic documentation pending
+[Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-add-cluster-tkg-new.html)
 
 Access the Hub GUI: `Infrastructure > Kuberentes Clusters > Clusters > Add Cluster > Create Tanzu Kubernetes Grid Cluster`:
 - Step 1: Select the management cluster and provisioner
@@ -487,8 +487,8 @@ It may take some time for the k8s services and network topology to show everythi
 
 2. Check contents of the app namespace
 ```
-kubectl get pod,svc -n jaime-wkshp-tests-588d6d66b5-2cjrc
-# we should now see the app pod and service, as well as the Istio Gateway service (type LB), in addition to the multicloiud-ingress-operator`
+kubectl get pod,svc,gateway -n jaime-wkshp-tests-588d6d66b5-2cjrc
+# We should now see the app pod and service, as well as the Istio Gateway resource, pod and service (type LB), in addition to the multicloiud-ingress-operator` pod we already had
 NAME                                               READY   STATUS    RESTARTS   AGE
 pod/default-gateway-istio-6dc59b76f6-rhg6h         1/1     Running   0          2m57s
 pod/multicloud-ingress-operator-84cb88dbd6-jlf9v   1/1     Running   0          2m59s
@@ -497,11 +497,21 @@ pod/spring-smoketest-7b5d495995-gb4sb              2/2     Running   0          
 NAME                            TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                        AGE
 service/default-gateway-istio   LoadBalancer   10.96.147.2     10.220.9.6    15021:31947/TCP,80:31437/TCP   2m58s
 service/spring-smoketest        ClusterIP      10.96.51.72     <none>        8080/TCP                       2m50s
+
+NAME                                                CLASS   ADDRESS      PROGRAMMED   AGE
+gateway.gateway.networking.k8s.io/default-gateway   istio   10.220.9.6   True         2m57s
 ```
-Notice that the app has two containers, as it has the istio sidecar reuired for service mesh capabilities (mTLS) and observability.
+Things to notice
+- The app has two containers, as it has the istio sidecar reuired for service mesh capabilities (mTLS) and observability.
+- Ingress into the space down to the application pod is possible thanks to the Istio Gateway. Its service has the external IP/CNAME to access the app from outisde the k8s cluster. This Istio Gateway has been programmed with the domain, listerners, ports, etc that we defined in our Profile and app Route. Let's see that in detail next.
 
 
 #### Review DNS, Load Balancing and Ingress
+1. Let's check the HTTPRoute resource
+2. Let's see the Istio Gateway configuration
 
+Let's now go to AWS Route 53 to see the DNS records and Healthchecks.
+
+#### Bonus lab, fix things for actual Load Balancing of traffic over EKS and TKGS clusters
 
 If you reached this part of the Lab successfully and your Space is in a healthy state, CONGRATULATIONS! your job as a Patform Engineer is done (for now) and your Application Development friends have now a ready to go and replicable Space where to deploy their applications.
