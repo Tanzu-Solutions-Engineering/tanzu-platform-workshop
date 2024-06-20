@@ -6,12 +6,12 @@ metadata:
   name: spring-smoketest
 spec:
   content:
-    buildTimestamp: "2024-06-20T14:04:43Z"
+    buildTimestamp: "2024-06-20T16:02:38Z"
     gitCommit: df3c54c858cd847ec49c2c477ba63e1848101374-dirty
     packageRefName: spring-smoketest.apps.local
-    summary: git:df3c54c @ 2024-06-20T14:04:43Z
-    version: 20240620.1404.43689
-  image: public.ecr.aws/e6j4w8b2/jaime-spring-smoketest@sha256:bc13e85dd7916f5de799d6d3634f4e75dad738ef8482c3006831498c8ff5fc84
+    summary: git:df3c54c @ 2024-06-20T16:02:38Z
+    version: 20240620.1602.38108
+  image: public.ecr.aws/e6j4w8b2/jaime-spring-smoketest@sha256:82e10ff7413b913da8521408c630f2293f45afda83698a07af8300dc4b182722
   nonSecretEnv:
   - name: JAVA_TOOL_OPTIONS
     value: -Dmanagement.endpoint.health.probes.add-additional-paths=true -Dmanagement.health.probes.enabled=true
@@ -68,7 +68,7 @@ spec:
   - apiGroup: data.packaging.carvel.dev
     for: kubernetes.delete
     kind: Package
-    name: spring-smoketest.apps.local.20240620.1404.43689
+    name: spring-smoketest.apps.local.20240620.1602.38108
   - for: kubernetes.delete
     kind: Secret
     name: spring-smoketest-values

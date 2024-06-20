@@ -461,8 +461,26 @@ Additional details in the [Increase Applicaiton Resiliency docs docs](https://do
 ## Deploy a simple application to the Space to smokte-test our setup
 
 #### Deploy pre-built application
+As a Platform Engineer I want to deploy an application to validate that all the setup we've prepared so far (cluster grouo, cluster, profile, space) is properly configured and ready for application development teams to use.
+
+To do this validation we will deploy a smoke test application already prebuilt and available in this repo. Follow these steps using the project name you were given and the name of the space you created:
+```
+tanzu project use <project-name>
+tanzu space use <space-name>
+cd spring-smoketest
+tanzu deploy --from-build ./pre-built
+# when propmpted with the detail of all resources that will be deployed in the space, type Y
+```
+
+Access the Hub GUI: `Application Spaces > Spaces > Click in your space to view details`. The space will now show gradually:
+- Applications: the `spring-smoketest` application you just deployed
+- Kubernetes Services: `spring-smoketest` service and `default-gateway-istio` service for each cluster
+- Network Topology: 2 clusters each with the 2 k8s services. As traffic flows those servies should connect visually (more on this later)
+It may take some time for the k8s services and network topology to show everything. Wait at least a minute or 2 and click `Refresh` as needed.
+
 
 #### Inspect resources created in the target clusters(s)
+
 
 #### Inspect DNS and Ingress configuration and fix load balancing
 

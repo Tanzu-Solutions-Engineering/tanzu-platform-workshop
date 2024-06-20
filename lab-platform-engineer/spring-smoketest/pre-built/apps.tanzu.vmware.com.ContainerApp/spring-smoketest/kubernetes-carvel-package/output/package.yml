@@ -2,10 +2,10 @@ apiVersion: data.packaging.carvel.dev/v1alpha1
 kind: Package
 metadata:
   creationTimestamp: null
-  name: spring-smoketest.apps.local.20240620.1404.43689
+  name: spring-smoketest.apps.local.20240620.1602.38108
 spec:
   refName: spring-smoketest.apps.local
-  releasedAt: "2024-06-20T14:05:45Z"
+  releasedAt: "2024-06-20T16:03:44Z"
   template:
     spec:
       deploy:
@@ -14,7 +14,7 @@ spec:
           - --wait=false
       fetch:
       - imgpkgBundle:
-          image: public.ecr.aws/e6j4w8b2/jaime-spring-smoketest@sha256:a22ae852f69861e0b85243111dd3bdd260b941a1b95dc0fffcc886fb289a6954
+          image: public.ecr.aws/e6j4w8b2/jaime-spring-smoketest@sha256:a45299a2659a7681aefc0f729a6f60b0258bbb797ff41e72a889b099916df738
       template:
       - ytt:
           paths:
@@ -25,4 +25,4 @@ spec:
           - '-'
   valuesSchema:
     openAPIv3: null
-  version: 20240620.1404.43689
+  version: 20240620.1602.38108
