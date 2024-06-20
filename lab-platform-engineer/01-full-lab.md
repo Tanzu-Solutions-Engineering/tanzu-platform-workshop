@@ -316,16 +316,21 @@ Access the Hub GUI: `Application Spaces > Profiles > Create Profile > Step by St
     - Choose a uniuque name, distinctive from other networking profiles for other networking profiles configured for other domain names. Example `networking.mydomain.com`:
 - Step 2: Choose required traits:
     - `egress.tanzu.vmware.com`, `multicloud-cert-manager.tanzu.vmware.com`, and `multicloud-ingress.tanzu.vmware.com`. This will allow us to deploy the related packages in the k8s clusters with specific configuration for the Spaces that use this profile. More on this when we create a Space.
-- Step 3: Configure the `multicloud-ingress` trait:
+- Step 3: Configure the `egress` trait:
+    - Click on the `Configure egress.tanzu.vmware.com`
+    - This step is optional but to ensure that the applications in the Spaces we are going to create with this Profile can call external services, we are going to open egress, which by default is closed.
+    - Set `Open` to `True`.
+- Step 4: Configure the `multicloud-ingress` trait:
+    - Click on the `Configure multicloud-ingress.tanzu.vmware.com`
     - The Listerners define the prefixes we can use later in the HTTPRoute resources to define HTTP, HTTPS, or other listerner with corresponding ports and secrets if required.
     - Set the `Gslb Dns ZoneId` using the Route53 Zone ID you've been given at the begining of the workshop.
     - Set the `Gslb Authentication CredentialRef` using the Credential ID you've been given.
     - Set tht `Domain` to the domain name assigned as well.
     - The `Name` is used to name the IstioGatewway CRD that will be created in your Space. 
     - You can leave all other defaults unchanged. More on ClusterIssuer in the advance topics.
-- Step 4: Configure Additional Capabilities:
+- Step 5: Configure Additional Capabilities:
     - We don't need to do anything here for this specific profile, since the Capabilities reqried by the traits we selected are already pre-selected. But if we required additional capabiities on our custom profiles, this is the place where we will select them.
-- Step 5: Review Summary and Create
+- Step 6: Review Summary and Create
 
 
 Alternatively you can create the Profile via CLI.
@@ -456,8 +461,6 @@ With this setup we have configured a Space with incresed resiliency across two s
 Additional details in the [Increase Applicaiton Resiliency docs docs](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-app-resilience.html) for this.
 
 
-
-
 ## Deploy a simple application to the Space to smokte-test our setup
 
 #### Deploy pre-built application
@@ -480,9 +483,25 @@ It may take some time for the k8s services and network topology to show everythi
 
 
 #### Inspect resources created in the target clusters(s)
+1. Let's access our TKGS cluster the same way we did earlier in this workshop in the [Inspect Packages and Agents intalled](/lab-platform-engineer/01-full-lab.md#inspect-packages-and-agents-intalled) section.
+
+2. Check contents of the app namespace
+```
+kubectl get pod,svc -n jaime-wkshp-tests-588d6d66b5-2cjrc
+# we should now see the app pod and service, as well as the Istio Gateway service (type LB), in addition to the multicloiud-ingress-operator`
+NAME                                               READY   STATUS    RESTARTS   AGE
+pod/default-gateway-istio-6dc59b76f6-rhg6h         1/1     Running   0          2m57s
+pod/multicloud-ingress-operator-84cb88dbd6-jlf9v   1/1     Running   0          2m59s
+pod/spring-smoketest-7b5d495995-gb4sb              2/2     Running   0          2m47s
+
+NAME                            TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                        AGE
+service/default-gateway-istio   LoadBalancer   10.96.147.2     10.220.9.6    15021:31947/TCP,80:31437/TCP   2m58s
+service/spring-smoketest        ClusterIP      10.96.51.72     <none>        8080/TCP                       2m50s
+```
+Notice that the app has two containers, as it has the istio sidecar reuired for service mesh capabilities (mTLS) and observability.
 
 
-#### Inspect DNS and Ingress configuration and fix load balancing
+#### Review DNS, Load Balancing and Ingress
 
 
 If you reached this part of the Lab successfully and your Space is in a healthy state, CONGRATULATIONS! your job as a Patform Engineer is done (for now) and your Application Development friends have now a ready to go and replicable Space where to deploy their applications.
