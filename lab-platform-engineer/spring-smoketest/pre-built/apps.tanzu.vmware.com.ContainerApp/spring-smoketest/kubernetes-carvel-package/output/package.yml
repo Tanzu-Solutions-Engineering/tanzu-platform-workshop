@@ -1,0 +1,28 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: spring-smoketest.apps.local.20240620.1404.43689
+spec:
+  refName: spring-smoketest.apps.local
+  releasedAt: "2024-06-20T14:05:45Z"
+  template:
+    spec:
+      deploy:
+      - kapp:
+          rawOptions:
+          - --wait=false
+      fetch:
+      - imgpkgBundle:
+          image: public.ecr.aws/e6j4w8b2/jaime-spring-smoketest@sha256:a22ae852f69861e0b85243111dd3bdd260b941a1b95dc0fffcc886fb289a6954
+      template:
+      - ytt:
+          paths:
+          - config/
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+  valuesSchema:
+    openAPIv3: null
+  version: 20240620.1404.43689

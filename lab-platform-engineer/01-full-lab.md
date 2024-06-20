@@ -354,6 +354,7 @@ Access the Hub GUI: `Application Spaces > Profiles > Find your profile and click
 Access the Hub GUI: `Application Spaces > Spaces > Create Space > Step by Step`:
 - Step 1: Name your Space:
     - Choose a uniuque name, the convention we will use in this workshop is to provide some notion of the apps lifecycle. Example `myname-prod`:
+    - Make sure the name is under 27 characters to avoid hitting an issue with the DNS record creation process.
 - Step 2: Select the Profiles:
     - Choose the Custom Networking Profile you have created earlier
     - Choose the Spring-dev profile which include all other Traits and Capabilities you will need in this workshop
