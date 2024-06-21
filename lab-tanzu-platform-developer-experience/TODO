@@ -1,3 +1,2 @@
-- Change workshop tanzu cli package url to current repository after merge and first Github Action workflow run
-- Validate all the instructions
-- Sync up with Jaime and William to make sure our workshop will work properly in their environment
+- Add instructions for deploying pre-built application images
+- 

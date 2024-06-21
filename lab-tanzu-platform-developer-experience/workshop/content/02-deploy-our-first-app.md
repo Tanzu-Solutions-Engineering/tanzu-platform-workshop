@@ -1,7 +1,7 @@
 ---
 title: Deploy our First App
 ---
-![Image showing an App deployed to a Space](./images/deploy-an-app.png)
+![Image showing an App deployed to a Space](../images/deploy-an-app.png)
 
 Now that we have the CLI configured, let's get our first app running on Tanzu Platform.
 
@@ -86,17 +86,30 @@ Now, let's deploy our application.
 tanzu deploy -y
 ```
 
-We can see that the Cloud Native Buildpacks for Java and Spring are being used to create a container image with best practices for our application, and manifests are getting generated for our application using the best practices from our Platform Engineering and DevOps teams. The container build will take a couple of minutes, so just wait until the process completes.
+The container build will take a couple of minutes, so just wait until the process completes.  Monitor the output of the build process to see if you can see how `tanzu build` is leveraging both Cloud Native Buildpacks and running additional automations to generate configurations specific to our Spring Boot application.  
+
+We can see that the Cloud Native Buildpacks for Java and Spring are being used to create a container image with best practices for our application.  It's first analyzing our application to determine the appropriate buildpacks to apply.  That phase is looking for build files, source code, and other markers to indicate what types of technologies our project is using.  You can see that there are lots of buildpacks in our platform, but only relevant ones are getting applied to our container build.  You can see a buildpack pulling in the Liberica JDK (version 17) to compile our app but a JRE to actually run our application.  You can see `tanzu build` is pulling in a layer to inject best practices for building containers for Spring Boot applications, and a memory calculator to properly size the memory for the application based on it's container settings.
+
+After the container image for our app is built, you can see `tanzu build` is going beyond just building the container.  It's also generating Kubernetes manifests to run our application on Kubernetes the way our Platform Engineers and DevOps teams want us to run them.  It's adding specific environment variables to the application manifest to enable Spring Boot actuator capabilities at runtime, and point Kubernetes health and readiness checks at those actuators.  It's bundling up all the manifests as a [Carvel Package](https://carvel.dev/kapp-controller/docs/latest/packaging/#package) that enables application operators to deliver that application consistently across multiple (even disconnected!) environments.  Finally, it's storing the container image and that Carvel Package in the container registry we configured back in the first section of this workshop.
+
+![Image showing a screenshot of the Inclusion app in the Tanzu Platform UI](../images/tanzu-platform-screenshot.png)
+
+{{< note >}}
+If you get a "Space not found error when you click the link below, make sure you have the {{< param TANZU_PLATFORM_PROJECT >}} project selected in the dropdown list right next to the "Tanzu Platform" logo in the upper left of the browser window.
+{{< /note >}}
+
+Once the deployment is completed, you can navigate to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see information about your deployed application.  
+
+The *Applications* tab shows a list of all the application services we have deployed to our space. You can click on the name of the "inclusion" application to see some more details about the application. That view will be sparse for now, but we'll look at it again when we work with services later on.  
+
+Explore the *Ingress & Egress* tab and click the chevron next to your application hostname in the *Ingress* list.  You can see some information about the route we currently have mapped to the application.
 
 {{< note >}}
 Your application might take a minute to start up, become healthy and for the app DNS record to propagate to your workstation's DNS servers. If the URL for your app that you get from Tanzu Platform below doesn't work immediately, give it a minute and try again.
 {{< /note >}}
 
-Once the deployment is completed, you can navigate to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see the URL for your application under the "Space URL" section of the upper middle of the page. 
-Click on the URL to see your application's UI.  After you see the app page with an emoji in the center, go back to the Tanzu Platform tab for your space and explore the different tabs for your application.  
+Notice that "Space URL" value in the upper middle of the Tanzu Platform UI page for your space?  Click on the URL to see your application's UI.  You should see your app page with an emoji in the center similar to the image below.  Your emoji will likely be different, but if it is the same as the image you may want to buy a lottery ticket because you are lucky today!
 
-The *Applications* tab shows a list of all the application services we have deployed to our space. You can click on the name of the "inclusion" application to see some more details about the application. That view will be sparse for now, but we'll look at it again when we work with services later on.  
-
-Explore the *Ingress & Egress* tab and click the chevron next to your application hostname in the *Ingress* list.  You can see some information about the route we currently have mapped to the application.
+![Image showing a view of the Inclusion app we just deployed](../images/inclusion-app.png)
 
 Excellent! With minimal fuss and no knowledge of Kubernetes, you were able to deploy a containerized application in just a few minutes.  Now, let's move on to the next section to explore this process in a little more depth.
