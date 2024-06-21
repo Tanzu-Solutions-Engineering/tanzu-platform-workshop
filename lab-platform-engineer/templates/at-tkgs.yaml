@@ -9,7 +9,7 @@ spec:
       clusterAffinity:
          clusterSelectorTerms:
          - matchExpressions:
-            - key: test-jaime
+            - key: jaime-prod
               operator: Exists
               values: []
             - key: vsphere

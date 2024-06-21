@@ -25,6 +25,17 @@ Organization
     |
      -- Spaces / Cluster Groups
 ```
+
+Optional/Bonus: When you are done with the workshop come back here to test with the different commands and see how the context changes:
+```
+tanzu project use workshop01
+tanzu context current | grep -E "Kube Context"
+#  Kube Context:    tanzu-cli-sa-tanzu-platform:workshop01
+tanzu space use test-wkshp
+tanzu context current | grep -E "Kube Context"
+#  Kube Context:    tanzu-cli-sa-tanzu-platform:workshop01:test-wkshp 
+```
+
 More on this in the [documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-and-manage-cli-contexts.html)
 
 During this workshop we will also use `kubectl` to access some UCP resources. To be able to do that you can set your `KUBECONFIG` environment variable to point to that `~/.config/tanzu/kube/config` file. Or even create an alias to only use that `KUBECONFIG` when you need to check UCP resources, and leave the default KUBECONFIG (`~/.kube/config`) fore regular use of kubectl to access the k8s clusters:
@@ -33,7 +44,7 @@ alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
 ```
 
 Throughout this lab of the workshop you will see how there are many resources that are created at UCP level, and automatically copied over, and kept in sync, in the k8s clusters where applications will run. At a high level:
-![UCP and k8s clusters](./ucpsync.png)
+![UCP and k8s clusters](./img/ucpsync.png)
 
 
 ## Register TKGS Supervisor in designated Tanzu Platform for k8s project
@@ -48,11 +59,11 @@ Process:
 - Step 1: Access the Hub GUI: `Setup & Configuration > Kubernetes Management > TKG Registrations > Register TKG Instance` to get the registration url
 - Step 2: Go to VCenter: `workload management > Supervisors > Configure > Tanzu Mission Control Registration`, and add that registration url.
 
-There is an alternative process to be followed via CLI with a yaml. (Insert info here)
+There is an alternative process to be followed via CLI, which you can find in the focicial documentation linked above.
 
 ## Tanzu Platform Concepts and Relationships to keep handy
 As a Platform Engineer we need to be able to configure the Platform and prepare repeatable and configurable environmments for the application team to deploy applications into. These are the Spaces. But they are not the only construct that Platform Engineers need to get familiar with. Throughout this lab we will get introuced to all of them through the lens of the Platform Engineer. At a high level we need to know what these are:
-- Cluster Groups: are groupings of Kubernetes Clusters with provided Capabilities installed on those Clusters. They enable platform engineers to curate what combination of Capabilities will be provided by their platform.
+- Cluster Groups: are groupings of Kubernetes Clusters with provided Software (Capabilities) installed on those Clusters. They enable platform engineers to curate what combination of Capabilities will be provided by their platform.
 - Capabilities: are named groups that describe the APIs and features available from the Platform.
     - In order to curate the APIs available to users, Spaces require Capabilities (indirectly, via profiles). This has the effect of determining precisely which Kubernetes APIs will be exposed to users and their tools in a given Space.
     - In order to support the APIs required to run the applications and handle the resources within a Space, Clusters provide Capabilities. A Cluster that provides Capabilities ensures the Custom Resource Definitions (CRDs) and their respective controllers are available to the applications that run in a Space on that cluster.
@@ -65,7 +76,7 @@ As a Platform Engineer we need to be able to configure the Platform and prepare 
 
 
 Here's a conceptual diagram with how these relate to each other:
-![Require and Provide Capabilities](./requireprovidecapabilities.png)
+![Require and Provide Capabilities](./img/requireprovidecapabilities.png)
 
 More on this in the [Tanzu Application Engine Conceptual Overview documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/concepts-about-spaces.html)
 
@@ -80,12 +91,12 @@ Access the Hub GUI: `Infrastructure > Kubedrnetes Clusters > Create Cluster Grou
 
 Make sure to enable Tanzu Application Engine.
 
-Alternatively you can do this via CLI. Follow this commands using the `cluster-group.yaml` sample file included in this folder of the repo, make sure to change the `fullName.name`:
+Alternatively you can do this via CLI. Follow this commands using the `cluster-group.yaml` sample template file included in this folder of the repo, make sure to change the `fullName.name`:
 ```
 tanzu project use 
 # follow the interactive menu to select the project you've been assigned to
 
-tanzu operations clustergroup create -f cluster-group.yaml
+tanzu operations clustergroup create -f templates/cluster-group.yaml
 ```
 
 #### Add capabilities to Cluster Group
@@ -137,9 +148,34 @@ tanzu package install tanzu-servicebinding.tanzu.vmware.com -p tanzu-servicebind
 tanzu package install spring-cloud-gateway.tanzu.vmware.com -p spring-cloud-gateway.tanzu.vmware.com -v '>0.0.0'
 ```
 
+After commans run return to the GUI (`Application Spaces > Capabilities > Installed`) to see all capabilities `Ready`. If the drop down menu does not show your Cluster Group, edit and go to this url with your cluster name as parameter:
+```
+https://www.mgmt.cloud.vmware.com/hub/application-engine/capabilities?view=installed&clusterGroup=jaime-cg-demo
+```
+You should see something like this:
+![ClusterGroup Capabilities](./img/cg-capabilities.png)
+
+Via command line you can check this:
+```
+alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
+tk get pkgi
+NAME                                    PACKAGE NAME                            PACKAGE VERSION             DESCRIPTION   AGE
+k8sgateway.tanzu.vmware.com             k8sgateway.tanzu.vmware.com             0.0.7                                     21h
+cert-manager.tanzu.vmware.com           cert-manager.tanzu.vmware.com           2.9.1                                     21h
+observability.tanzu.vmware.com          observability.tanzu.vmware.com          1.0.13                                    21h
+mtls.tanzu.vmware.com                   mtls.tanzu.vmware.com                   0.0.1                                     21h
+servicebinding.tanzu.vmware.com         servicebinding.tanzu.vmware.com         0.13.0                                    21h
+spring-cloud-gateway.tanzu.vmware.com   spring-cloud-gateway.tanzu.vmware.com   2.2.4                                     21h
+container-apps.tanzu.vmware.com         container-apps.tanzu.vmware.com         0.0.3+1715585258.1ef0f6e7                 21h
+tanzu-servicebinding.tanzu.vmware.com   tanzu-servicebinding.tanzu.vmware.com   1.0.0+1717058073.8e6bdbf8                 21h
+bitnami.services.tanzu.vmware.com       bitnami.services.tanzu.vmware.com       0.6.0                                     21h
+tcs.tanzu.vmware.com                    tcs.tanzu.vmware.com                    2.2.11                                    21h
+crossplane.tanzu.vmware.com             crossplane.tanzu.vmware.com             0.6.1                                     21h
+```
+
 #### (Optionl) Remove needed capability to test error scenario
-Remove Crossplane capability from the Cluster Group: if not choosing it the bitnami package will fail:
-- When that capability deployment fails, space scheduling will stay in WARNING
+Remove Crossplane capability from the Cluster Group:
+- When that capability is missing, bitnami capability failes to reconcile, and space scheduling will stay in WARNING since there is no cluster that provide(satisfy) all required capabilities
 - Once you add crossplane, bitnami package will reconcyle.
 - After that Space should go ready after .... 1 or 2 minutes
 
@@ -180,16 +216,17 @@ Access the Hub GUI: `Infrastructure > Kuberentes Clusters > Clusters > Add Clust
     - No need to add anything.
 - Click Create.
 
-Alternatively you can do this via CLI. Follow this commands using the `tkgs-cluster.yaml` sample file included in this folder of the repo, make sure to adjust: all the `fullName` variables, the `spec.clusterGroupName` and all references to storageClass at minimu:
+Alternatively you can do this via CLI. Follow this commands using the `tkgs-cluster.yaml` sample template file included in this folder of the repo, make sure to adjust: all the `fullName` variables, the `spec.clusterGroupName` and all references to storageClass at minimu:
 ```
 tanzu project use <project-name>
-tanzu operations apply -f tkgs-cluster.yaml
+tanzu operations apply -f templates/tkgs-cluster.yaml
 ```
 
 #### Confirm TKGS cluster is onboarded to the Platform
 1. Confirm the Cluster is Healthy and Ready
     - This is the TMC layer, does not provide information about the UCP onboarding
     - Access the Hub GUI: `Infrastructure > Kubernetes Clusters > Clusters` and confirm it's `Healthy` and `Ready`.
+![Cluster Healthy TMC](./img/cluster-healthy-tmc.png)
     - CLI path: check status conditions
         ```
         tanzu project use <project-name>
@@ -197,14 +234,16 @@ tanzu operations apply -f tkgs-cluster.yaml
         ```
 2. Confirm the Cluster is properly onboarded to UCP
     - Access the Hub GUI: `Setup & Configuration > Kubernetes Management` and confirm it is `Attached` and the Colector status is `Online`
+![Cluster Healthy UCP](./img/cluster-healthy-ucp.png)
     - CLI path: check status conditions
         ```
         tanzu operations clustergroup use <cluster-group-name>
         alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
-        tk get kubernetesclusters <cluster-name> -oyaml | yq .status
+        tk get kubernetesclusters <cluster-name> -oyaml | yq .status.conditions
+        # this actually doesn't show the collector online status.
         ```
 
-#### Confirm via UCP that capabilities defined in cluster group are provided by the
+#### Confirm via UCP that capabilities defined in cluster group are provided by the Cluster
 
 To check the cluster has all the capabilities we initially defined at cluster-group level, run the following commands:
 ```
@@ -274,7 +313,7 @@ tanzu-system                 vss-k8s-collector                                 v
 
 #### Look at existing Availability Target pointing to our EKS overflow clusters
 - Access the Hub GUI: `Application Spaces > Availability Targets > type "workshop+ENTER" > Click on "View Details" in the workshop-overflow AT`.
-- See the list of clusters: these are all EKS clusters we have available in our project for extra compute for our Spaces. More on this later
+- See the list of clusters: these are all EKS clusters we have available in our project for extra compute for our Spaces. 
 - On the top right click on `Actions > View YAML`. Scroll down to `spec.affinity.clusterAffinity`
 - Observe the matchingExpresion looking for clusters with a label `workshop-overflow`
 
@@ -282,14 +321,34 @@ tanzu-system                 vss-k8s-collector                                 v
 #### Create an Availability Target that targets our TKGS cluster
 We will use the yaml/CLI apprach to define & create the Availability Target to have more flexibility and to use a single matchExpression with two elements in order to have it work as an AND logical operator, which is not currently supported in the UI.
 
-Check the `at-tkgs.yaml` file in this folder of the repo and notice to elements in the matchExpressions array: we want this availability target to match clusters that have the first label AND the second label. Let's keep the `vsphere` label and edit the other one to be something unique for you that describes your clusters. Then create the AT following these commands:
+Check the `at-tkgs.yaml` template file in this folder of the repo:
+- Notice to elements in the matchExpressions array: we want this availability target to match clusters that have the first label AND the second label.
+    - Let's keep the `vsphere` label and edit the other one to be something unique for you that describes your clusters
+- Change the `metadata.name` to something unique for you to avoid overlapping with other ATs in the project.
+- Then create the AT following these commands:
 ```
 tanzu project use <project-name>
-tanzu availability-target apply -f at-tkgs.yaml
+tanzu availability-target create -f templates/at-tkgs.yaml
 ```
 
-#### (Optional) Create an Availability Target that targets the TKGS cluster and the EKS overflow clusters
+Let's confirm the Availability Target is in `Ready` state.
+- Via Hub GUI: `Application Spaces > Availability Targets`
+    - Type the name of your AT in the search field and click on "View Details"
+    - You should see it `Ready` and your TKGS cluster should be listed in.
+![AT Healthy](./img/at-healthy.png)
+    - Bear in mind this sometimes take a few minutes, and your cluster must be fully onboarded to UCP to be considered here.
+- Via CLI, run these commands:
+```
+# for a nice output via tanzu CLI
+tanzu availability-target get <at-name>
 
+# alternatively checking the status in the UCP resources
+tanzu project use <project-name>
+alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
+tk get availabilitytarget <at-name> -oyaml | yq .status
+```
+
+#### (Optional/Bonus) Create an Availability Target that targets the TKGS cluster and the EKS overflow clusters
 
 
 ## Configure Ingress and GSLB
@@ -304,7 +363,7 @@ Ingress Trait and HTTPRoute objects are the primary inputs that are used to setu
 - Istio uses Gateway to dynamically bring up the gateway proxy services (deployment and service) to allow public traffic into the Space.
 
 Here's the Ingress and GSLB Architecture:
-![Ingress and GSLB Architecture](./IngressGSLB.png)
+![Ingress and GSLB Architecture](./img/IngressGSLB.png)
 
 > Note: This architecture is in rapid evolution and will be changed & improved very soon.
 
@@ -334,21 +393,30 @@ Access the Hub GUI: `Application Spaces > Profiles > Create Profile > Step by St
 
 
 Alternatively you can create the Profile via CLI.
-- Use the `custom-networking-profile.yaml` sample file included in this folder of the repo and, following the same guidelines as described above for the GUI approach, make sure to adjust:
+- Use the `custom-networking-profile.yaml` sample template file included in this folder of the repo and, following the same guidelines as described above for the GUI approach, make sure to adjust:
     - `metadata.name`
     - The following specs under the `multicloud-ingress.tanzu.vmware.com` trait inline configuration: `domain`, `gslb.authentication.credentialRef` and `gslb.authentication.zoneId` following the same suggestions provided above in the GUI based approach.
 - Then run the following commands:
 ```
 tanzu project use <project-name>
-tanzu deploy --only custom-networking-profile.yaml
+tanzu deploy --only templates/custom-networking-profile.yaml
 ```
 
 #### Check Profile is in Ready state
+- Via Hub GUI: `Application Spaces > Profiles > Find your profile and click on View Details`. You should see the Profile as `READY` in green, and with all `Traits to be installed` as `Resolved`.
+![Profile Healthy](./img/profile-healthy.png)
+- Via CLI
+```
+# for a nice output via tanzu CLI
+tanzu profile get <profile-name>
 
-Access the Hub GUI: `Application Spaces > Profiles > Find your profile and click on View Details`. You should see the Profile as `READY` in green, and with all `Traits to be installed` as `Resolved`.
+# alternatively checking the status in the UCP resources
+tanzu project use <project-name>
+alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
+tk get profile <profile-name> -oyaml | yq '(.status.conditions, .status.requiredCapabilities, .status.traits)'
+```
 
 > Note: This doesn't confirm yet that the Traits Packages are deployed and configured succesfully anywhere. More on this in the next section.
-
 
 
 ## Create a Space for developers to deploy apps on TKGS
@@ -369,23 +437,29 @@ Access the Hub GUI: `Application Spaces > Spaces > Create Space > Step by Step`:
     - Notice that we can configure each AT in Active or Passive mode. We will leave both in Active mode so that the Space is scheduled in both Fault Domains and the Route53 records for both Fault Domains are also created 
 - Step 4: Click on Create Space.
 
-While in the GUI, click on your newly created space to see details: It may take a few seconds for the space to go from `ERROR` (red), through `WARNING` (yellow), to `READY` (green). Click on the top-right `Refresh` link to update.
+While in the GUI, click on your newly created space to see details: It may take a few seconds for the space to go from `ERROR` (red), through `WARNING` (yellow), to `READY` (green). Click on the top-right `Refresh` link to update. It should look like this:
+![Space Healthy](./img/space-healthy.png)
+
+More information will be added once apps are deployed.
 
 Alternatively you can create the Space via CLI.
-- Use the `space.yaml` sample file included in this folder of the repo and, following the same guidelines as described above for the GUI approach, make sure to adjust:
+- Use the `space.yaml` sample template file included in this folder of the repo and, following the same guidelines as described above for the GUI approach, make sure to adjust:
     - `metadata.name`
     - Under `spec.profiles` change the second profile name to match your Custom Networking Profile you created
     - Under `spec.availabilityTargets` change the name of the second AT to match the AT we created earlier targetting our TKGS clusters.
 - Then run the following commands:
 ```
 tanzu project use <project-name>
-tanzu deploy --only space.yaml
+tanzu deploy --only templates/space.yaml
 ```
 While in the CLI we can also validate that the Space is in ready state. Let's run a few commands
 ```
-# set alias to target the UCP contexts
-alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
+# for a nice output via tanzu CLI
+tanzu space get <space-name>
 
+# alternatively checking the status in the UCP resources
+tanzu project use <project-name>
+alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
 # get status of our space
 tk get space <space-name> -oyaml | yq .status
 # key elements to understand from the status outout
@@ -450,9 +524,6 @@ multicloud-cert-manager.tanzu.vmware.com-7c669    multicloud-cert-manager.tanzu.
 multicloud-ingress.tanzu.vmware.com-6db87         multicloud-ingress.tanzu.vmware.com         0.1.5             Reconcile succeeded   61m
 observability.tanzu.vmware.com-6d469              observability-traits.tanzu.vmware.com       1.0.2             Reconcile succeeded   61m
 ```
-
-#### (Optional) Troubleshooting a Space inn non-ready state
-
 
 #### Rplicating Spaces for Resiliency
 
