@@ -1,2 +1,4 @@
-ci/Dockerfile
+.DS_STORE
+.vscode
+private/ci/Dockerfile
 custom-container-task

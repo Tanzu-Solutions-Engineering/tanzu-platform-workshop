@@ -1,0 +1,68 @@
+name: Publish Devx Workshop Tanzu CLI Extension Package
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'lab-tanzu-platform-developer-experience/extension-packages/tanzu-cli/**'
+
+jobs:
+  publish-tanzu-cli-extension-package:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Download and install tanzu CLI
+      run: |
+        mkdir -p extension-package/bin
+        tanzu_cli_version=$(grep -oP 'tanzu-cli==\K.*' lab-tanzu-platform-developer-experience/extension-packages/tanzu-cli/requirements.txt)
+        curl -LO https://github.com/vmware-tanzu/tanzu-cli/releases/download/$tanzu_cli_version/tanzu-cli-linux-amd64.tar.gz
+        tar xvzf tanzu-cli-linux-amd64.tar.gz -C extension-package/bin/ --strip-components=1 
+
+        mv extension-package/bin/tanzu-cli-linux_amd64 extension-package/bin/tanzu
+        chmod 755 extension-package/bin/tanzu
+        ./extension-package/bin/tanzu config eula accept
+
+    - name: Install tanzu CLI plugins
+      run: |
+        TANZU_CLI_CEIP_OPT_IN_PROMPT_ANSWER=no ./extension-package/bin/tanzu plugin install --group vmware-tanzucli/essentials
+        TANZU_CLI_CEIP_OPT_IN_PROMPT_ANSWER=no ./extension-package/bin/tanzu plugin install --group vmware-tanzu/platform-engineer
+
+    - name: Collect tanzu CLI files
+      run: |
+        mkdir -p extension-package/.local/share/tanzu-cli
+        cp -r ~/.local/share/tanzu-cli/. extension-package/.local/share/tanzu-cli/
+        mkdir -p extension-package/.config/tanzu
+        cp -r ~/.config/tanzu/. extension-package/.config/tanzu/
+        mkdir -p extension-package/.cache/tanzu
+        cp -r ~/.cache/tanzu/. extension-package/.cache/tanzu/
+
+    - name: Add setup scripts
+      run: |
+        cp -r lab-tanzu-platform-developer-experience/extension-packages/tanzu-cli/setup.d extension-package
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and package container image
+      run: |
+        (cd extension-package && tree -a)
+
+        curl -LO https://github.com/carvel-dev/imgpkg/releases/download/v0.42.1/imgpkg-linux-amd64
+        mv imgpkg-linux-amd64 imgpkg
+        chmod 755 imgpkg
+
+        tanzu_cli_version=$(grep -oP 'tanzu-cli==\K.*' lab-tanzu-platform-developer-experience/extension-packages/tanzu-cli/requirements.txt)
+        LOWER_REPO=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+        ./imgpkg push -i ghcr.io/$LOWER_REPO/lab-tanzu-platform-developer-experience-tanzu-cli-extension-package:$tanzu_cli_version -f extension-package/

@@ -7,7 +7,12 @@ pathways:
 
       steps:
       - 00-workshop-overview
-      - 01-workshop-instructions
+      - 01-prepare-for-launch
+      - 02-deploy-our-first-app
+      - 03-deeper-dive-on-apps
+      - 04-services
+      - 05-scaling
+      - 06-troubleshooting
       - 99-workshop-summary
 
 # modules:
@@ -18,8 +23,9 @@ pathways:
 # - name: 99-workshop-summary
 #   title: Workshop Summary
 
-# params:
-# - name: NAME
-#   value: undefined
-#   aliases:
-#   - ALIAS
+params:
+- name: TANZU_PLATFORM_PROJECT
+  value: undefined
+- name: DB_PASSWORD
+  value: undefined
+
