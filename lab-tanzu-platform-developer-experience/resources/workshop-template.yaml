@@ -1,0 +1,133 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: "lab-tanzu-platform-developer-experience"
+spec:
+  title: "Tanzu Platform Developer Experience"
+  description: "The workshop covers the developer experience of deploying applications to the Tanzu Platform."
+  publish:
+    image: "$(image_repository)/lab-tanzu-platform-developer-experience-files:$(workshop_version)"
+  environment:
+    objects:
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: kapp-installer
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: Role
+      metadata:
+        name: kapp-installer-role
+      rules:
+      - apiGroups: ['*']
+        resources: ['*']
+        verbs: ['*']
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        name: kapp-installer-role-rolebinding
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: Role
+        name: kapp-installer-role
+      subjects:
+      - kind: ServiceAccount
+        name: kapp-installer
+        namespace: $(workshop_namespace)
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: postgres-existing-secret
+      type: Opaque
+      stringData:
+        postgres-password: #@ data.values.tanzu_platform.db_password
+        password: #@ data.values.tanzu_platform.db_password
+        replication-password: #@ data.values.tanzu_platform.db_password
+    - apiVersion: kappctrl.k14s.io/v1alpha1
+      kind: App
+      metadata:
+        name: postgres
+      spec:
+        serviceAccountName: kapp-installer
+        syncPeriod: 720h
+        noopDelete: true
+        fetch:
+        - git:
+            url: https://github.com/Tanzu-Solutions-Engineering/tanzu-platform-workshop
+            ref: origin/dev-experience
+            subPath: lab-tanzu-platform-developer-experience/carvel-packages/postgres-package
+        template:
+        - ytt: 
+            inline:
+              paths:
+                values.yaml: |
+                  #@data/values
+                  ---
+                  ingress_domain: $(ingress_domain)
+                  host_suffix: -$(environment_name)
+        deploy:
+        - kapp: {}
+
+  workshop:
+    files:
+    - git:
+        url: https://github.com/Tanzu-Solutions-Engineering/tanzu-platform-workshop
+        ref: origin/dev-experience
+      includePaths:
+      - /lab-tanzu-platform-developer-experience/workshop/**
+      - /lab-tanzu-platform-developer-experience/exercises/**
+      - /lab-tanzu-platform-developer-experience/README.md
+      newRootPath: lab-tanzu-platform-developer-experience
+    packages:
+    - name: tanzu-cli
+      files:
+      - image:
+          url: ghcr.io/timosalm/tanzu-platform-workshop/lab-tanzu-platform-developer-experience-tanzu-cli-extension-package:v1.3.0
+  session:
+    namespaces:
+      budget: large
+      security:
+        token:
+          enabled: false
+    applications:
+      terminal:
+        enabled: true
+        layout: split
+      editor:
+        enabled: true
+      console:
+        enabled: false
+      docker:
+        enabled: true
+      registry:
+        enabled: true
+      vcluster:
+        enabled: false
+    env:
+    - name: KUBECONFIG
+      value: /home/eduk8s/.config/tanzu/kube/config
+    - name: PUBLIC_REGISTRY_HOST
+      value: public-registry-$(session_name).$(ingress_domain)
+    - name: TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID
+      value: #@ data.values.tanzu_platform.org
+    - name: TANZU_PLATFORM_PROJECT
+      value: #@ data.values.tanzu_platform.project
+    - name: TANZU_PLATFORM_PROFILES
+      value: #@ data.values.tanzu_platform.profiles
+    - name: TANZU_PLATFORM_AVAILABILITY_TARGETS
+      value: #@ data.values.tanzu_platform.availability_targets
+    - name: TANZU_CLI_SPACE_CREATE_TOKEN
+      value: #@ data.values.tanzu_platform.space_creation_token
+    - name: DB_PASSWORD
+      value: #@ data.values.tanzu_platform.db_password
+    ingresses:
+    - name: public-registry
+      host: $(session_name)-registry
+      port: 5000
+      protocol: http
+      headers:
+      - name: Authorization
+        value: "Basic REGISTRY_BASIC_AUTH_CREDENTIALS"
+      authentication:
+        type: none
