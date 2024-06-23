@@ -9,5 +9,3 @@ In this section, we'll put on our developer persona and to deliver an applicatio
   - Platform Provisioned
   - User Provided
 - Scale your application
-- Stop your application
-- View application logs

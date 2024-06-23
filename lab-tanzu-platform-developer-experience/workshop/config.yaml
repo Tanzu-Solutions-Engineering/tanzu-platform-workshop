@@ -12,7 +12,7 @@ pathways:
       - 03-deeper-dive-on-apps
       - 04-services
       - 05-scaling
-      - 06-troubleshooting
+      #- 06-troubleshooting
       - 99-workshop-summary
 
 # modules:

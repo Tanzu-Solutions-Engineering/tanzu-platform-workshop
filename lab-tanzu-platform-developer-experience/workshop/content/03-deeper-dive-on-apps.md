@@ -64,7 +64,7 @@ before: 0
 after: 1
 ```
 
-![Image showing ContainerApp lifecycle](./images/containerapp-lifecyle.png)
+![Image showing ContainerApp lifecycle](../images/containerapp-lifecyle.png)
 
 Remember, all we have done at this point is just update our on-disk configuration files.  We could make these changes take effect by building and deploying a new container for our application with the `tanzu deploy` command like we did at the begining of the workshop.
 
@@ -79,6 +79,7 @@ session: 2
 ```
 
 You can see that `tanzu build` is invoking the Cloud Native Buildpacks, and you should be able to see in the output that version 21 of the Java Virtual Machine was installed instead of version 17.  The line in the output you are looking for contains the text `BellSoft Liberica JDK 21.0.3`.
+
 
 We can also specify contact information about your application that is included with your deployment.  This information currently isn't used by the platform, but some of this information may be surfaced in the future.  It's a great way to communicate to application operators how to get in contact with the development team if they have questions or issues when deploying.
 

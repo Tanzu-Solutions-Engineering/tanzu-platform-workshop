@@ -1,7 +1,7 @@
 ---
 title: Scalability and Resiliency
 ---
-![Image showing an application with specific memory and CPU settings, multiple container replicas, and distributed across multiple clusters](./images/vertical-replicas-multi-at.png)
+![Image showing an application with specific memory and CPU settings, multiple container replicas, and distributed across multiple clusters](../images/vertical-replicas-multi-at.png)
 
 Tanzu Platform for Kubernetes makes it simple to scale your application resources vertically and horizontally for performance and resilience. We'll explore the different options for scaling your applications.
 
@@ -73,5 +73,3 @@ You may use a custom secret to inject credentials provided by your service opera
 {{< /note >}}
 
 So we've seen the multiple levels of scaling and resilience that are configurable for your application.  As an app developer, you can set the requested CPU, Memory and replicas to be provisioned within a single cluster for your application.  And platform engineers can specify how your application is scheduled across multiple clusters for cross-regional (and even cross-cloud!) resilience.
-
-Now, let's close things out by viewing the logs for our application.
