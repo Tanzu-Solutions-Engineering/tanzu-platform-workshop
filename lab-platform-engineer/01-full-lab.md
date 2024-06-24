@@ -226,7 +226,7 @@ tanzu operations apply -f templates/tkgs-cluster.yaml
 1. Confirm the Cluster is Healthy and Ready
     - This is the TMC layer, does not provide information about the UCP onboarding
     - Access the Hub GUI: `Infrastructure > Kubernetes Clusters > Clusters` and confirm it's `Healthy` and `Ready`.
-![Cluster Healthy TMC](./img/cluster-healthy-tmc.png)
+        ![Cluster Healthy TMC](./img/cluster-healthy-tmc.png)
     - CLI path: check status conditions
         ```
         tanzu project use <project-name>
@@ -234,7 +234,7 @@ tanzu operations apply -f templates/tkgs-cluster.yaml
         ```
 2. Confirm the Cluster is properly onboarded to UCP
     - Access the Hub GUI: `Setup & Configuration > Kubernetes Management` and confirm it is `Attached` and the Colector status is `Online`
-![Cluster Healthy UCP](./img/cluster-healthy-ucp.png)
+        ![Cluster Healthy UCP](./img/cluster-healthy-ucp.png)
     - CLI path: check status conditions
         ```
         tanzu operations clustergroup use <cluster-group-name>
@@ -335,18 +335,18 @@ Let's confirm the Availability Target is in `Ready` state.
 - Via Hub GUI: `Application Spaces > Availability Targets`
     - Type the name of your AT in the search field and click on "View Details"
     - You should see it `Ready` and your TKGS cluster should be listed in.
-![AT Healthy](./img/at-healthy.png)
+    ![AT Healthy](./img/at-healthy.png)
     - Bear in mind this sometimes take a few minutes, and your cluster must be fully onboarded to UCP to be considered here.
 - Via CLI, run these commands:
-```
-# for a nice output via tanzu CLI
-tanzu availability-target get <at-name>
+    ```
+    # for a nice output via tanzu CLI
+    tanzu availability-target get <at-name>
 
-# alternatively checking the status in the UCP resources
-tanzu project use <project-name>
-alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
-tk get availabilitytarget <at-name> -oyaml | yq .status
-```
+    # alternatively checking the status in the UCP resources
+    tanzu project use <project-name>
+    alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
+    tk get availabilitytarget <at-name> -oyaml | yq .status
+    ```
 
 #### (Optional/Bonus) Create an Availability Target that targets the TKGS cluster and the EKS overflow clusters
 
@@ -397,24 +397,24 @@ Alternatively you can create the Profile via CLI.
     - `metadata.name`
     - The following specs under the `multicloud-ingress.tanzu.vmware.com` trait inline configuration: `domain`, `gslb.authentication.credentialRef` and `gslb.authentication.zoneId` following the same suggestions provided above in the GUI based approach.
 - Then run the following commands:
-```
-tanzu project use <project-name>
-tanzu deploy --only templates/custom-networking-profile.yaml
-```
+    ```
+    tanzu project use <project-name>
+    tanzu deploy --only templates/custom-networking-profile.yaml
+    ```
 
 #### Check Profile is in Ready state
 - Via Hub GUI: `Application Spaces > Profiles > Find your profile and click on View Details`. You should see the Profile as `READY` in green, and with all `Traits to be installed` as `Resolved`.
 ![Profile Healthy](./img/profile-healthy.png)
 - Via CLI
-```
-# for a nice output via tanzu CLI
-tanzu profile get <profile-name>
+    ```
+    # for a nice output via tanzu CLI
+    tanzu profile get <profile-name>
 
-# alternatively checking the status in the UCP resources
-tanzu project use <project-name>
-alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
-tk get profile <profile-name> -oyaml | yq '(.status.conditions, .status.requiredCapabilities, .status.traits)'
-```
+    # alternatively checking the status in the UCP resources
+    tanzu project use <project-name>
+    alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
+    tk get profile <profile-name> -oyaml | yq '(.status.conditions, .status.requiredCapabilities, .status.traits)'
+    ```
 
 > Note: This doesn't confirm yet that the Traits Packages are deployed and configured succesfully anywhere. More on this in the next section.
 
@@ -448,82 +448,82 @@ Alternatively you can create the Space via CLI.
     - Under `spec.profiles` change the second profile name to match your Custom Networking Profile you created
     - Under `spec.availabilityTargets` change the name of the second AT to match the AT we created earlier targetting our TKGS clusters.
 - Then run the following commands:
-```
-tanzu project use <project-name>
-tanzu deploy --only templates/space.yaml
-```
-While in the CLI we can also validate that the Space is in ready state. Let's run a few commands
-```
-# for a nice output via tanzu CLI
-tanzu space get <space-name>
+    ```
+    tanzu project use <project-name>
+    tanzu deploy --only templates/space.yaml
+    ```
+    While in the CLI we can also validate that the Space is in ready state. Let's run a few commands
+    ```
+    # for a nice output via tanzu CLI
+    tanzu space get <space-name>
 
-# alternatively checking the status in the UCP resources
-tanzu project use <project-name>
-alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
-# get status of our space
-tk get space <space-name> -oyaml | yq .status
-# key elements to understand from the status outout
-# availabilityTargets: -> per AT the number of readyReplicas must match the number of replicas, otherwise the Space is having issues finding a k8s cluster that meets the criteria and/or scheduling the space 
-# conditions:
-#  - type: Progressing -> we will see one of this per replica of the Space.
-#    message: ManagedNamespaceSet "myname-prod-588d6d66b5" has successfully progressed. -> this ManagedNamespaceSet is a k8s CRD that has a set of ManagedNamespaces which equate to the actual namespaces created in the tartget k8s clusters.
-#  - type: Ready >  > self explanatory condition that illustrates the space being sucessfully scheduled or not
-#    message: successfully scheduled 
-# providedCapabilities: -> lists all the capabilities required by our space and to be statisfied by the target clusters to ensure scheduling of each Space replica.
-# resolvedProfiles: -> all profiles defined in the Space
+    # alternatively checking the status in the UCP resources
+    tanzu project use <project-name>
+    alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
+    # get status of our space
+    tk get space <space-name> -oyaml | yq .status
+    # key elements to understand from the status outout
+    # availabilityTargets: -> per AT the number of readyReplicas must match the number of replicas, otherwise the Space is having issues finding a k8s cluster that meets the criteria and/or scheduling the space 
+    # conditions:
+    #  - type: Progressing -> we will see one of this per replica of the Space.
+    #    message: ManagedNamespaceSet "myname-prod-588d6d66b5" has successfully progressed. -> this ManagedNamespaceSet is a k8s CRD that has a set of ManagedNamespaces which equate to the actual namespaces created in the tartget k8s clusters.
+    #  - type: Ready >  > self explanatory condition that illustrates the space being sucessfully scheduled or not
+    #    message: successfully scheduled 
+    # providedCapabilities: -> lists all the capabilities required by our space and to be statisfied by the target clusters to ensure scheduling of each Space replica.
+    # resolvedProfiles: -> all profiles defined in the Space
 
-# We can get info from the generated ManagedNamespaceSet and ManagedNamespace resources
-tk get managednamespaceset myname-prod-588d6d66b5 -o yaml
-# for each space replica inthat managednamespaceset, we can find a managednamespace resource, with an extra suffix in the name
-tk get myname-prod-588d6d66b5-2cjrc -oyaml .status
-# key elements from the status outout
-#  conditions: -> self explanatory to show scheduling status and readiness for this space replica
-#  - type: Scheduled
-#    message: found a matching cluster
-#  - type: TraitsInstalled
-#    message: Traits Installed
-#  - type: Ready
-#    message: Ready
-#  placement:
-#    cluster:
-#      clusterGroup: jaime-cg-demo -> clsuter group the target k8s cluser belongs to, with all required capabilities
-#      name: jaime-tkgs-demo -> target cluster that matched criteria and resources for scheduling of this space replica
-#      namespace: default
-#    namespace: myname-prod-588d6d66b5-2cjrc -> actual name of the namespace in the target cluster created to deploy this space replica
-#  providedCapabilities: -> lists all the capabilities required by our space and to be statisfied by this target clusters to ensure scheduling of this replica
-```
+    # We can get info from the generated ManagedNamespaceSet and ManagedNamespace resources
+    tk get managednamespaceset myname-prod-588d6d66b5 -o yaml
+    # for each space replica inthat managednamespaceset, we can find a managednamespace resource, with an extra suffix in the name
+    tk get myname-prod-588d6d66b5-2cjrc -oyaml .status
+    # key elements from the status outout
+    #  conditions: -> self explanatory to show scheduling status and readiness for this space replica
+    #  - type: Scheduled
+    #    message: found a matching cluster
+    #  - type: TraitsInstalled
+    #    message: Traits Installed
+    #  - type: Ready
+    #    message: Ready
+    #  placement:
+    #    cluster:
+    #      clusterGroup: jaime-cg-demo -> clsuter group the target k8s cluser belongs to, with all required capabilities
+    #      name: jaime-tkgs-demo -> target cluster that matched criteria and resources for scheduling of this space replica
+    #      namespace: default
+    #    namespace: myname-prod-588d6d66b5-2cjrc -> actual name of the namespace in the target cluster created to deploy this space replica
+    #  providedCapabilities: -> lists all the capabilities required by our space and to be statisfied by this target clusters to ensure scheduling of this replica
+    ```
 
 #### Inspect resources created in the target clusters(s)
 1. Let's access our TKGS cluster the same way we did earlier in this workshop in the [Inspect Packages and Agents intalled](/lab-platform-engineer/01-full-lab.md#inspect-packages-and-agents-intalled) section.
 
 2. Check the new namespaces
-```
-kubectl get ns
-# we should now see two new namespaces that match with the managedspace resource name
-NAME                                    STATUS   AGE
-jaime-demo-58d6c9cf7d-wkbk9             Active   6m24s  # this is the namespace where the apps will be deployed
-jaime-demo-58d6c9cf7d-wkbk9-internal    Active   6m24s  # this is an auxiliary namespace that includes the traits packages and their configuration
-```
+    ```
+    kubectl get ns
+    # we should now see two new namespaces that match with the managedspace resource name
+    NAME                                    STATUS   AGE
+    jaime-demo-58d6c9cf7d-wkbk9             Active   6m24s  # this is the namespace where the apps will be deployed
+    jaime-demo-58d6c9cf7d-wkbk9-internal    Active   6m24s  # this is an auxiliary namespace that includes the traits packages and their configuration
+    ```
 
 3. Check contents of the app namespace
-```
-kubectl get pod,svc -n jaime-demo-58d6c9cf7d-wkbk9
-# we should only see the multicloiud-ingress-operator pod since no apps have been deployed yet
-NAME                                               READY   STATUS    RESTARTS   AGE
-pod/multicloud-ingress-operator-7bb85d98bc-7mrjj   1/1     Running   0          6m22s
-```
+    ```
+    kubectl get pod,svc -n jaime-demo-58d6c9cf7d-wkbk9
+    # we should only see the multicloiud-ingress-operator pod since no apps have been deployed yet
+    NAME                                               READY   STATUS    RESTARTS   AGE
+    pod/multicloud-ingress-operator-7bb85d98bc-7mrjj   1/1     Running   0          6m22s
+    ```
 
 4. Check the packages in the auxiliar namespace
-```
-kubectl get pkgi -n jaime-demo-58d6c9cf7d-wkbk9-internal
-# we should see all namespace-bound packages spacific to the tratis we selected in all Profiles of our Space
-NAME                                              PACKAGE NAME                                PACKAGE VERSION   DESCRIPTION           AGE
-carvel-package-installer.tanzu.vmware.com-9b887   carvel-package-installer.tanzu.vmware.com   0.1.10            Reconcile succeeded   8m3s
-egress.tanzu.vmware.com-6d9f5                     egress.tanzu.vmware.com                     0.0.5             Reconcile succeeded   8m3s
-multicloud-cert-manager.tanzu.vmware.com-86446    multicloud-cert-manager.tanzu.vmware.com    2.0.0             Reconcile succeeded   8m3s
-multicloud-ingress.tanzu.vmware.com-8948f         multicloud-ingress.tanzu.vmware.com         0.1.5             Reconcile succeeded   8m2s
-observability.tanzu.vmware.com-6d469              observability-traits.tanzu.vmware.com       1.0.2             Reconcile succeeded   8m2s
-```
+    ```
+    kubectl get pkgi -n jaime-demo-58d6c9cf7d-wkbk9-internal
+    # we should see all namespace-bound packages spacific to the tratis we selected in all Profiles of our Space
+    NAME                                              PACKAGE NAME                                PACKAGE VERSION   DESCRIPTION           AGE
+    carvel-package-installer.tanzu.vmware.com-9b887   carvel-package-installer.tanzu.vmware.com   0.1.10            Reconcile succeeded   8m3s
+    egress.tanzu.vmware.com-6d9f5                     egress.tanzu.vmware.com                     0.0.5             Reconcile succeeded   8m3s
+    multicloud-cert-manager.tanzu.vmware.com-86446    multicloud-cert-manager.tanzu.vmware.com    2.0.0             Reconcile succeeded   8m3s
+    multicloud-ingress.tanzu.vmware.com-8948f         multicloud-ingress.tanzu.vmware.com         0.1.5             Reconcile succeeded   8m2s
+    observability.tanzu.vmware.com-6d469              observability-traits.tanzu.vmware.com       1.0.2             Reconcile succeeded   8m2s
+    ```
 
 #### Rplicating Spaces for Resiliency
 
