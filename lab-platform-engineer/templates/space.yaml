@@ -1,7 +1,7 @@
  apiVersion: spaces.tanzu.vmware.com/v1alpha1
  kind: Space
  metadata:
-   name: myname-prod
+   name: jaime-demo
  spec:
    template:
      spec:
