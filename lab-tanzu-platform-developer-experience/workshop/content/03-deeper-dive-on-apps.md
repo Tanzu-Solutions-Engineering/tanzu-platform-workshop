@@ -89,7 +89,7 @@ tanzu app config contact set email=me@here.com
 ```
 
 We can also add multiple entries and have the CLI prompt us for the information. Let's add *team* and *slack* entries to our contact info.  
-You can enter arbitrary strings for each key.
+You can enter arbitrary strings for each prompted entry.
 ```execute
 tanzu app config contact set team slack
 ```
