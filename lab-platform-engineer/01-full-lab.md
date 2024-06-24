@@ -548,12 +548,14 @@ tanzu deploy --from-build ./pre-built
 
 Access the Hub GUI: `Application Spaces > Spaces > Click in your space to view details`. The space will now show gradually:
 - Applications: the `spring-smoketest` application you just deployed
-![Space App](./img/spaceapp.png)
+    ![Space App](./img/spaceapp.png)
+    - Click on the Space URL to access the UI and see something similar to this:
+        ![App](./img/smoketestapp.png)
 - Kubernetes Services: `spring-smoketest` service and `default-gateway-istio` service for each cluster
-![Space K8s Services](./img/spacek8sservices.png)
+    ![Space K8s Services](./img/spacek8sservices.png)
 - Network Topology: 2 clusters each with the 2 k8s services. As traffic flows those servies should connect visually (more on this later)
 It may take some time for the k8s services and network topology to show everything. Wait at least a minute or 2 and click `Refresh` as needed.
-![Space Network Topology](./img/spacenetworktopology.png)
+    ![Space Network Topology](./img/spacenetworktopology.png)
 
 #### Inspect resources created in the target clusters(s)
 1. Let's access our TKGS cluster the same way we did earlier in this workshop in the [Inspect Packages and Agents intalled](/lab-platform-engineer/01-full-lab.md#inspect-packages-and-agents-intalled) section.
