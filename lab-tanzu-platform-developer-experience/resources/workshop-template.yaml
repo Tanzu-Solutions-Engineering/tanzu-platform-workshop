@@ -55,7 +55,7 @@ spec:
         fetch:
         - git:
             url: https://github.com/Tanzu-Solutions-Engineering/tanzu-platform-workshop
-            ref: origin/dev-experience
+            ref: origin/main
             subPath: lab-tanzu-platform-developer-experience/carvel-packages/postgres-package
         template:
         - ytt: 
@@ -73,7 +73,7 @@ spec:
     files:
     - git:
         url: https://github.com/Tanzu-Solutions-Engineering/tanzu-platform-workshop
-        ref: origin/dev-experience
+        ref: origin/main
       includePaths:
       - /lab-tanzu-platform-developer-experience/workshop/**
       - /lab-tanzu-platform-developer-experience/exercises/**
