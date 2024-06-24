@@ -7,8 +7,12 @@ However, we're running this workshop in Educates, so we are almost acting as if 
 ![Image showing the login token we need to copy in the URL line of your browser](https://raw.githubusercontent.com/vmware-tanzu/tanzu-cli/6a11ce93cd4e811e213e8439e090e1d73a053fd3/docs/quickstart/images/interactive_login_copy_authcode.png)
 
 Click on the section below to log in.  Your browser will prompt you to log in to the CSP, and then it will show an error page since your machine can't talk directly to the Tanzu CLI running in Educates. Copy the token from the address bar and then come back to Educates.
+
+{{< note >}}
+You will see an error page pop up when the `tanzu login` command runs. This is normal in the workshop environment.  Follow the instructions and image right above the `tanzu login` step in the workshop instructions that explains how to copy the `code` value from the error page address bar, and then paste that code value into this terminal session
+{{< /note >}}
+
 ```execute
-echo '\033[0;31m'~~~~~~~~~~~~~ IMPORTANT NOTE: ~~~~~~~~~~~~~'\033[0m''\n'You will see an error page pop up when the \'tanzu login\' command runs.  This is normal in the workshop environment.  Follow the instructions and image right above the \'tanzu login\' step in the workshop instructions that explains how to copy the \'code\' value from the error page address bar, and then paste that code value into this terminal session'\n''\033[0;31m'~~~~~~~~~~~~~ IMPORTANT NOTE: ~~~~~~~~~~~~~'\033[0m'
 tanzu login
 ```
 
