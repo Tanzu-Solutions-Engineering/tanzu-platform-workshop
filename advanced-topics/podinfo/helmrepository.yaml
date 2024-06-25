@@ -5,4 +5,4 @@ metadata:
   name: podinfo
 spec:
   interval: 5m
-  url: oci://ghcr.io/stefanprodan/charts/podinfo
+  url: https://stefanprodan.github.io/podinfo

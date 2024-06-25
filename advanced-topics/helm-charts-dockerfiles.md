@@ -307,3 +307,42 @@ Continue? [yN]: y
 6:05:13PM: ---- applying complete [4/4 done] ----
 6:05:13PM: ---- waiting complete [4/4 done] ----
 ```
+3. View status of Helm Repository from UCP
+
+```
+alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
+tk get srs -l "resource-name=podinfo,kind=HelmRepository" -oyaml
+
+Look For:
+              .status:
+                conditions:
+                - lastTransitionTime: "2024-06-25T19:33:35Z"
+                  message: 'stored artifact: revision ''sha256:3dfe15d87f81dedc8ddaf116c7302892e54a0d8f269e35f65aaff9ac4d1b179c'''
+                  observedGeneration: 2
+                  reason: Succeeded
+                  status: "True"
+                  type: Ready
+```
+4. View staus of Helm Release from UCP
+
+```
+alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
+tk get srs -l "resource-name=podinfo,kind=HelmRelease" -oyaml
+
+              .status:
+                conditions:
+                - lastTransitionTime: "2024-06-25T19:33:44Z"
+                  message: Helm install succeeded for release bauerbo-helm-app-fdf9b444d-vj92s/podinfo.v1
+                    with chart podinfo@6.5.4
+                  observedGeneration: 1
+                  reason: InstallSucceeded
+                  status: "True"
+                  type: Ready
+```
+5. Verify using the UI
+
+Navigate to your Space in Tanzu Platform UI (`Application Space -> Spaces -> Your helm-app space`) and click View Details
+
+On the Space you will see a Space URL: podinfo.fqdn.com.  This is where you application is publically available via HTTPRoute.  You can also see this same information undeer Ingress & Egress.  Open this link in your web browser to visit the Podinfo site.
+
+![Helm Space URL](../images/helm-space-url.png)
