@@ -1,0 +1,14 @@
+apiVersion: spaces.tanzu.vmware.com/v1alpha1
+kind: Profile
+metadata:
+  name: flux-helm-profile
+spec:
+  description: Provides capabilities to deploy helm charts using fluxcd
+  requiredCapabilities:
+  - name: fluxcd-helm.tanzu.vmware.com
+  - name: fluxcd-source.tanzu.vmware.com
+  traits:
+  - alias: fluxcd-helmrelease-installer
+    name: fluxcd-helmrelease-installer.tanzu.vmware.com
+    values:
+      inline: null

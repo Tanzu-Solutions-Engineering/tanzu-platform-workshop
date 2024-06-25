@@ -78,7 +78,7 @@ For TKGs clusters we ship with Pod Security Admission mode set to enforce [Visit
 tanzu context current
 # Cluster Group: {your cluster group} should be one of the variables in the output
 ```
-2. Edit the psa-mutating-policy.yaml file in this repo and replace `{your clustergroup name}` with the  name of the cluster group you are using.  Note: This is an intentionally broad policy (all clusters in the group and all new namespaces)
+2. Edit the advanced-topics/templates/psa-mutating-policy.yaml file in this repo and replace `{your clustergroup name}` with the  name of the cluster group you are using.  Note: This is an intentionally broad policy (all clusters in the group and all new namespaces)
 
 ```
 fullName:
@@ -94,7 +94,7 @@ spec:
 3. Create the Mutation Policy
 
 ```
-tanzu operations policy create -s clustergroup -f psa-mutating-policy.yaml
+tanzu operations policy create -s clustergroup -f templates/psa-mutating-policy.yaml
 ```
 
 4. You can verify the policy was created using
@@ -104,7 +104,57 @@ tanzu operations policy list
 tanzu operations policy get psa-mutation-policy -n {clustergroup name} -s clustergroup
 ```
 
-## Create Helm Profile
+## Create Flex-Helm Profile
+
+We can use the Tanzu Provided fluxcd-helm.tanzu.vmware.com profile as it provides the required capabilities `fluxcd-helm.tanzu.vmware.com, fluxcd-source.tanzu.vmware.com` and traits `fluxcd-helmrelease-installer.tanzu.vmware.com`
+
+Alternatively you can create your own profile by applying the templates/flux-helm-profile.yaml using the Tanzu CLI or you could even make your own via the UI.
+
+CLI Instructions
+
+1. Make sure your project is selected
+
+```
+tanzu context current
+```
+2. Apply flux-helm-profile.yaml  from templates folder
+
+```
+tanzu profile create -f flux-helm-profile.yaml
+🔎 Creating profile:
+      1 + |---
+      2 + |apiVersion: spaces.tanzu.vmware.com/v1alpha1
+      3 + |kind: Profile
+      4 + |metadata:
+      5 + |  name: flux-helm-profile
+      6 + |  namespace: default
+      7 + |spec:
+      8 + |  description: Provides capabilities to deploy helm charts using fluxcd
+      9 + |  requiredCapabilities:
+     10 + |  - name: fluxcd-helm.tanzu.vmware.com
+     11 + |  - name: fluxcd-source.tanzu.vmware.com
+     12 + |  traits:
+     13 + |  - alias: fluxcd-helmrelease-installer
+     14 + |    name: fluxcd-helmrelease-installer.tanzu.vmware.com
+     15 + |    values:
+     16 + |      inline: null
+Create profile flux-helm-profile from flux-helm-profile.yaml? [yN]: y
+✓ Successfully created profile flux-helm-profile
+```
+3. Verify Policy was created and Ready is True
+
+```
+tanzu profile list
+Listing profiles from Tanzu Platform for Org
+  NAME                          READY  TRAITS RESOLVED  AGE
+  flux-helm-profile             True   1/1              5s
+  fluxcd-helm.tanzu.vmware.com  True   1/1              41d
+  gateway-api                   True   0/0              18d
+  k8s-containerapp              True   1/1              7d6h
+  networking.tanzu.vmware.com   True   3/3              41d
+  spring-dev.tanzu.vmware.com   True   3/3              41d
+  spring-prod.tanzu.vmware.com  True   3/3              41d
+```
 
 ## Create Helm Space
 
