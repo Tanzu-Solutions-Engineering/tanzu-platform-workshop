@@ -1,0 +1,8 @@
+# helmrepository.yaml
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: podinfo
+spec:
+  interval: 5m
+  url: oci://ghcr.io/stefanprodan/charts/podinfo

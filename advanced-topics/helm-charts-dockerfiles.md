@@ -47,6 +47,8 @@ tanzu operations clustergroup use
 
 ## Install Helm Capabilites on your Cluster group
 
+[Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html#add-packages)
+
 We are going to use the Tanzu CLI to install the cluster group capabilities although these can also be done using the UI (`Application Spaces -> Capabilities`).
 
 Since we are reusing the previous cluster group, most of the needed capabilities for helm apps are already installed, so we will just add the two new flux capabilies provided by the following packages.
@@ -69,6 +71,8 @@ We could also check using the Tanzu Platform for Kubernetes UI (`Application Spa
 ![placeholder]{../images/foo.png}
 
 ## Create Mutation Webhook Policy
+
+[Official Documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-mutation-policy.html_)
 
 For TKGs clusters we ship with Pod Security Admission mode set to enforce [Visit this page for more information](https://kubernetes.io/docs/concepts/security/pod-security-admission/).  This means security violations cause a pod to be rejected. The test application we are using breaks the policy and won't be scheduled unless we label the application namespace PSA standard level accordingly.  Since Tanzu Platform for Kubernetes dynamically creates namespaces based on the Space concept, we need a way to automatically label these namespaces to allow our pods to run.
 
@@ -104,13 +108,15 @@ tanzu operations policy list
 tanzu operations policy get psa-mutation-policy -n {clustergroup name} -s clustergroup
 ```
 
-## Create Flex-Helm Profile
+## Flex-Helm Profile
 
-We can use the Tanzu Provided fluxcd-helm.tanzu.vmware.com profile as it provides the required capabilities `fluxcd-helm.tanzu.vmware.com, fluxcd-source.tanzu.vmware.com` and traits `fluxcd-helmrelease-installer.tanzu.vmware.com`
+We will be reusing profiles created in the earlier modules (`sping-dev-simple-sa.tanzu.vmware.com`) and your custom network profile (`networking.mydomain.com or yourname-customer-networking`).  We will be using an additional profile to add the fluxcd source and fluxcd helm capabilities to our space.  This demonstrates the additive abilty of reusing profiles grouped around an application type or requirement.
+
+We can use the **Tanzu Provided** `fluxcd-helm.tanzu.vmware.com` profile as it provides the required capabilities fluxcd-helm.tanzu.vmware.com, fluxcd-source.tanzu.vmware.com and traits fluxcd-helmrelease-installer.tanzu.vmware.com to deploy a helm application.
 
 Alternatively you can create your own profile by applying the templates/flux-helm-profile.yaml using the Tanzu CLI or you could even make your own via the UI.
 
-CLI Instructions
+CLI Instructions **(Optional)**
 
 1. Make sure your project is selected
 
@@ -156,15 +162,29 @@ Listing profiles from Tanzu Platform for Org
   spring-prod.tanzu.vmware.com  True   3/3              41d
 ```
 
-## Create Helm Space
+## Create Helm App Space
 
-3. Expand your space by clicking on view details then select Space Configuration.  Examine the Profiles to verify you see **at least** the following Profiles `fluxcd-helm.tanzu.vmware.com my-custom-networking gateway-api`
+Access the Tanzu Platform GUI: `Application Spaces -> Spaces -> Create Space -> Step by Step`
+
+1. Space Name
+    - Choose a unique name and something different than you've used for other spaces in this workshop.  Example: `yourname-helmapp`
+2. Select Profiles
+    - Select your custom networking profile you created in previous module
+    - Select the spring-dev-simple-sa.tanzu.vmware.com profile
+    - Select the fluxcd-helm.tanzu.vmware.com (or custom flux profile you create)
+3. Availability Targets
+    - Add the availabilty target which contains the clustergroup you've installed the capabilities on in previous modules and above in this module
+4. Click `Create Space`
+
+4. Expand your space by clicking on view details then select Space Configuration.  Examine the Profiles to verify you see **at least** the following Profiles `fluxcd-helm.tanzu.vmware.com my-custom-networking gateway-api`
 
 ![Space Configuration](../images/helm-space-configuration.png)
 
 ![Space Ready](../images/helm-space-tile.png)
 
-## Create Helm Objects
+## Install Helm charts in a Space
+
+[Official Documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-helm-charts-in-spaces.html)
 
 Instructions Here
 
