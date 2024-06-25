@@ -32,6 +32,7 @@ alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
 3. Select the Project you have been using during your workshop
 ```
 tanzu project list
+tanzu project use
 # follow the interactive menu to select the project you've been assigned to
 ```
 3. Select your cluster group
@@ -39,24 +40,29 @@ tanzu project list
 For this module we will reuse the same clusterg roup you used in your previous sections.  So please select that cluster group using the command below.
 
 ```
+tanzu operations clustergroup list
 tanzu operations clustergroup use
 # follow the interactive menu to select the cluster group you previously created
 ```
 
-## Install Helm Capabilites on your Clustergroup
+## Install Helm Capabilites on your Cluster group
 
 We are going to use the Tanzu CLI to install the cluster group capabilities although these can also be done using the UI (`Application Spaces -> Capabilities`).
 
 Since we are reusing the previous cluster group, most of the needed capabilities for helm apps are already installed, so we will just add the two new flux capabilies provided by the following packages.
 
 ```
-tanzu package install fluxcd-helm.tanzu.vmware.com -p fluxcd-helm-controller.tanzu.vmware.com -v '>0.0.0'
-tanzu package install fluxcd-source.tanzu.vmware.com -p fluxcd-source.tanzu.vmware.com -v '>0.0.0'
+tanzu package install fluxcd-helm-controller.tanzu.vmware.com -p fluxcd-helm-controller.tanzu.vmware.com -v '>0.0.0'
+tanzu package install fluxcd-source-controller.tanzu.vmware.com -p fluxcd-source-controller.tanzu.vmware.com -v '>0.0.0'
 ```
 
 We can verify the packages corretly installed using the CLI and the previously aliased tk command
 ```
 tk get pkgi
+```
+or
+```
+tanzu package installed list
 ```
 
 We could also check using the Tanzu Platform for Kubernetes UI (`Application Spaces -> Capabilities -> Installed -> Select your cluster group`).  You will see something like this:
@@ -64,14 +70,52 @@ We could also check using the Tanzu Platform for Kubernetes UI (`Application Spa
 
 ## Create Mutation Webhook Policy
 
-For TKGs clusters we ship with Pod Security Admission mode set to enforce [Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/).  This means security violations cause a pod to be rejected. The test application we are using breaks the policy and won't be scheduled unless we label the application namespace PSA standard level accordingly.  Since Tanzu Platform for Kubernetes dynamically creates namespaces based on the Space concept, we need a way to automatically label these namespaces to allow our pods to run.
+For TKGs clusters we ship with Pod Security Admission mode set to enforce [Visit this page for more information](https://kubernetes.io/docs/concepts/security/pod-security-admission/).  This means security violations cause a pod to be rejected. The test application we are using breaks the policy and won't be scheduled unless we label the application namespace PSA standard level accordingly.  Since Tanzu Platform for Kubernetes dynamically creates namespaces based on the Space concept, we need a way to automatically label these namespaces to allow our pods to run.
 
+1. Verify you are in the correct cluster group
 
+```
+tanzu context current
+# Cluster Group: {your cluster group} should be one of the variables in the output
+```
+2. Edit the psa-mutating-policy.yaml file in this repo and replace `{your clustergroup name}` with the  name of the cluster group you are using.  Note: This is an intentionally broad policy (all clusters in the group and all new namespaces)
 
-![Space Ready](../images/helm-space-tile.png)
+```
+fullName:
+  clusterGroupName: {your clustergroup name}
+  name: psa-mutation-policy
+meta:
+spec:
+  input:
+    label:
+      key: pod-security.kubernetes.io/enforce
+........
+  ```
+3. Create the Mutation Policy
+
+```
+tanzu operations policy create -s clustergroup -f psa-mutating-policy.yaml
+```
+
+4. You can verify the policy was created using
+
+```
+tanzu operations policy list
+tanzu operations policy get psa-mutation-policy -n {clustergroup name} -s clustergroup
+
+## Create Helm Profile
+
+## Create Helm Space
 
 3. Expand your space by clicking on view details then select Space Configuration.  Examine the Profiles to verify you see **at least** the following Profiles `fluxcd-helm.tanzu.vmware.com my-custom-networking gateway-api`
 
 ![Space Configuration](../images/helm-space-configuration.png)
 
-Bob's clustergroup mutation webhook policy https://chat.google.com/room/AAAA7-TLcC0/qtEJEIWujdU/QZVuuRDL-PE?cls=10
+![Space Ready](../images/helm-space-tile.png)
+
+## Create Helm Objects
+
+Instructions Here
+
+
+
