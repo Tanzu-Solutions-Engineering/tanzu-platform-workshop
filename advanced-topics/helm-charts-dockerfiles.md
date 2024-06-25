@@ -94,7 +94,8 @@ fluxcd-source-controller.tanzu.vmware.com   fluxcd-source-controller.tanzu.vmwar
 ```
 
 We could also check using the Tanzu Platform for Kubernetes UI (`Application Spaces -> Capabilities -> Installed -> Select your cluster group`).  You will see something like this:
-![Cluster Group Capabilities]{../images/capabilities.png}
+
+![Cluster Group Capabilities](../images/capabilities.png)
 
 ## Create Mutation Webhook Policy
 
