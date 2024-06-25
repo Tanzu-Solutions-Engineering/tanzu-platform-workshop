@@ -103,11 +103,13 @@ We could also check using the Tanzu Platform for Kubernetes UI (`Application Spa
 
 For TKGs clusters we ship with Pod Security Admission mode set to enforce [Visit this page for more information](https://kubernetes.io/docs/concepts/security/pod-security-admission/).  This means security violations cause a pod to be rejected. The test application we are using breaks the policy and won't be scheduled unless we label the application namespace PSA standard level accordingly.  Since Tanzu Platform for Kubernetes dynamically creates namespaces based on the Space concept, we need a way to automatically label these namespaces to allow our pods to run.
 
-1. Verify you are in the correct cluster group
+1. Verify that your clustergroup is stil selected in your context
 
 ```
 tanzu context current
 # Cluster Group: {your cluster group} should be one of the variables in the output
+
+
 ```
 2. Edit the advanced-topics/templates/psa-mutating-policy.yaml file in this repo and replace `{your clustergroup name}` with the  name of the cluster group you are using.  Note: This is an intentionally broad policy (all clusters in the group and all new namespaces)
 
@@ -145,69 +147,80 @@ Alternatively you can create your own profile by applying the templates/flux-hel
 
 CLI Instructions **(Optional)**
 
-1. Make sure your project is selected
+1. Select project (setting this will reset the space or clustergroup in your context).  Commands run from the CLI need to be created in the correct context or you will either get errors or items created in an unexpected place.  It is good practice to alway verify your context before CLI commands.
 
 ```
+tanzu project use
+# follow the interactive menu to select the project you've been assigned to
+
 tanzu context current
+  Name:            sa-tanzu-platform
+  Type:            tanzu
+  Organization:    sa-tanzu-platform (8406......)
+  Project:         workshop01 (66cf1......)
+  Kube Config:     /home/ubuntu/.config/tanzu/kube/config
+  Kube Context:    sa-tanzu-platform:workshop01
+
+  # Note there is no Space or Clustergroup specificed
 ```
 2. Apply flux-helm-profile.yaml  from templates folder
 
 ```
-tanzu profile create -f flux-helm-profile.yaml
-🔎 Creating profile:
-      1 + |---
-      2 + |apiVersion: spaces.tanzu.vmware.com/v1alpha1
-      3 + |kind: Profile
-      4 + |metadata:
-      5 + |  name: flux-helm-profile
-      6 + |  namespace: default
-      7 + |spec:
-      8 + |  description: Provides capabilities to deploy helm charts using fluxcd
-      9 + |  requiredCapabilities:
-     10 + |  - name: fluxcd-helm.tanzu.vmware.com
-     11 + |  - name: fluxcd-source.tanzu.vmware.com
-     12 + |  traits:
-     13 + |  - alias: fluxcd-helmrelease-installer
-     14 + |    name: fluxcd-helmrelease-installer.tanzu.vmware.com
-     15 + |    values:
-     16 + |      inline: null
-Create profile flux-helm-profile from flux-helm-profile.yaml? [yN]: y
-✓ Successfully created profile flux-helm-profile
+tanzu deploy --only templates/flux-helm-profile.yaml
+
+Target cluster 'https://api.tanzu.cloud.vmware.com/org/8406e52e-.............'
+
+Changes
+
+Namespace  Name               Kind     Age  Op      Op st.  Wait to  Rs  Ri
+default    flux-helm-profile  Profile  12h  update  -       -        ok  -
+
+Op:      0 create, 0 delete, 1 update, 0 noop, 0 exists
+Wait to: 0 reconcile, 0 delete, 1 noop
+
+Continue? [yN]: y
+
+5:00:36PM: ---- applying 1 changes [0/1 done] ----
+5:00:36PM: update profile/flux-helm-profile (spaces.tanzu.vmware.com/v1alpha1) namespace: default
+5:00:36PM: ---- waiting on 1 changes [0/1 done] ----
+5:00:36PM: ok: noop profile/flux-helm-profile (spaces.tanzu.vmware.com/v1alpha1) namespace: default
+5:00:36PM: ---- applying complete [1/1 done] ----
+5:00:36PM: ---- waiting complete [1/1 done] ----
 ```
 3. Verify Policy was created and Ready is True
 
 ```
 tanzu profile list
-Listing profiles from Tanzu Platform for Org
-  NAME                          READY  TRAITS RESOLVED  AGE
-  flux-helm-profile             True   1/1              5s
-  fluxcd-helm.tanzu.vmware.com  True   1/1              41d
-  gateway-api                   True   0/0              18d
-  k8s-containerapp              True   1/1              7d6h
-  networking.tanzu.vmware.com   True   3/3              41d
-  spring-dev.tanzu.vmware.com   True   3/3              41d
-  spring-prod.tanzu.vmware.com  True   3/3              41d
+Listing profiles from Tanzu Platform for sa-tanzu-platform
+  NAME                                   READY  TRAITS RESOLVED  AGE
+  bauerbo-custom-networking              True   3/3              40d
+  flux-helm-profile                      True   1/1              12h
+  fluxcd-helm.tanzu.vmware.com           True   1/1              42d
+  gateway-api                            True   0/0              18d
+  k8s-containerapp                       True   1/1              7d19h
+  networking.tanzu.vmware.com            True   3/3              42d
+  spring-dev-simple-sa.tanzu.vmware.com  True   2/2              3h11m
+  spring-dev.tanzu.vmware.com            True   3/3              42d
+  spring-prod.tanzu.vmware.com           True   3/3              42d
 ```
-
 ## Create Helm App Space
 
 Access the Tanzu Platform GUI: `Application Spaces -> Spaces -> Create Space -> Step by Step`
 
 1. Space Name
-    - Choose a unique name and something different than you've used for other spaces in this workshop.  Example: `yourname-helmapp`
+    - Choose a unique name and something different than you've used for other spaces in this workshop.  Example: `yourname-helm-app`
 2. Select Profiles
     - Select your custom networking profile you created in previous module
     - Select the spring-dev-simple-sa.tanzu.vmware.com profile
     - Select the fluxcd-helm.tanzu.vmware.com (or custom flux profile you create)
 3. Availability Targets
-    - Add the availabilty target which contains the clustergroup you've installed the capabilities on in previous modules and above in this module
+    - Add the availabilty target which contains the clustergroup you've installed the capabilities on in previous modules and above in this module (example bauerbo-at-tkgs)
+    - Set Replicas to 1
 4. Click `Create Space`
-
-4. Expand your space by clicking on view details then select Space Configuration.  Examine the Profiles to verify you see **at least** the following Profiles `fluxcd-helm.tanzu.vmware.com my-custom-networking gateway-api`
-
-![Space Configuration](../images/helm-space-configuration.png)
-
+5. View your Space in the Space page.  It will take some time for the Space to become ready.  Use the Refesh in upper right to refresh the view
 ![Space Ready](../images/helm-space-tile.png)
+6. Expand your space by clicking on `View Details -> Space Configuration` You should see the 3 Profiles you added in Step 2 of Space Creation
+![Space Configuration](../images/helm-space-configuration.png)
 
 ## Install Helm charts in a Space
 
