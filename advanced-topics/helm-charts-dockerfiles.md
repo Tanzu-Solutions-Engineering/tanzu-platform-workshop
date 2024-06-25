@@ -72,17 +72,29 @@ tanzu package install fluxcd-helm-controller.tanzu.vmware.com -p fluxcd-helm-con
 tanzu package install fluxcd-source-controller.tanzu.vmware.com -p fluxcd-source-controller.tanzu.vmware.com -v '>0.0.0'
 ```
 
-We can verify the packages corretly installed using the CLI and the previously aliased tk command
+We can verify the packages corretly installed using the CLI and aliased tk command
 ```
+alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
 tk get pkgi
-```
-or
-```
-tanzu package installed list
+
+NAME                                        PACKAGE NAME                                PACKAGE VERSION   DESCRIPTION   AGE
+k8sgateway.tanzu.vmware.com                 k8sgateway.tanzu.vmware.com                                                 8m39s
+tcs.tanzu.vmware.com                        tcs.tanzu.vmware.com                                                        8m33s
+cert-manager.tanzu.vmware.com               cert-manager.tanzu.vmware.com                                               8m48s
+observability.tanzu.vmware.com              observability.tanzu.vmware.com                                              8m25s
+mtls.tanzu.vmware.com                       mtls.tanzu.vmware.com                                                       7m42s
+container-apps.tanzu.vmware.com             container-apps.tanzu.vmware.com                                             7m20s
+bitnami.services.tanzu.vmware.com           bitnami.services.tanzu.vmware.com                                           7m27s
+crossplane.tanzu.vmware.com                 crossplane.tanzu.vmware.com                                                 7m35s
+servicebinding.tanzu.vmware.com             servicebinding.tanzu.vmware.com                                             7m13s
+tanzu-servicebinding.tanzu.vmware.com       tanzu-servicebinding.tanzu.vmware.com                                       7m4s
+spring-cloud-gateway.tanzu.vmware.com       spring-cloud-gateway.tanzu.vmware.com                                       6m55s
+fluxcd-helm-controller.tanzu.vmware.com     fluxcd-helm-controller.tanzu.vmware.com                                     2m28s
+fluxcd-source-controller.tanzu.vmware.com   fluxcd-source-controller.tanzu.vmware.com                                   2m17s                
 ```
 
 We could also check using the Tanzu Platform for Kubernetes UI (`Application Spaces -> Capabilities -> Installed -> Select your cluster group`).  You will see something like this:
-![placeholder]{../images/foo.png}
+![Cluster Group Capabilities]{../images/capabilities.png}
 
 ## Create Mutation Webhook Policy
 
