@@ -328,7 +328,7 @@ Check the `at-tkgs.yaml` template file in this folder of the repo:
 - Then create the AT following these commands:
 ```
 tanzu project use <project-name>
-tanzu availability-target create -f templates/at-tkgs.yaml
+tanzu deploy --only templates/at-tkgs.yaml
 ```
 
 Let's confirm the Availability Target is in `Ready` state.
