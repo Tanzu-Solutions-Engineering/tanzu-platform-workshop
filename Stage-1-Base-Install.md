@@ -1,4 +1,4 @@
-# Installing Tanzu Platform for Kubernetes by Will Arroyo
+# Installing Tanzu Platform for Kubernetes
 
 ## Overview
 
@@ -68,6 +68,12 @@ Create an availability target that matches the label created for the cluster in 
 
 ![](images/2024-06-19-10-50-04.png)
 
+## Trait and capability relationships
+
+A good example of this is cert manager. cert management would be a capability, this capability installed at the cluster group level is isntalling the cert manager controller and CRDS. the cert manager trait would then implement some CRD from cert manager, like a issuer. Also adding the capability to the profile will then expose the cert manager APIs(CRDS) to the space. 
+
+![](images/2024-06-25-09-32-21.png)
+
 ## Create a space
 
 Create a space that uses the availability target and some pre-existing profiles along with the custom networking profile..
@@ -76,3 +82,9 @@ Create a space that uses the availability target and some pre-existing profiles 
 2. select the spring dev profile and the custom networking profile. 
 
 ![](images/2024-06-19-10-50-46.png)
+
+## Space Policies
+
+Create a space policy that is a default for the entire project. Also show the ability to create space specific policy in the space api.
+
+Policies today are more like space requests. The limits that are set need to be available in the cluster for the space to schedule. 
