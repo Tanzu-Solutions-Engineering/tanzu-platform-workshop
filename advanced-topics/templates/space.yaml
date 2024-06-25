@@ -1,0 +1,25 @@
+---
+apiVersion: spaces.tanzu.vmware.com/v1alpha1
+kind: Space
+metadata:
+  name: {yourname-helm-app}
+spec:
+  availabilityTargets:
+  - name: {your-avail-target}
+    replicas: 1
+  revisionHistoryLimit: 10
+  template:
+    spec:
+      profiles:
+      - name: fluxcd-helm.tanzu.vmware.com
+        values:
+          inline: null
+      - name: {your-network-profile}
+        values:
+          inline: null
+      - name: spring-dev-simple-sa.tanzu.vmware.com
+        values:
+          inline: null
+      resources: {}
+  updateStrategy:
+    type: Recreate
