@@ -51,7 +51,21 @@ tanzu operations clustergroup use
 
 We are going to use the Tanzu CLI to install the cluster group capabilities although these can also be done using the UI (`Application Spaces -> Capabilities`).
 
-Since we are reusing the previous cluster group, most of the needed capabilities for helm apps are already installed, so we will just add the two new flux capabilies provided by the following packages.
+We will be reusing the cluster group you used on previous modules, so most of the needed capabilities for our helm application are already installed.
+
+```
+# Capabilities Required by Helm Application
+
+# Already installed from Previous Modules
+- egress.tanzu.vmware.com
+- certificates.tanzu.vmware.com
+- multicloud-ingress.tanzu.vmware.com
+- k8sgateway.tanzu.vmware.com
+
+# Newly installed below
+- fluxcd-helm-controller.tanzu.vmware.com
+- fluxcd-source-controller.tanzu.vmware.com
+```
 
 ```
 tanzu package install fluxcd-helm-controller.tanzu.vmware.com -p fluxcd-helm-controller.tanzu.vmware.com -v '>0.0.0'
