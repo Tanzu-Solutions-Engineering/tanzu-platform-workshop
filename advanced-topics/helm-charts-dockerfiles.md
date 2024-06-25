@@ -102,6 +102,7 @@ tanzu operations policy create -s clustergroup -f psa-mutating-policy.yaml
 ```
 tanzu operations policy list
 tanzu operations policy get psa-mutation-policy -n {clustergroup name} -s clustergroup
+```
 
 ## Create Helm Profile
 
