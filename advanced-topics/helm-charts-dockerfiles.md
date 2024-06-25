@@ -343,6 +343,6 @@ tk get srs -l "resource-name=podinfo,kind=HelmRelease" -oyaml
 
 Navigate to your Space in Tanzu Platform UI (`Application Space -> Spaces -> Your helm-app space`) and click View Details
 
-On the Space you will see a Space URL: podinfo.fqdn.com.  This is where you application is publically available via HTTPRoute.  You can also see this same information undeer Ingress & Egress.  Open this link in your web browser to visit the Podinfo site.
+On the Space you will see a `Space URL: podinfo.fqdn.com` This is where you application is publically available via HTTPRoute.  You can also see this same information undeer Ingress & Egress.  Open this link in your web browser to visit the Podinfo site.
 
 ![Helm Space URL](../images/helm-space-url.png)
