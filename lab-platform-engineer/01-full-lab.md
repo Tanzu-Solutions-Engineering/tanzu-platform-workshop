@@ -644,4 +644,4 @@ It may take some time for the k8s services and network topology to show everythi
 
 #### Bonus lab: check DNS-based Load Balancing behavior and look for improvements
 
-## If you reached this part of the Lab successfully and your Space is in a healthy state, CONGRATULATIONS! your job as a Patform Engineer is done (for now) and your Application Development friends have now a ready to go and replicable Space where to deploy their applications.
+## If you reached this part of the Lab successfully and your Space is in a healthy state, CONGRATULATIONS! your job as a Platform Engineer is done (for now) and your Application Development friends have now a ready to go and replicable Space where to deploy their applications.
