@@ -218,8 +218,11 @@ Access the Tanzu Platform GUI: `Application Spaces -> Spaces -> Create Space -> 
     - Set Replicas to 1
 4. Click `Create Space`
 5. View your Space in the Space page.  It will take some time for the Space to become ready.  Use the Refesh in upper right to refresh the view
+
 ![Space Ready](../images/helm-space-tile.png)
+
 6. Expand your space by clicking on `View Details -> Space Configuration` You should see the 3 Profiles you added in Step 2 of Space Creation
+
 ![Space Configuration](../images/helm-space-configuration.png)
 
 ## Install Helm charts in a Space
