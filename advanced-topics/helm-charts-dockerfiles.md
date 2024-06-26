@@ -127,7 +127,7 @@ We could also check using the Tanzu Platform for Kubernetes UI (`Application Spa
 
 For TKGs clusters we ship with Pod Security Admission mode set to enforce [Visit this page for more information](https://kubernetes.io/docs/concepts/security/pod-security-admission/).  This means security violations cause a pod to be rejected. The test application we are using breaks the policy and won't be scheduled unless we label the application namespace PSA standard level accordingly.  Since Tanzu Platform for Kubernetes dynamically creates namespaces based on the Space concept, we need a way to automatically label these namespaces to allow our pods to run.
 
-1. Verify that your clustergroup is stil selected in your context
+1. Verify that your clustergroup is still selected in your context
 
 ```
 tanzu context current
@@ -347,7 +347,7 @@ Continue? [yN]: y
 ```
 alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
 tk get srs -l "resource-name=podinfo,kind=HelmRepository" -oyaml
-
+```
 Look For:
               .status:
                 conditions:
@@ -357,12 +357,13 @@ Look For:
                   reason: Succeeded
                   status: "True"
                   type: Ready
-```
+
 4. View staus of Helm Release from UCP
 
 ```
 alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
 tk get srs -l "resource-name=podinfo,kind=HelmRelease" -oyaml
+```
 
               .status:
                 conditions:
@@ -373,7 +374,7 @@ tk get srs -l "resource-name=podinfo,kind=HelmRelease" -oyaml
                   reason: InstallSucceeded
                   status: "True"
                   type: Ready
-```
+
 5. Verify using the UI
 
 Navigate to your Space in Tanzu Platform UI (`Application Space -> Spaces -> Your helm-app space`) and click View Details
