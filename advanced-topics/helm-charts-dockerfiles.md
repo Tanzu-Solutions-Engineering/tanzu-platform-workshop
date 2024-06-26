@@ -291,6 +291,28 @@ We do not need to modify any of these files.  We can simply select our space we 
 
 ### Deploy Helm Application
 
+1. You may need to edit the podinfo/route.yaml depending on how your configured your Ingress and GSLB settings in the [lab-platform-engineer module](/lab-platform-engineer/01-full-lab.md#configure-ingress-and-gslb)
+
+```
+cd podinfo
+vi route.yaml
+```
+Look at the spec.parentRefs name. This is the name of the Gateway object the route will use.
+```
+spec:
+  parentRefs:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: default-gateway   <-----
+```
+This needs to match what you configured for the `mutlicloud-ingress.tanzu.vmware.com` name in your custom networking profiles.  
+- You can verify this by going to (`Application Spaces -> Profiles -> {your custom networking profile}`) and then click the 3 elipses and choose`Edit Profile` (or action edit if you are in View Details)
+- Click Next of the Basic Information section
+- In the Traits section click on the > next to `Configure multicloud-ingress.tanzu.vmware.com` to expand details
+- Scroll down to the Name field.  This needs to match what is in route.yaml.  If the supplied route.yaml .spec.parentRef.name doesn't match the Name field in your mutlicloud-ingress - updated the route.yaml
+
+![Gateway Name](../images/ingressname.png)
+
 1. Set your Space to the helm-app space you created
 
 ```
