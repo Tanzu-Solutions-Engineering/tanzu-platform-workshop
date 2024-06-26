@@ -26,14 +26,20 @@ Organization
      -- Spaces / Cluster Groups
 ```
 
-Optional/Bonus: When you are done with the workshop come back here to test with the different commands and see how the context changes:
+Check what happens with the Tanzu CLI context when you target a project
 ```
-tanzu project use workshop01
+tanzu project use
+# choose a valid project from the list, e.g: workshop01
 tanzu context current | grep -E "Kube Context"
 #  Kube Context:    tanzu-cli-sa-tanzu-platform:workshop01
-tanzu space use test-wkshp
+```
+
+If there are spaces available, check what happens with the Tanzu CLI context when yu target a space. If there are no spaces available in the project yet, come back here once you create a space.
+```
+tanzu space use
+# choose a valid space from the list
 tanzu context current | grep -E "Kube Context"
-#  Kube Context:    tanzu-cli-sa-tanzu-platform:workshop01:test-wkshp 
+#  Kube Context:    tanzu-cli-sa-tanzu-platform:workshop01:space-name 
 ```
 
 More on this in the [documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-and-manage-cli-contexts.html)
