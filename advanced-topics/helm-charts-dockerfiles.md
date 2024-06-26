@@ -4,6 +4,30 @@
 
 In this section we deploy an application using Helm Charts.  This is accomplished by using a Tanzu Platform space that is configured with the FluxCD Helm profile.  We are also using our my-custom-networking profile and creating an additonal profile that has the k8sgateway.tanzu.vmware.com capability to provide ingress for our application.
 
+## Update Repo
+
+To make sure you have captured any changes since your last pull it is recommened to update your repo
+
+```
+cd tanzu-platform-workshop
+git pull origin main
+```
+
+All file for this module are located under the advanced-topics folder
+
+```
+cd advanced-topics
+./podinfo
+./podinfo/helmrepository.yaml
+./podinfo/helmrelease.yaml
+./podinfo/podinfo-values.yaml
+./podinfo/route.yaml
+./helm-charts-dockerfiles.md
+./templates
+./templates/space.yaml
+./templates/flux-helm-profile.yaml
+./templates/psa-mutating-policy.yaml
+```
 ## Log in to Tanzu Platform for Kubernetes UI
 
 Open your browser to the Tanzu Platform for K8s URL you were given at the begining of the workshop. Log into the Cloud Service Portal with your username and password.  
@@ -51,7 +75,7 @@ tanzu operations clustergroup use
 
 We are going to use the Tanzu CLI to install the cluster group capabilities although these can also be done using the UI (`Application Spaces -> Capabilities`).
 
-We will be reusing the cluster group you used on previous modules, so most of the needed capabilities for our helm application are already installed.
+We will be reusing the cluster group you used on previous modules, so most of the needed capabilities for our helm application are already installed.  If for some reason you are starting with a fresh cluster group please also install the capabilities listed  [here](/lab-platform-engineer/01-full-lab.md#add-capabilities-to-cluster-group)
 
 ```
 # Capabilities Required by Helm Application
@@ -99,7 +123,7 @@ We could also check using the Tanzu Platform for Kubernetes UI (`Application Spa
 
 ## Create Mutation Webhook Policy
 
-[Official Documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-mutation-policy.html_)
+[Official Documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-mutation-policy.html)
 
 For TKGs clusters we ship with Pod Security Admission mode set to enforce [Visit this page for more information](https://kubernetes.io/docs/concepts/security/pod-security-admission/).  This means security violations cause a pod to be rejected. The test application we are using breaks the policy and won't be scheduled unless we label the application namespace PSA standard level accordingly.  Since Tanzu Platform for Kubernetes dynamically creates namespaces based on the Space concept, we need a way to automatically label these namespaces to allow our pods to run.
 
@@ -108,14 +132,22 @@ For TKGs clusters we ship with Pod Security Admission mode set to enforce [Visit
 ```
 tanzu context current
 # Cluster Group: {your cluster group} should be one of the variables in the output
-
+  Name:             sa-tanzu-platform
+  Type:             tanzu
+  Organization:     sa-tanzu-platform (77aee......)
+  Project:          workshop01 (3b65b......)
+  Cluster Group:    bauerbo-cg1
+  Kube Config:      /home/ubuntu/.config/tanzu/kube/config
+  Kube Context:     tanzu-cli-sa-tanzu-platform:workshop01:bauerbo-cg-01
 
 ```
-2. Edit the advanced-topics/templates/psa-mutating-policy.yaml file in this repo and replace `{your clustergroup name}` with the  name of the cluster group you are using.  Note: This is an intentionally broad policy (all clusters in the group and all new namespaces)
+2. Edit the templates/psa-mutating-policy.yaml file in this repo and replace `{your clustergroup name}` with the  name of the cluster group you are using.  Note: This is an intentionally broad policy (all clusters in the group and all new namespaces)
 
 ```
+vi templates/psa-mutating-policy.yaml
+
 fullName:
-  clusterGroupName: {your clustergroup name}
+  clusterGroupName: {your clustergroup name}  <---- Replace with your cluster group name
   name: psa-mutation-policy
 meta:
 spec:
@@ -159,7 +191,7 @@ tanzu context current
   Organization:    sa-tanzu-platform (8406......)
   Project:         workshop01 (66cf1......)
   Kube Config:     /home/ubuntu/.config/tanzu/kube/config
-  Kube Context:    sa-tanzu-platform:workshop01
+  Kube Context:    tanzu-cli-sa-tanzu-platform:workshop01
 
   # Note there is no Space or Clustergroup specificed
 ```
@@ -210,12 +242,15 @@ Access the Tanzu Platform GUI: `Application Spaces -> Spaces -> Create Space -> 
 1. Space Name
     - Choose a unique name and something different than you've used for other spaces in this workshop.  Example: `yourname-helm-app`
 2. Select Profiles
-    - Select your custom networking profile you created in previous module
-    - Select the spring-dev-simple-sa.tanzu.vmware.com profile
-    - Select the fluxcd-helm.tanzu.vmware.com (or custom flux profile you create)
+    - Select your `custom networking profile` you created in previous module
+    - Select the `spring-dev-simple-sa.tanzu.vmware.com` profile
+    - Select the `fluxcd-helm.tanzu.vmware.com` (or custom flux profile you create)
 3. Availability Targets
     - Add the availabilty target which contains the clustergroup you've installed the capabilities on in previous modules and above in this module (example bauerbo-at-tkgs)
     - Set Replicas to 1
+
+![Helm App Space](../images/space.png)
+
 4. Click `Create Space`
 5. View your Space in the Space page.  It will take some time for the Space to become ready.  Use the Refesh in upper right to refresh the view
 
@@ -271,7 +306,7 @@ tanzu context current
   Project:         workshop01 (66cf1f......)
   Space:           bauerbo-helm-app
   Kube Config:     /home/ubuntu/.config/tanzu/kube/config
-  Kube Context:    sa-tanzu-platform:workshop01:bauerbo-helm-app
+  Kube Context:    tanzu-cli-sa-tanzu-platform:workshop01:bauerbo-helm-app
 ```
 2. Deploy Helm Resources
 
