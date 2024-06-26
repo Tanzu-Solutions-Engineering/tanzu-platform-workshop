@@ -143,7 +143,7 @@ tanzu context current
   Type:             tanzu
   Organization:     sa-tanzu-platform (77aee......)
   Project:          workshop01 (3b65b......)
-  Cluster Group:    bauerbo-cg1
+  Cluster Group:    bauerbo-cg1     <-------
   Kube Config:      /home/ubuntu/.config/tanzu/kube/config
   Kube Context:     tanzu-cli-sa-tanzu-platform:workshop01:bauerbo-cg-01
 
@@ -200,7 +200,7 @@ tanzu context current
   Kube Config:     /home/ubuntu/.config/tanzu/kube/config
   Kube Context:    tanzu-cli-sa-tanzu-platform:workshop01
 
-  # Note there is no Space or Clustergroup specificed
+# Note there is no Space or Clustergroup specificed
 ```
 2. Apply flux-helm-profile.yaml  from templates folder
 
@@ -332,8 +332,8 @@ tanzu context current
   Name:            sa-tanzu-platform
   Type:            tanzu
   Organization:    sa-tanzu-platform (8406e5......)
-  Project:         workshop01 (66cf1f......)
-  Space:           bauerbo-helm-app
+  Project:         workshop01 (66cf1f......)     <--------
+  Space:           bauerbo-helm-app     <--------
   Kube Config:     /home/ubuntu/.config/tanzu/kube/config
   Kube Context:    tanzu-cli-sa-tanzu-platform:workshop01:bauerbo-helm-app
 ```
