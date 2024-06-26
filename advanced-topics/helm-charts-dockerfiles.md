@@ -13,10 +13,17 @@ cd tanzu-platform-workshop
 git pull origin main
 ```
 
+If you are doing this workshop for the first time clone the Tanzu Platform Workshop repo
+
+```
+git clone https://github.com/Tanzu-Solutions-Engineering/tanzu-platform-workshop.git
+```
+
 All file for this module are located under the advanced-topics folder
 
 ```
 cd advanced-topics
+find .
 ./podinfo
 ./podinfo/helmrepository.yaml
 ./podinfo/helmrelease.yaml
@@ -313,7 +320,7 @@ This needs to match what you configured for the `mutlicloud-ingress.tanzu.vmware
 
 ![Gateway Name](../images/ingressname.png)
 
-1. Set your Space to the helm-app space you created
+2. Set your Space to the helm-app space you created
 
 ```
 tanzu space list
@@ -330,7 +337,7 @@ tanzu context current
   Kube Config:     /home/ubuntu/.config/tanzu/kube/config
   Kube Context:    tanzu-cli-sa-tanzu-platform:workshop01:bauerbo-helm-app
 ```
-2. Deploy Helm Resources
+3. Deploy Helm Resources
 
 ```
 tanzu deploy --only podinfo/.
@@ -364,7 +371,9 @@ Continue? [yN]: y
 6:05:13PM: ---- applying complete [4/4 done] ----
 6:05:13PM: ---- waiting complete [4/4 done] ----
 ```
-3. View status of Helm Repository from UCP
+4. View status of Helm Repository from UCP
+
+**Note** Recently seeing error here that doesn't affect application so you may see something different below
 
 ```
 alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
@@ -381,7 +390,9 @@ Look For:
                   status: "True"
                   type: Ready
 ```
-4. View staus of Helm Release from UCP
+5. View staus of Helm Release from UCP
+
+**Note** Recently seeing error here that doesn't affect application so you may see something different below
 
 ```
 alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
@@ -398,7 +409,7 @@ tk get srs -l "resource-name=podinfo,kind=HelmRelease" -oyaml
                   status: "True"
                   type: Ready
 ```
-5. Verify using the UI
+6. Verify using the UI
 
 Navigate to your Space in Tanzu Platform UI (`Application Space -> Spaces -> Your helm-app space`) and click View Details
 
