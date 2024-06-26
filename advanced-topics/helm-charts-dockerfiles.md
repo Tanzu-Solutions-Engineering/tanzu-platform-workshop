@@ -348,6 +348,7 @@ Continue? [yN]: y
 alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
 tk get srs -l "resource-name=podinfo,kind=HelmRepository" -oyaml
 ```
+```
 Look For:
               .status:
                 conditions:
@@ -357,14 +358,14 @@ Look For:
                   reason: Succeeded
                   status: "True"
                   type: Ready
-
+```
 4. View staus of Helm Release from UCP
 
 ```
 alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
 tk get srs -l "resource-name=podinfo,kind=HelmRelease" -oyaml
 ```
-
+```
               .status:
                 conditions:
                 - lastTransitionTime: "2024-06-25T19:33:44Z"
@@ -374,7 +375,7 @@ tk get srs -l "resource-name=podinfo,kind=HelmRelease" -oyaml
                   reason: InstallSucceeded
                   status: "True"
                   type: Ready
-
+```
 5. Verify using the UI
 
 Navigate to your Space in Tanzu Platform UI (`Application Space -> Spaces -> Your helm-app space`) and click View Details
