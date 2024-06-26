@@ -373,8 +373,6 @@ Continue? [yN]: y
 ```
 4. View status of Helm Repository from UCP
 
-**Note** Recently seeing error here that doesn't affect application so you may see something different below
-
 ```
 alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
 tk get srs -l "resource-name=podinfo,kind=HelmRepository" -oyaml
@@ -391,8 +389,6 @@ Look For:
                   type: Ready
 ```
 5. View staus of Helm Release from UCP
-
-**Note** Recently seeing error here that doesn't affect application so you may see something different below
 
 ```
 alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
