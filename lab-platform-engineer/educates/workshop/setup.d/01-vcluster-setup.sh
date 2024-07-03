@@ -15,7 +15,7 @@ sync:
         all: true
 EOF
 
-vcluster create vcluster-$SESSION_NAME --update-current=false --switch-context=false --create-namespace=false --background-proxy=false -n $SESSION_NAMESPACE -f vcluster.yaml
+vcluster create vcluster-$SESSION_NAME --update-current=false --switch-context=false --create-namespace=false --background-proxy=false --skip-wait=true -n $SESSION_NAMESPACE -f vcluster.yaml
 vcluster connect vcluster-$SESSION_NAME -n $SESSION_NAMESPACE --print --server=https://vcluster-$SESSION_NAMESPACE.$INGRESS_DOMAIN > vcluster-kubeconfig.yaml
 
 cat <<EOF | kubectl apply -f -
