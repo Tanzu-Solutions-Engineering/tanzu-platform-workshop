@@ -3,6 +3,16 @@ title: Workshop Overview
 ---
 
 ```terminal:execute
+description: Create vCluster
+command: vcluster create vcluster-{{< param  session_name >}} --update-current=false --switch-context=false --create-namespace=false --background-proxy=false -n {{< param  session_namespace >}} -f vcluster.yaml
+```
+
+```terminal:execute
+description: Create workload cluster context
+command: vcluster connect vcluster-{{< param  session_name >}} -n {{< param  session_namespace >}} --print --server=https://vcluster-{{< param  session_namespace >}}.{{< param  ingress_domain >}}  > vcluster-kubeconfig.yaml
+```
+
+```terminal:execute
 description: Switch to workload cluster context
 command: export KUBECONFIG=$HOME/vcluster-kubeconfig.yaml
 ```
