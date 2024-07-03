@@ -14,15 +14,15 @@ command: vcluster connect vcluster-{{< param  session_name >}} -n {{< param  ses
 
 ```terminal:execute
 description: Switch to workload cluster context
-command: export KUBECONFIG=$HOME/vcluster-kubeconfig.yaml
+command: export KUBECONFIG=$HOME/vcluster-kubeconfig.yaml && kubectl config set-context --current --namespace=default
 ```
 ```terminal:execute
 description: Switch to TP for K8s context
-command: export KUBECONFIG=$HOME/.config/tanzu/kube/config
+command: export KUBECONFIG=$HOME/.config/tanzu/kube/config && kubectl config set-context --current --namespace=default
 ```
 ```terminal:execute
 description: Switch to educates namespace context
-command: unset KUBECONFIG
+command: unset KUBECONFIG && kubectl config set-context --current --namespace={{< param  session_namespace >}}
 ```
 
 ```execute
