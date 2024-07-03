@@ -3,7 +3,7 @@
 apiVersion: training.educates.dev/v1beta1
 kind: Workshop
 metadata:
-  name: "lab-tanzu-platform-lab-platform-engineer"
+  name: lab-tanzu-platform-platform-engineer
 spec:
   title: "Tanzu Platform for Platform Engineers"
   description: "The workshop covers the fundamentals of Tanzu Platform for Platform Engineers."
@@ -13,7 +13,7 @@ spec:
     files:
     - git:
         url: https://github.com/Tanzu-Solutions-Engineering/tanzu-platform-workshop
-        ref: origin/educates-platform-enginee
+        ref: origin/educates-platform-engineer
       includePaths:
       - /lab-platform-engineer/educates/workshop/**
       - /lab-platform-engineer/educates/exercises/**
@@ -28,6 +28,7 @@ spec:
     namespaces:
       budget: large
       security:
+        policy: baseline
         token:
           enabled: false
     applications:
