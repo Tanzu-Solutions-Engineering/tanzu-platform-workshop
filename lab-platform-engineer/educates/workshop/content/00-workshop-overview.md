@@ -2,12 +2,15 @@
 title: Workshop Overview
 ---
 
-The developer and app operator experience on Tanzu Platform for Kubernetes is centered around four simple commands.
-
-![](../images/tp-commands.png)
-- Build: Automating the process of creating secure, consistent application container images
-- Bind: The ability to discover and inject external application service credentials (databases, messaging services, etc.) to your application
-- Deploy: Simplify the process of getting applications running on Kubernetes without having to understand Kubernetes manifests
-- Scale: Adjust resources allocated to your application instances, and add resilience with multiple application instances distributed across availability zones
-
-This workshop will explore how these verbs manifest in Tanzu Platform for Kubernetes.
+```terminal:execute
+description: Switch to workload cluster context
+command: export KUBECONFIG=$HOME/vcluster-kubeconfig.yaml
+```
+```terminal:execute
+description: Switch to TP for K8s context
+command: export KUBECONFIG=$HOME/.config/tanzu/kube/config
+```
+```terminal:execute
+description: Switch to educates namespace context
+command: unset KUBECONFIG
+```

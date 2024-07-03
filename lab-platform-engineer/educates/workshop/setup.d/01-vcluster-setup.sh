@@ -15,5 +15,22 @@ sync:
         all: true
 EOF
 
-vcluster create vcluster-$SESSION_NAME --update-current=false -n $SESSION_NAMESPACE -f vcluster.yaml
+vcluster create vcluster-$SESSION_NAME --update-current=false --switch-context=false --create-namespace=false --background-proxy=false -n $SESSION_NAMESPACE -f vcluster.yaml
+vcluster connect vcluster-$SESSION_NAME -n $SESSION_NAMESPACE --print --server=https://vcluster-$SESSION_NAMESPACE.$INGRESS_DOMAIN > vcluster-kubeconfig.yaml
+
+cat <<EOF | kubectl apply -f -
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: vcluster-$SESSION_NAME
+spec:
+  virtualhost:
+    fqdn: vcluster-$SESSION_NAMESPACE.$INGRESS_DOMAIN
+    tls:
+      passthrough: true
+  tcpproxy:
+    services:
+    - name: vcluster-$SESSION_NAME
+      port: 443
+EOF
 
