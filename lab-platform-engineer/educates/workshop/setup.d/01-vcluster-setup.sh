@@ -14,21 +14,6 @@ sync:
       selector:
         all: true
 EOF
-vcluster create vcluster-$SESSION_NAME --update-current=false --switch-context=false --create-namespace=false --background-proxy=false --skip-wait -n $SESSION_NAMESPACE -f vcluster.yaml &
-KUBECTL_PID=$!
-
-( tail -f /dev/null & ) | {
-    while read -r line; do
-        echo "$line"
-        if [[ "$line" == *"Forwarding from"* ]]; then
-            echo "Desired output detected. Stopping command."
-            kill "$KUBECTL_PID"
-            exit 0
-        fi
-    done
-}
-
-vcluster connect vcluster-$SESSION_NAME -n $SESSION_NAMESPACE --print --server=https://vcluster-$SESSION_NAMESPACE.$INGRESS_DOMAIN > vcluster-kubeconfig.yaml
 
 cat <<EOF | kubectl apply -f -
 apiVersion: projectcontour.io/v1
