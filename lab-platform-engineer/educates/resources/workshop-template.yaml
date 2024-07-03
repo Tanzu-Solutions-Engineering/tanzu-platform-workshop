@@ -26,11 +26,9 @@ spec:
           url: ghcr.io/timosalm/tanzu-platform-workshop/lab-tanzu-platform-developer-experience-tanzu-cli-extension-package:v1.3.0
   session:
     namespaces:
-      budget: large
+      budget: custom
       security:
         policy: baseline
-        token:
-          enabled: false
     applications:
       terminal:
         enabled: true
@@ -42,8 +40,6 @@ spec:
       docker:
         enabled: true
       registry:
-        enabled: true
-      vcluster:
         enabled: true
     env:
     - name: PUBLIC_REGISTRY_HOST
@@ -62,3 +58,46 @@ spec:
         value: "Basic REGISTRY_BASIC_AUTH_CREDENTIALS"
       authentication:
         type: none
+    objects:
+      - apiVersion: rbac.authorization.k8s.io/v1
+        kind: Role
+        metadata:
+          name: $(session_namespace)-session
+          namespace: $(session_namespace)
+        rules:
+        - apiGroups: ['*']
+          resources: ['*']
+          verbs: ['*']
+      - apiVersion: rbac.authorization.k8s.io/v1
+        kind: RoleBinding
+        metadata:
+          name: $(session_namespace)-session-rb
+          namespace: $(session_namespace)
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: Role
+          name: $(session_namespace)-session
+        subjects:
+          - kind: ServiceAccount
+            namespace: $(workshop_namespace)
+            name: $(service_account)
+      - apiVersion: rbac.authorization.k8s.io/v1
+        kind: ClusterRole
+        metadata:
+          name: $(session_name)-vcluster-deployer
+        rules:
+        - apiGroups: [rbac.authorization.k8s.io]
+          resources: [clusterroles,clusterrolebindings]
+          verbs: ['*']
+      - apiVersion: rbac.authorization.k8s.io/v1
+        kind: ClusterRoleBinding
+        metadata:
+          name: $(session_name)-vcluster-deployer-binding
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: ClusterRole
+          name: $(session_name)-vcluster-deployer
+        subjects:
+        - kind: ServiceAccount
+          namespace: $(workshop_namespace)
+          name: $(service_account)
