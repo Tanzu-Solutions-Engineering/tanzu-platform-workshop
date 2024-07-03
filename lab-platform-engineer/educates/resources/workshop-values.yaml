@@ -1,0 +1,9 @@
+#@data/values
+---
+tanzu_platform:
+  org: 77aee83b-308f-4c8e-b9c4-3f7a6f19ba75
+  project: AMER-East
+  profiles: spring-dev.tanzu.vmware.com,custom-networking.aws-work.grogcsave.net
+  availability_targets: cdelashmutt-dev
+  db_password: ""
+  space_creation_token: ""

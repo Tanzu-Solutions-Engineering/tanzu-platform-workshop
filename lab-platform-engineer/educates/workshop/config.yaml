@@ -1,0 +1,14 @@
+pathways:
+  default: workshop
+
+  paths:
+    workshop:
+      title: "Workshop"
+
+      steps:
+      - 00-workshop-overview
+      - 99-workshop-summary
+params:
+- name: TANZU_PLATFORM_PROJECT
+  value: undefined
+
