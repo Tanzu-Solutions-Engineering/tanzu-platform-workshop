@@ -1,13 +1,16 @@
 apiVersion: packaging.carvel.dev/v1alpha1
 kind: PackageInstall
 metadata:
+  annotations:
+    apps.tanzu.vmware.com/promotable: ""
+    apps.tanzu.vmware.com/promote-group: ContainerApp/spring-smoketest
   creationTimestamp: null
   name: spring-smoketest
 spec:
   packageRef:
     refName: spring-smoketest.apps.local
     versionSelection:
-      constraints: 20240620.1602.38108
+      constraints: 20240706.20.46976
   serviceAccountName: carvel-package-installer
   values:
   - secretRef:

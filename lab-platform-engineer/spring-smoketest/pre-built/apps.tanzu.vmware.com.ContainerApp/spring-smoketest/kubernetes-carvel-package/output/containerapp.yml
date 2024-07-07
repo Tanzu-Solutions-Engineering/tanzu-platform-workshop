@@ -2,16 +2,18 @@ apiVersion: apps.tanzu.vmware.com/v1
 kind: ContainerApp
 metadata:
   annotations:
+    apps.tanzu.vmware.com/promotable: ""
+    apps.tanzu.vmware.com/promote-group: ContainerApp/spring-smoketest
     containerapp.apps.tanzu.vmware.com/class: kubernetes
   name: spring-smoketest
 spec:
   content:
-    buildTimestamp: "2024-06-20T16:02:38Z"
-    gitCommit: df3c54c858cd847ec49c2c477ba63e1848101374-dirty
+    buildTimestamp: "2024-07-06T00:20:46Z"
+    gitCommit: 77c46a052c7294e61e9eecc30db4945c32ccc3fd
     packageRefName: spring-smoketest.apps.local
-    summary: git:df3c54c @ 2024-06-20T16:02:38Z
-    version: 20240620.1602.38108
-  image: public.ecr.aws/e6j4w8b2/jaime-spring-smoketest@sha256:82e10ff7413b913da8521408c630f2293f45afda83698a07af8300dc4b182722
+    summary: git:77c46a0 @ 2024-07-06T00:20:46Z
+    version: 20240706.20.46976
+  image: public.ecr.aws/e6j4w8b2/jaime-spring-smoketest@sha256:9000e0526726147c9ab27011c573b18ae818d6cd29bbe33d578d2713bb380657
   nonSecretEnv:
   - name: JAVA_TOOL_OPTIONS
     value: -Dmanagement.endpoint.health.probes.add-additional-paths=true -Dmanagement.health.probes.enabled=true
@@ -68,8 +70,12 @@ spec:
   - apiGroup: data.packaging.carvel.dev
     for: kubernetes.delete
     kind: Package
-    name: spring-smoketest.apps.local.20240620.1602.38108
+    name: spring-smoketest.apps.local.20240706.20.46976
   - for: kubernetes.delete
+    kind: Secret
+    name: spring-smoketest-values
+  - for: kubernetes.set-content-hash
+    keyPath: .data['values.yml']->[yaml].contentHash
     kind: Secret
     name: spring-smoketest-values
   resources:
