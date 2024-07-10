@@ -72,7 +72,7 @@ Create an availability target that matches the label created for the cluster in 
 
 A good example of this is cert manager. cert management would be a capability, this capability installed at the cluster group level is isntalling the cert manager controller and CRDS. the cert manager trait would then implement some CRD from cert manager, like a issuer. Also adding the capability to the profile will then expose the cert manager APIs(CRDS) to the space. 
 
-![](images/2024-06-25-09-32-21.png)
+![](images/2024-07-10-13-01-31.png)
 
 ## Create a space
 
