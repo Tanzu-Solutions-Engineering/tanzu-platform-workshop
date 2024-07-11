@@ -3,4 +3,5 @@
 set -x
 set -eo pipefail
 
-docker pull paketobuildpacks/builder-jammy-base
+BUILDER=$(echo $TANZU_BUILD_PLAN | jq '.spec.buildpacks.builder')
+docker pull $BUILDER
