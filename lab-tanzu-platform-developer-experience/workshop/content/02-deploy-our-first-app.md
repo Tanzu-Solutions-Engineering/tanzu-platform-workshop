@@ -24,12 +24,6 @@ First, the name of the app, which defaults to the name of the directory we're ru
 ```terminal:execute
 description: Accept default application name
 command: ""
-cascade: true
-```
-```terminal:execute
-description: Default version of commercial BPs is still 11
-command: tanzu app config build non-secret-env set BP_JVM_VERSION=17
-hidden: true
 ```
 
 Next, the location of our application's source code, which is in our case the current directory, and the default.
@@ -42,6 +36,12 @@ Finally, our platform team has configured Cloud Native Buildpacks as the only bu
 ```terminal:execute
 description: Confirm Cloud Native Buildpacks as build type
 command: ""
+cascade: true
+```
+```terminal:execute
+description: Default version of commercial BPs is still 11
+command: tanzu app config build non-secret-env set BP_JVM_VERSION=17
+hidden: true
 ```
 
 We could have also specified all these values as parameters to the `tanzu app init` call. Look at the help output for the command to see the options you can specify.
