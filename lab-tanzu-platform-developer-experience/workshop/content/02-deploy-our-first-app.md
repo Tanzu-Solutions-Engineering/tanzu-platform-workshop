@@ -40,7 +40,7 @@ cascade: true
 ```
 ```terminal:execute
 description: Default version of commercial BPs is still 11
-command: tanzu app config build non-secret-env set BP_JVM_VERSION=17
+command: tanzu app config build non-secret-env set BP_JVM_VERSION=17 && clear
 hidden: true
 ```
 
