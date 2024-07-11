@@ -19,7 +19,15 @@ Next, we'll use the `tanzu app init` command to add the default configuration fo
 ```execute
 tanzu app init
 ```
-
+```terminal:execute
+description: Accept default application name
+command: ""
+```
+```terminal:execute
+description: Default version of commercial BPs is still 11
+command: tanzu app config build non-secret-env set BP_JVM_VERSION=17
+hidden: true
+```
 With no parameters, the `tanzu app init` command prompts us for the key bits of information it needs. 
 First, the name of the app, which defaults to the name of the directory we're running the command from, and you can accept the default by pressing enter.
 ```terminal:execute
@@ -37,6 +45,12 @@ Finally, our platform team has configured Cloud Native Buildpacks as the only bu
 ```terminal:execute
 description: Confirm Cloud Native Buildpacks as build type
 command: ""
+cascade: true
+```
+```terminal:execute
+description: Default version of commercial BPs is still 11
+command: tanzu app config build non-secret-env set BP_JVM_VERSION=17 && clear
+hidden: true
 ```
 
 We could have also specified all these values as parameters to the `tanzu app init` call. Look at the help output for the command to see the options you can specify.
