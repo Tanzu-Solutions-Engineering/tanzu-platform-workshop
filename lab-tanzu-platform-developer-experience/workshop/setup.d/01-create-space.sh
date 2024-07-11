@@ -13,4 +13,7 @@ export TANZU_BUILD_PLAN=$(kubectl get containerappbuildplans simple.tanzu.vmware
 tanzu space create $SESSION_NAME $(echo $TANZU_PLATFORM_PROFILES | tr , '\n' | awk '{print "--profile " $1}' | tr '\n' ' ') $(echo $TANZU_PLATFORM_AVAILABILITY_TARGETS | tr , '\n' | awk '{print "--availability-target " $1}' | tr '\n' ' ') --update-strategy RollingUpdate -y --no-color
 
 tanzu context delete space-admin -y
+
+BUILDER=$(echo $TANZU_BUILD_PLAN | jq '.spec.buildpacks.builder')
+docker pull $BUILDER
 fi
