@@ -36,12 +36,11 @@ Finally, our platform team has configured Cloud Native Buildpacks as the only bu
 ```terminal:execute
 description: Confirm Cloud Native Buildpacks as build type
 command: ""
-cascade: true
 ```
+
+As the default Java version of our commercial Java Cloud Native Buildpack is 11, but our application requires version 17 as a minimum, let's configure the CNB accordingly. 
 ```terminal:execute
-description: Default version of commercial BPs is still 11
-command: tanzu app config build non-secret-env set BP_JVM_VERSION=17 && clear
-hidden: true
+command: tanzu app config build non-secret-env set BP_JVM_VERSION=17
 ```
 
 We could have also specified all these values as parameters to the `tanzu app init` call. Look at the help output for the command to see the options you can specify.
