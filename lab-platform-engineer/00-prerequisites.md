@@ -5,9 +5,9 @@
     - Workload Management enabled with AVI
     - Supervisor cluster v1.27.5+vmware.1-fips.1 or newer.
     - ContentLibrary synced with TKr 1.28.8 available (1.29.4 should work too)
-    - Compute capacity for 2x TKGS clusters with 1 CP node and 3 worker nodes with 4VCPU & 16GBRAM per VM per attendee
-    - At least 8 VM IPs available for all those k8s nodes per attendee
-    - At least 6 AVI VIPs available for those 2 clusters and 1 Space/App per attendee (1 VIP for CP, 2 VIP for ingress per cluster)
+    - Compute capacity for one TKG clusters with 1 CP node and 3 worker nodes with 4VCPU & 16GBRAM per VM per attendee
+    - At least 4 VM IPs available for all those k8s nodes per attendee
+    - At least 3 AVI VIPs available per attendee: 1 VIP for the cluster CP, 2 VIP for ingress per cluster
     - Supervisor Namespace created with Storage Policy and VM Classes associated to it
 - AWS Route53 Zone
     - Domain registered/delegated to Route53 zone
