@@ -5,10 +5,10 @@ metadata:
     apps.tanzu.vmware.com/promotable: ""
     apps.tanzu.vmware.com/promote-group: ContainerApp/spring-smoketest
   creationTimestamp: null
-  name: spring-smoketest.apps.local.20240718.313.28716
+  name: spring-smoketest.apps.local.20240718.1509.180
 spec:
   refName: spring-smoketest.apps.local
-  releasedAt: "2024-07-18T03:14:17Z"
+  releasedAt: "2024-07-18T15:09:55Z"
   template:
     spec:
       deploy:
@@ -17,7 +17,7 @@ spec:
           - --wait=false
       fetch:
       - imgpkgBundle:
-          image: ghcr.io/jaimegag/spring-smoketest@sha256:3468579b5aed385efd4d75f9ea8b8c1801962c099db556a602fde6518531bf86
+          image: ghcr.io/jaimegag/spring-smoketest@sha256:1f163c76e97113d7c5a5a855dec78d20f46a8240cf320b76560db120bac8533d
       template:
       - ytt:
           paths:
@@ -28,4 +28,4 @@ spec:
           - '-'
   valuesSchema:
     openAPIv3: null
-  version: 20240718.313.28716
+  version: 20240718.1509.180
