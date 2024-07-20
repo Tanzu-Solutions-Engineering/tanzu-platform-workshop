@@ -9,7 +9,7 @@ controlPlane:
     - vcluster-$SESSION_NAMESPACE.$INGRESS_DOMAIN
 EOF
 
-vcluster create vcluster-tanzu-$SESSION_NAMESPACE  --update-current=false --switch-context=false --create-namespace=false --background-proxy=false --connect=false -n $SESSION_NAMESPACE  -f vcluster.yaml
+vcluster create vcluster-$SESSION_NAMESPACE  --update-current=false --switch-context=false --create-namespace=false --background-proxy=false --connect=false -n $SESSION_NAMESPACE  -f vcluster.yaml
 while true; do
   if echo "$(vcluster list)" | grep -q "Running"; then
     break
