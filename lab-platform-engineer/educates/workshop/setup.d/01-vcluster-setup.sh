@@ -35,5 +35,3 @@ spec:
 EOF
 
 vcluster connect vcluster-$SESSION_NAMESPACE -n $SESSION_NAMESPACE --print --server=https://vcluster-$SESSION_NAMESPACE.$INGRESS_DOMAIN  > vcluster-kubeconfig.yaml
-k8s_ctx_vcluster
-
