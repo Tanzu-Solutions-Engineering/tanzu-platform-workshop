@@ -14,6 +14,43 @@ tanzu project list
 tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
 ```
 
+## Cluster Group
+```editor:append-lines-to-file
+file: ~/cluster-group-values.yaml
+description: Add cluster group template file
+text: |
+  Name: {{< param  session_name >}}
+  Integrations: TANZU_APPLICATION_ENGINE
+```
+```execute
+tanzu operations clustergroup create -v cluster-group-values.yaml 
+```
+
+## Attach workload cluster 
+```editor:append-lines-to-file
+file: ~/cluster-attach-values.yaml
+description: Add template file for cluster attachment
+text: |
+  fullName:
+    managementClusterName: attached
+    provisionerName: attached
+    name: {{< param  session_name >}}
+  meta:
+    description: Attaching cluster using tanzu cli
+  spec:
+    clusterGroupName: {{< param  session_name >}}
+```
+```execute
+tanzu operations cluster attach --file cluster-attach-values.yaml --kubeconfig vcluster-kubeconfig.yaml
+```
+
+## Add capabilities to cluster group
+
+WIP
+
+https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html
+
+# TMP
 ## App
 
 ```execute

@@ -19,7 +19,14 @@ kubectl krew install ns
 kubectl krew install konfig
 
 kubectl konfig import --save vcluster-kubeconfig.yaml
-kubectl konfig import --save .config/tanzu/kube/config
+
+kubectl konfig import --save vcluster-kubeconfig.yaml
+kubectl ctx $(yq eval '.current-context' vcluster-kubeconfig.yaml)
+kubectl ns default
+
+ 
+
+#kubectl konfig import --save .config/tanzu/kube/config
 
 
 #alias k8s_ctx_vcluster="export KUBECONFIG=$HOME/vcluster-kubeconfig.yaml && kubectl config set-context --current --namespace=default"
