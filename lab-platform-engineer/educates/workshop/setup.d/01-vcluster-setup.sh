@@ -35,10 +35,5 @@ spec:
 EOF
 
 vcluster connect vcluster-$SESSION_NAMESPACE -n $SESSION_NAMESPACE --print --server=https://vcluster-$SESSION_NAMESPACE.$INGRESS_DOMAIN  > vcluster-kubeconfig.yaml
-alias k8s_ctx_vcluster="export KUBECONFIG=$HOME/vcluster-kubeconfig.yaml && kubectl config set-context --current --namespace=default"
 k8s_ctx_vcluster
-alias k8s_ctx_tp4k8s="export KUBECONFIG=$HOME/.config/tanzu/kube/config && kubectl config set-context --current --namespace=default"
-alias k8s_ctx_educates="unset KUBECONFIG && kubectl config set-context --current --namespace=$SESSION_NAMESPACE"
-
-
 
