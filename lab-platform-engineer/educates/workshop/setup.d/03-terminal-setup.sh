@@ -12,6 +12,7 @@ set -eo pipefail
   tar zxvf "${KREW}.tar.gz" &&
   ./"${KREW}" install krew
 )
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 kubectl krew install ctx
 kubectl krew install ns
