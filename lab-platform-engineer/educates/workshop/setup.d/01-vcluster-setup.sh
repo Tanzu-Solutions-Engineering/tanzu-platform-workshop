@@ -34,4 +34,4 @@ spec:
       port: 443
 EOF
 
-vcluster connect vcluster-$SESSION_NAMESPACE -n $SESSION_NAMESPACE --print --server=https://vcluster-$SESSION_NAMESPACE.$INGRESS_DOMAIN  > vcluster-kubeconfig.yaml
+vcluster connect vcluster-$SESSION_NAMESPACE -n $SESSION_NAMESPACE --print --silent --server=https://vcluster-$SESSION_NAMESPACE.$INGRESS_DOMAIN  > vcluster-kubeconfig.yaml
