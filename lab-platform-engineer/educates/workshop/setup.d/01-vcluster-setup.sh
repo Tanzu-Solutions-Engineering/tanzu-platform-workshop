@@ -10,13 +10,6 @@ controlPlane:
 EOF
 
 vcluster create vcluster-$SESSION_NAMESPACE  --update-current=false --switch-context=false --create-namespace=false --background-proxy=false --connect=false -n $SESSION_NAMESPACE  -f vcluster.yaml
-while true; do
-  if echo "$(vcluster list)" | grep -q "Running"; then
-    break
-  else
-    sleep 5
-  fi
-done
 
 cat <<EOF | kubectl apply -f -
 apiVersion: projectcontour.io/v1
