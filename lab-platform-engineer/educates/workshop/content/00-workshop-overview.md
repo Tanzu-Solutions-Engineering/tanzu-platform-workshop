@@ -37,6 +37,8 @@ text: |
     name: {{< param  session_name >}}
   meta:
     description: Attaching cluster using tanzu cli
+    labels:
+      workshop-session: {{< param  session_name >}}
   spec:
     clusterGroupName: {{< param  session_name >}}
 ```
