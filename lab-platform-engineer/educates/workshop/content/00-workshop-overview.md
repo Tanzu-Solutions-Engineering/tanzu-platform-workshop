@@ -52,6 +52,12 @@ WIP
 
 https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html
 
+## Cleanup
+```execute
+tanzu operations cluster delete {{< param  session_name >}} --cluster-type attached --management-cluster-name attached --provisioner-name attached
+anzu operations clustergroup delete {{< param  session_name >}}
+```
+
 # TMP
 ## App
 
