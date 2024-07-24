@@ -60,4 +60,4 @@ alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
 ```
 
 Throughout this workshop, you will experience how resources are created at the UCP level and automatically copied over to and kept in sync with the Kubernetes workload clusters. At a high level:
-![UCP and k8s clusters](../images/ucpsync.png)
+![UCP and k8s clusters](ucpsync.png)

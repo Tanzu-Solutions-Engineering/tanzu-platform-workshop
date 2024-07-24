@@ -7,10 +7,11 @@ pathways:
 
       steps:
       - 00-workshop-overview
-      - 01-login-to-tp4k8s
-      - 02-tp-concepts
-      - 03-cluster-group-capabilities
-      - 04-attach-cluster
+      - 01-platform-engineers
+      - 02-login-to-tp4k8s
+      - 03-tp-concepts
+      - 04-cluster-group-capabilities
+      - 05-attach-cluster
       - 99-workshop-summary
 params:
 - name: TANZU_PLATFORM_PROJECT

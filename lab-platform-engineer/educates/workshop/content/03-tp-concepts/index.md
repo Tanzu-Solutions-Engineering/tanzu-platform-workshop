@@ -17,6 +17,6 @@ A *Space* will be scheduled on a cluster only if that cluster provides all of th
 - **Traits** are collections of Kubernetes resources that are **deployed into *Spaces*** when they are created. They deliver required, pre-configured, and consistent content to them.
 
 Here's a conceptual diagram of how these relate to each other:
-![Require and Provide Capabilities](../images/requireprovidecapabilities.png)
+![Require and Provide Capabilities](requireprovidecapabilities.png)
 
 More on this in the [Tanzu Application Engine Conceptual Overview documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/concepts-about-spaces.html)

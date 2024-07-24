@@ -2,17 +2,6 @@
 title: Workshop Overview
 ---
 
-```execute
-tanzu login
-```
-
-```execute
-tanzu project list
-```
-
-```execute
-tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
-```
 
 ## Cluster Group
 ```editor:append-lines-to-file
