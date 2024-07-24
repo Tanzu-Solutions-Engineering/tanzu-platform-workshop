@@ -128,7 +128,7 @@ We need to install all capabilities that we are going to need in the Spaces we w
 	- Tanzu Service Binding
 	- Spring Cloud Gateway.tanzu.vmware.com (can be skipped if not needed by app)
 	- Crossplane (Bitnami's dependency)
-> Note: Egress, Ingress and Service Mesh Observability capabilities are all provided by the same `tcs` meta package today
+> Note: Ingress and Service Mesh Observability capabilities are all provided by the same `tcs` meta package today
 
 To install the necessary capabilities run these commands
 ```
@@ -144,6 +144,7 @@ tanzu operations clustergroup use
 tanzu package install cert-manager.tanzu.vmware.com -p cert-manager.tanzu.vmware.com -v '>0.0.0'
 tanzu package install k8sgateway.tanzu.vmware.com -p k8sgateway.tanzu.vmware.com -v '>0.0.0'
 tanzu package install tcs.tanzu.vmware.com -p tcs.tanzu.vmware.com -v '>0.0.0'
+tanzu package install egress.tanzu.vmware.com -p egress.tanzu.vmware.com -v '>0.0.0'
 tanzu package install observability.tanzu.vmware.com -p observability.tanzu.vmware.com -v '>0.0.0'
 tanzu package install mtls.tanzu.vmware.com -p mtls.tanzu.vmware.com -v '>0.0.0'
 tanzu package install crossplane.tanzu.vmware.com -p crossplane.tanzu.vmware.com -v '>0.0.0'
@@ -169,6 +170,7 @@ NAME                                    PACKAGE NAME                            
 cert-manager.tanzu.vmware.com           cert-manager.tanzu.vmware.com                                           2m8s
 k8sgateway.tanzu.vmware.com             k8sgateway.tanzu.vmware.com                                             2m7s
 tcs.tanzu.vmware.com                    tcs.tanzu.vmware.com                                                    2m5s
+egress.tanzu.vmware.com                 egress.tanzu.vmware.com                                                 2m5s
 observability.tanzu.vmware.com          observability.tanzu.vmware.com                                          2m4s
 mtls.tanzu.vmware.com                   mtls.tanzu.vmware.com                                                   2m4s
 crossplane.tanzu.vmware.com             crossplane.tanzu.vmware.com                                             2m2s
@@ -288,6 +290,7 @@ service-bindings               Active   15h   # added from capabilities
 spring-cloud-gateway           Active   15h   # added from capabilities
 tanzu-cluster-group-system     Active   15h   # added from ucp
 tanzu-containerapp             Active   15h   # added from capabilities
+tanzu-egress                   Active   15h   # added from capabilities
 tanzu-service-bindings         Active   15h   # added from capabilities
 tanzu-system                   Active   15h   # added from ucp
 vmware-system-tmc              Active   15h   # added from tmc
@@ -299,18 +302,19 @@ kubectl get pkgi -A
 NAMESPACE                    NAME                                              PACKAGE NAME                                  PACKAGE VERSION                DESCRIPTION           AGE
 tanzu-cluster-group-system   bitnami.services.tanzu.vmware.com                 bitnami.services.tanzu.vmware.com             0.6.0                          Reconcile succeeded   15h   # added from capabilities
 tanzu-cluster-group-system   cert-manager.tanzu.vmware.com                     cert-manager.tanzu.vmware.com                 2.9.1                          Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   container-apps.tanzu.vmware.com                   container-apps.tanzu.vmware.com               0.0.3+1715585258.1ef0f6e7      Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   crossplane.tanzu.vmware.com                       crossplane.tanzu.vmware.com                   0.6.0                          Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system   container-apps.tanzu.vmware.com                   container-apps.tanzu.vmware.com               0.0.5+1718364253.b6bb7e71      Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system   crossplane.tanzu.vmware.com                       crossplane.tanzu.vmware.com                   0.7.0                          Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system   egress.tanzu.vmware.com                           egress.tanzu.vmware.com                       1.1.3                          Reconcile succeeded   15h  # added from capabilities
 tanzu-cluster-group-system   k8sgateway.tanzu.vmware.com                       k8sgateway.tanzu.vmware.com                   0.0.7                          Reconcile succeeded   15h   # added from capabilities
 tanzu-cluster-group-system   mtls.tanzu.vmware.com                             mtls.tanzu.vmware.com                         0.0.1                          Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   observability.tanzu.vmware.com                    observability.tanzu.vmware.com                1.0.13                         Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system   observability.tanzu.vmware.com                    observability.tanzu.vmware.com                1.0.15                         Reconcile succeeded   15h   # added from capabilities
 tanzu-cluster-group-system   servicebinding.tanzu.vmware.com                   servicebinding.tanzu.vmware.com               0.13.0                         Reconcile succeeded   15h   # added from capabilities
 tanzu-cluster-group-system   spring-cloud-gateway.tanzu.vmware.com             spring-cloud-gateway.tanzu.vmware.com         2.2.4                          Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   tanzu-servicebinding.tanzu.vmware.com             tanzu-servicebinding.tanzu.vmware.com         1.0.0+1715584031.31092f96      Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   tcs.tanzu.vmware.com                              tcs.tanzu.vmware.com                          2.2.7                          Reconcile succeeded   15h   # added from capabilities
-tanzu-system                 capabilities-controller                           capabilities-controller.tanzu.vmware.com      1.0.0+release.15.607ff05fe     Reconcile succeeded   15h   # added from ucp
-tanzu-system                 syncer                                            syncer.ucp.tanzu.vmware.com                   1.0.0+release.15.607ff05fe     Reconcile succeeded   15h   # added from ucp
-tanzu-system                 vss-k8s-collector                                 vss-k8s-collector.tanzu.vmware.com            3.17.1                         Reconcile succeeded   15h   # added from ucp
+tanzu-cluster-group-system   tanzu-servicebinding.tanzu.vmware.com             tanzu-servicebinding.tanzu.vmware.com         1.1.0+1718281466.c3437892      Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system   tcs.tanzu.vmware.com                              tcs.tanzu.vmware.com                          2.2.14                         Reconcile succeeded   15h   # added from capabilities
+tanzu-system                 capabilities-controller                           capabilities-controller.tanzu.vmware.com      1.0.1+release.test             Reconcile succeeded   15h   # added from ucp
+tanzu-system                 syncer                                            syncer.ucp.tanzu.vmware.com                   1.0.1+release.15.180eca5c3     Reconcile succeeded   15h   # added from ucp
+tanzu-system                 vss-k8s-collector                                 vss-k8s-collector.tanzu.vmware.com            3.18.3                         Reconcile succeeded   15h   # added from ucp
 ```
 
 
