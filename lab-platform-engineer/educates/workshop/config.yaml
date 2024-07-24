@@ -12,6 +12,8 @@ pathways:
       - 03-tp-concepts
       - 04-cluster-group-capabilities
       - 05-attach-cluster
+      - 06-developer-ready-platform
+      - 07-cleanup
       - 99-workshop-summary
 params:
 - name: TANZU_PLATFORM_PROJECT
