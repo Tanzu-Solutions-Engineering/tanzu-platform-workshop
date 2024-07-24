@@ -6,3 +6,4 @@ metadata:
 spec:
   interval: 5m
   url: oci://ghcr.io/stefanprodan/charts/podinfo
+  type: oci
