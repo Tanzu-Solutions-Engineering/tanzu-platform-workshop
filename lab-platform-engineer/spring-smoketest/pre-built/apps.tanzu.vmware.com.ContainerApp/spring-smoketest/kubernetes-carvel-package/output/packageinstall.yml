@@ -10,7 +10,7 @@ spec:
   packageRef:
     refName: spring-smoketest.apps.local
     versionSelection:
-      constraints: 20240718.1509.180
+      constraints: 20240723.2348.54321
   serviceAccountName: carvel-package-installer
   values:
   - secretRef:

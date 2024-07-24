@@ -1,14 +1,14 @@
 {
  "artifacts": [
   {
-   "id": "8b2db91f2fe5e235",
+   "id": "e25edaf73478e137",
    "name": "HdrHistogram",
    "version": "2.2.1",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/HdrHistogram-2.2.1.jar"
     }
    ],
    "licenses": [],
@@ -20,7 +20,7 @@
    "purl": "pkg:maven/org.hdrhistogram/HdrHistogram@2.2.1",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/HdrHistogram-2.2.1.jar",
+    "virtualPath": "BOOT-INF/lib/HdrHistogram-2.2.1.jar",
     "manifest": {
      "main": {
       "Bnd-LastModified": "1714903643341",
@@ -55,14 +55,14 @@
    }
   },
   {
-   "id": "c626a48480928c5a",
+   "id": "ee0d581b96186f2b",
    "name": "LatencyUtils",
    "version": "2.0.3",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/LatencyUtils-2.0.3.jar"
     }
    ],
    "licenses": [],
@@ -74,7 +74,7 @@
    "purl": "pkg:maven/org.latencyutils/LatencyUtils@2.0.3",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/LatencyUtils-2.0.3.jar",
+    "virtualPath": "BOOT-INF/lib/LatencyUtils-2.0.3.jar",
     "manifest": {
      "main": {
       "Archiver-Version": "Plexus Archiver",
@@ -95,14 +95,14 @@
    }
   },
   {
-   "id": "e181564a8434c129",
+   "id": "3b3d1f9e95104912",
    "name": "angular-ui",
    "version": "0.4.0-2",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/angular-ui-0.4.0-2.jar"
     }
    ],
    "licenses": [],
@@ -120,7 +120,7 @@
    "purl": "pkg:maven/org.webjars/angular-ui@0.4.0-2",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/angular-ui-0.4.0-2.jar",
+    "virtualPath": "BOOT-INF/lib/angular-ui-0.4.0-2.jar",
     "manifest": {
      "main": {
       "Archiver-Version": "Plexus Archiver",
@@ -141,14 +141,14 @@
    }
   },
   {
-   "id": "413ee54a3bb2a265",
+   "id": "a4285c5f2e27a4c8",
    "name": "angular-ui-bootstrap",
    "version": "0.10.0-1",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/angular-ui-bootstrap-0.10.0-1.jar"
     }
    ],
    "licenses": [],
@@ -170,7 +170,7 @@
    "purl": "pkg:maven/org.webjars/angular-ui-bootstrap@0.10.0-1",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/angular-ui-bootstrap-0.10.0-1.jar",
+    "virtualPath": "BOOT-INF/lib/angular-ui-bootstrap-0.10.0-1.jar",
     "manifest": {
      "main": {
       "Archiver-Version": "Plexus Archiver",
@@ -191,14 +191,14 @@
    }
   },
   {
-   "id": "3e6ffa01e63687e7",
+   "id": "ad0c979935782aa4",
    "name": "angularjs",
    "version": "1.2.16",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/angularjs-1.2.16.jar"
     }
    ],
    "licenses": [],
@@ -210,7 +210,7 @@
    "purl": "pkg:maven/org.webjars/angularjs@1.2.16",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/angularjs-1.2.16.jar",
+    "virtualPath": "BOOT-INF/lib/angularjs-1.2.16.jar",
     "manifest": {
      "main": {
       "Archiver-Version": "Plexus Archiver",
@@ -231,14 +231,14 @@
    }
   },
   {
-   "id": "a5ff840e1d5ba11c",
+   "id": "c48e12b600673e76",
    "name": "bootstrap",
    "version": "3.1.1",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/bootstrap-3.1.1.jar"
     }
    ],
    "licenses": [],
@@ -250,7 +250,7 @@
    "purl": "pkg:maven/org.webjars/bootstrap@3.1.1",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/bootstrap-3.1.1.jar",
+    "virtualPath": "BOOT-INF/lib/bootstrap-3.1.1.jar",
     "manifest": {
      "main": {
       "Archiver-Version": "Plexus Archiver",
@@ -271,14 +271,14 @@
    }
   },
   {
-   "id": "4cfdd029bc873a9e",
+   "id": "a6f46a9a56c0d0c4",
    "name": "jackson-annotations",
    "version": "2.17.1",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/jackson-annotations-2.17.1.jar"
     }
    ],
    "licenses": [],
@@ -303,7 +303,7 @@
    "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.17.1",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/jackson-annotations-2.17.1.jar",
+    "virtualPath": "BOOT-INF/lib/jackson-annotations-2.17.1.jar",
     "manifest": {
      "main": {
       "Build-Jdk-Spec": "1.8",
@@ -342,14 +342,14 @@
    }
   },
   {
-   "id": "4c78f9142daad4dd",
+   "id": "584643968b951e79",
    "name": "jackson-core",
    "version": "2.17.1",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/jackson-core-2.17.1.jar"
     }
    ],
    "licenses": [],
@@ -379,7 +379,7 @@
    "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.17.1",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/jackson-core-2.17.1.jar",
+    "virtualPath": "BOOT-INF/lib/jackson-core-2.17.1.jar",
     "manifest": {
      "main": {
       "Build-Jdk-Spec": "1.8",
@@ -420,14 +420,14 @@
    }
   },
   {
-   "id": "99c24ff96fa2d421",
+   "id": "f2c4cd26c0b817d9",
    "name": "jackson-databind",
    "version": "2.17.1",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/jackson-databind-2.17.1.jar"
     }
    ],
    "licenses": [],
@@ -452,7 +452,7 @@
    "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.17.1",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/jackson-databind-2.17.1.jar",
+    "virtualPath": "BOOT-INF/lib/jackson-databind-2.17.1.jar",
     "manifest": {
      "main": {
       "Build-Jdk-Spec": "1.8",
@@ -493,14 +493,14 @@
    }
   },
   {
-   "id": "c39895843438ba08",
+   "id": "d2aca01be7111a26",
    "name": "jackson-datatype-jdk8",
    "version": "2.17.1",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/jackson-datatype-jdk8-2.17.1.jar"
     }
    ],
    "licenses": [],
@@ -531,7 +531,7 @@
    "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jdk8@2.17.1",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/jackson-datatype-jdk8-2.17.1.jar",
+    "virtualPath": "BOOT-INF/lib/jackson-datatype-jdk8-2.17.1.jar",
     "manifest": {
      "main": {
       "Build-Jdk-Spec": "1.8",
@@ -572,14 +572,14 @@
    }
   },
   {
-   "id": "1a5f5d7c1f631f4e",
+   "id": "e46868c1d9cc9d2f",
    "name": "jackson-datatype-jsr310",
    "version": "2.17.1",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/jackson-datatype-jsr310-2.17.1.jar"
     }
    ],
    "licenses": [],
@@ -610,7 +610,7 @@
    "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.17.1",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/jackson-datatype-jsr310-2.17.1.jar",
+    "virtualPath": "BOOT-INF/lib/jackson-datatype-jsr310-2.17.1.jar",
     "manifest": {
      "main": {
       "Build-Jdk-Spec": "1.8",
@@ -651,14 +651,14 @@
    }
   },
   {
-   "id": "f7e3b3d8e2d08fea",
+   "id": "106d4f6ecbcf10d4",
    "name": "jackson-module-parameter-names",
    "version": "2.17.1",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/jackson-module-parameter-names-2.17.1.jar"
     }
    ],
    "licenses": [],
@@ -695,7 +695,7 @@
    "purl": "pkg:maven/com.fasterxml.jackson.module/jackson-module-parameter-names@2.17.1",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/jackson-module-parameter-names-2.17.1.jar",
+    "virtualPath": "BOOT-INF/lib/jackson-module-parameter-names-2.17.1.jar",
     "manifest": {
      "main": {
       "Build-Jdk-Spec": "1.8",
@@ -736,14 +736,14 @@
    }
   },
   {
-   "id": "ece39a630040622d",
+   "id": "6bbd43f49ab53e24",
    "name": "jakarta.annotation-api",
    "version": "2.1.1",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/jakarta.annotation-api-2.1.1.jar"
     }
    ],
    "licenses": [],
@@ -765,7 +765,7 @@
    "purl": "pkg:maven/org.glassfish/jakarta.annotation-api@2.1.1",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/jakarta.annotation-api-2.1.1.jar",
+    "virtualPath": "BOOT-INF/lib/jakarta.annotation-api-2.1.1.jar",
     "manifest": {
      "main": {
       "Build-Jdk-Spec": "11",
@@ -800,14 +800,14 @@
    }
   },
   {
-   "id": "780f52d93f25f692",
+   "id": "a2cd264757ac4ec5",
    "name": "java-cfenv",
    "version": "3.1.2",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/java-cfenv-3.1.2.jar"
     }
    ],
    "licenses": [],
@@ -841,7 +841,7 @@
    "purl": "pkg:maven/io.pivotal.cfenv.core/java-cfenv@3.1.2",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/java-cfenv-3.1.2.jar",
+    "virtualPath": "BOOT-INF/lib/java-cfenv-3.1.2.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "io.pivotal.cfenv.core",
@@ -851,14 +851,14 @@
    }
   },
   {
-   "id": "1bedafa9c3bccea8",
+   "id": "a7e75bf17be7f47a",
    "name": "java-cfenv-boot",
    "version": "3.1.2",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/java-cfenv-boot-3.1.2.jar"
     }
    ],
    "licenses": [],
@@ -913,7 +913,7 @@
    "purl": "pkg:maven/io.pivotal.cfenv.spring.boot/java-cfenv-boot@3.1.2",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/java-cfenv-boot-3.1.2.jar",
+    "virtualPath": "BOOT-INF/lib/java-cfenv-boot-3.1.2.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "io.pivotal.cfenv.spring.boot",
@@ -923,14 +923,14 @@
    }
   },
   {
-   "id": "14badbcc6768e393",
+   "id": "1e844b39d1c4ed7a",
    "name": "java-cfenv-jdbc",
    "version": "3.1.2",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/java-cfenv-jdbc-3.1.2.jar"
     }
    ],
    "licenses": [],
@@ -972,7 +972,7 @@
    "purl": "pkg:maven/io.pivotal.cfenv.jdbc/java-cfenv-jdbc@3.1.2",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/java-cfenv-jdbc-3.1.2.jar",
+    "virtualPath": "BOOT-INF/lib/java-cfenv-jdbc-3.1.2.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "io.pivotal.cfenv.jdbc",
@@ -982,14 +982,14 @@
    }
   },
   {
-   "id": "3de69c7cc3035465",
+   "id": "556e82f4e33b3c0d",
    "name": "jquery",
    "version": "2.1.0-2",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/jquery-2.1.0-2.jar"
     }
    ],
    "licenses": [],
@@ -1001,7 +1001,7 @@
    "purl": "pkg:maven/org.webjars/jquery@2.1.0-2",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/jquery-2.1.0-2.jar",
+    "virtualPath": "BOOT-INF/lib/jquery-2.1.0-2.jar",
     "manifest": {
      "main": {
       "Archiver-Version": "Plexus Archiver",
@@ -1022,14 +1022,14 @@
    }
   },
   {
-   "id": "ca09b824b59077bb",
+   "id": "4964e5812fecd2ed",
    "name": "json-io",
    "version": "4.14.1",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/json-io-4.14.1.jar"
     }
    ],
    "licenses": [],
@@ -1047,7 +1047,7 @@
    "purl": "pkg:maven/com.cedarsoftware/json-io@4.14.1",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/json-io-4.14.1.jar",
+    "virtualPath": "BOOT-INF/lib/json-io-4.14.1.jar",
     "manifest": {
      "main": {
       "Bnd-LastModified": "1694721726113",
@@ -1077,14 +1077,14 @@
    }
   },
   {
-   "id": "406c6330ed73e7a9",
+   "id": "ce8e9f8a0e66e995",
    "name": "jul-to-slf4j",
    "version": "2.0.13",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/jul-to-slf4j-2.0.13.jar"
     }
    ],
    "licenses": [],
@@ -1106,7 +1106,7 @@
    "purl": "pkg:maven/org.slf4j/jul-to-slf4j@2.0.13",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/jul-to-slf4j-2.0.13.jar",
+    "virtualPath": "BOOT-INF/lib/jul-to-slf4j-2.0.13.jar",
     "manifest": {
      "main": {
       "Build-Jdk-Spec": "21",
@@ -1142,14 +1142,14 @@
    }
   },
   {
-   "id": "ab85cb34b26a737e",
+   "id": "1b04983630ec3ecb",
    "name": "log4j-api",
    "version": "2.23.1",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/log4j-api-2.23.1.jar"
     }
    ],
    "licenses": [],
@@ -1199,7 +1199,7 @@
    "purl": "pkg:maven/org.apache.logging.log4j/log4j-api@2.23.1",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/log4j-api-2.23.1.jar",
+    "virtualPath": "BOOT-INF/lib/log4j-api-2.23.1.jar",
     "manifest": {
      "main": {
       "Build-Jdk-Spec": "17",
@@ -1239,14 +1239,14 @@
    }
   },
   {
-   "id": "2d18dd72e6eae96e",
+   "id": "e01d6b28c2e7ba1d",
    "name": "log4j-to-slf4j",
    "version": "2.23.1",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/log4j-to-slf4j-2.23.1.jar"
     }
    ],
    "licenses": [],
@@ -1304,7 +1304,7 @@
    "purl": "pkg:maven/org.apache.logging.log4j/log4j-to-slf4j@2.23.1",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/log4j-to-slf4j-2.23.1.jar",
+    "virtualPath": "BOOT-INF/lib/log4j-to-slf4j-2.23.1.jar",
     "manifest": {
      "main": {
       "Build-Jdk-Spec": "17",
@@ -1343,14 +1343,14 @@
    }
   },
   {
-   "id": "b0f33aad3ab07d6e",
+   "id": "a64a3e39d7246cf5",
    "name": "logback-classic",
    "version": "1.5.6",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/logback-classic-1.5.6.jar"
     }
    ],
    "licenses": [],
@@ -1370,7 +1370,7 @@
    "purl": "pkg:maven/logback-classic/logback-classic@1.5.6",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/logback-classic-1.5.6.jar",
+    "virtualPath": "BOOT-INF/lib/logback-classic-1.5.6.jar",
     "manifest": {
      "main": {
       "Build-Jdk-Spec": "21",
@@ -1409,14 +1409,14 @@
    }
   },
   {
-   "id": "677121fed62839a4",
+   "id": "f1146b1b4cc5b3a1",
    "name": "logback-core",
    "version": "1.5.6",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/logback-core-1.5.6.jar"
     }
    ],
    "licenses": [],
@@ -1436,7 +1436,7 @@
    "purl": "pkg:maven/logback-core/logback-core@1.5.6",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/logback-core-1.5.6.jar",
+    "virtualPath": "BOOT-INF/lib/logback-core-1.5.6.jar",
     "manifest": {
      "main": {
       "Build-Jdk-Spec": "21",
@@ -1475,14 +1475,14 @@
    }
   },
   {
-   "id": "4bec2de05f80e3d3",
+   "id": "5e61899ea62bb66b",
    "name": "micrometer-commons",
    "version": "1.13.0",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/micrometer-commons-1.13.0.jar"
     }
    ],
    "licenses": [],
@@ -1504,7 +1504,7 @@
    "purl": "pkg:maven/io.micrometer%23micrometer-commons/micrometer-commons@1.13.0",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/micrometer-commons-1.13.0.jar",
+    "virtualPath": "BOOT-INF/lib/micrometer-commons-1.13.0.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "micrometer.commons",
@@ -1549,14 +1549,14 @@
    }
   },
   {
-   "id": "20990ff4d49ef22d",
+   "id": "ad5ef2e2c76c4129",
    "name": "micrometer-core",
    "version": "1.13.0",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/micrometer-core-1.13.0.jar"
     }
    ],
    "licenses": [],
@@ -1578,7 +1578,7 @@
    "purl": "pkg:maven/io.micrometer%23micrometer-core/micrometer-core@1.13.0",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/micrometer-core-1.13.0.jar",
+    "virtualPath": "BOOT-INF/lib/micrometer-core-1.13.0.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "micrometer.core",
@@ -1624,14 +1624,14 @@
    }
   },
   {
-   "id": "d8744c502fd0a1e4",
+   "id": "8dd621b7f8fd8d04",
    "name": "micrometer-jakarta9",
    "version": "1.13.0",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/micrometer-jakarta9-1.13.0.jar"
     }
    ],
    "licenses": [],
@@ -1653,7 +1653,7 @@
    "purl": "pkg:maven/io.micrometer%23micrometer-jakarta9/micrometer-jakarta9@1.13.0",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/micrometer-jakarta9-1.13.0.jar",
+    "virtualPath": "BOOT-INF/lib/micrometer-jakarta9-1.13.0.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "micrometer.jakarta9",
@@ -1698,14 +1698,14 @@
    }
   },
   {
-   "id": "e0e795b28d040b51",
+   "id": "5c30dcab76d75dd3",
    "name": "micrometer-observation",
    "version": "1.13.0",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/micrometer-observation-1.13.0.jar"
     }
    ],
    "licenses": [],
@@ -1727,7 +1727,7 @@
    "purl": "pkg:maven/io.micrometer%23micrometer-observation/micrometer-observation@1.13.0",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/micrometer-observation-1.13.0.jar",
+    "virtualPath": "BOOT-INF/lib/micrometer-observation-1.13.0.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "micrometer.observation",
@@ -1771,14 +1771,14 @@
    }
   },
   {
-   "id": "b92f4e731fb4c7f",
+   "id": "d70752d3ba8174a7",
    "name": "slf4j-api",
    "version": "2.0.13",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/slf4j-api-2.0.13.jar"
     }
    ],
    "licenses": [],
@@ -1794,7 +1794,7 @@
    "purl": "pkg:maven/org.slf4j/slf4j-api@2.0.13",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/slf4j-api-2.0.13.jar",
+    "virtualPath": "BOOT-INF/lib/slf4j-api-2.0.13.jar",
     "manifest": {
      "main": {
       "Build-Jdk-Spec": "21",
@@ -1830,14 +1830,14 @@
    }
   },
   {
-   "id": "711b16590253907f",
+   "id": "f87e82e3031d2f81",
    "name": "snakeyaml",
    "version": "2.2",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/snakeyaml-2.2.jar"
     }
    ],
    "licenses": [],
@@ -1849,7 +1849,7 @@
    "purl": "pkg:maven/org.yaml/snakeyaml@2.2",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/snakeyaml-2.2.jar",
+    "virtualPath": "BOOT-INF/lib/snakeyaml-2.2.jar",
     "manifest": {
      "main": {
       "Bnd-LastModified": "1693124775469",
@@ -1880,14 +1880,14 @@
    }
   },
   {
-   "id": "e5bbd2c6f0ecf9d9",
+   "id": "374dd422c70b5b23",
    "name": "spring-aop",
    "version": "6.1.8",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/spring-aop-6.1.8.jar"
     }
    ],
    "licenses": [],
@@ -1903,7 +1903,7 @@
    "purl": "pkg:maven/spring-aop/spring-aop@6.1.8",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/spring-aop-6.1.8.jar",
+    "virtualPath": "BOOT-INF/lib/spring-aop-6.1.8.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "spring.aop",
@@ -1916,14 +1916,14 @@
    }
   },
   {
-   "id": "7d4ed1df6e5ca836",
+   "id": "31d034f21cab6606",
    "name": "spring-beans",
    "version": "6.1.8",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/spring-beans-6.1.8.jar"
     }
    ],
    "licenses": [],
@@ -1939,7 +1939,7 @@
    "purl": "pkg:maven/spring-beans/spring-beans@6.1.8",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/spring-beans-6.1.8.jar",
+    "virtualPath": "BOOT-INF/lib/spring-beans-6.1.8.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "spring.beans",
@@ -1952,14 +1952,14 @@
    }
   },
   {
-   "id": "ea20f064daf0a021",
+   "id": "d9c5266b70e283c5",
    "name": "spring-boot",
    "version": "3.3.0",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/spring-boot-3.3.0.jar"
     }
    ],
    "licenses": [],
@@ -1975,7 +1975,7 @@
    "purl": "pkg:maven/spring-boot/spring-boot@3.3.0",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/spring-boot-3.3.0.jar",
+    "virtualPath": "BOOT-INF/lib/spring-boot-3.3.0.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "spring.boot",
@@ -1989,14 +1989,14 @@
    }
   },
   {
-   "id": "c2aba705f034f198",
+   "id": "5937d266b51ad4b",
    "name": "spring-boot-actuator",
    "version": "3.3.0",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/spring-boot-actuator-3.3.0.jar"
     }
    ],
    "licenses": [],
@@ -2016,7 +2016,7 @@
    "purl": "pkg:maven/spring-boot-actuator/spring-boot-actuator@3.3.0",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/spring-boot-actuator-3.3.0.jar",
+    "virtualPath": "BOOT-INF/lib/spring-boot-actuator-3.3.0.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "spring.boot.actuator",
@@ -2030,14 +2030,14 @@
    }
   },
   {
-   "id": "8e24f501f6057c09",
+   "id": "3846df384eaccc39",
    "name": "spring-boot-actuator-autoconfigure",
    "version": "3.3.0",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/spring-boot-actuator-autoconfigure-3.3.0.jar"
     }
    ],
    "licenses": [],
@@ -2061,7 +2061,7 @@
    "purl": "pkg:maven/spring-boot-actuator-autoconfigure/spring-boot-actuator-autoconfigure@3.3.0",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/spring-boot-actuator-autoconfigure-3.3.0.jar",
+    "virtualPath": "BOOT-INF/lib/spring-boot-actuator-autoconfigure-3.3.0.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "spring.boot.actuator.autoconfigure",
@@ -2075,14 +2075,14 @@
    }
   },
   {
-   "id": "c727e5f3371fd9f3",
+   "id": "a89558613a4b0c37",
    "name": "spring-boot-autoconfigure",
    "version": "3.3.0",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/spring-boot-autoconfigure-3.3.0.jar"
     }
    ],
    "licenses": [],
@@ -2102,7 +2102,7 @@
    "purl": "pkg:maven/spring-boot-autoconfigure/spring-boot-autoconfigure@3.3.0",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/spring-boot-autoconfigure-3.3.0.jar",
+    "virtualPath": "BOOT-INF/lib/spring-boot-autoconfigure-3.3.0.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "spring.boot.autoconfigure",
@@ -2116,14 +2116,14 @@
    }
   },
   {
-   "id": "fd15038af53165a9",
+   "id": "c07995a21e6e6631",
    "name": "spring-boot-jarmode-tools",
    "version": "3.3.0",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/spring-boot-jarmode-tools-3.3.0.jar"
     }
    ],
    "licenses": [],
@@ -2147,7 +2147,7 @@
    "purl": "pkg:maven/spring-boot-jarmode-tools/spring-boot-jarmode-tools@3.3.0",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/spring-boot-jarmode-tools-3.3.0.jar",
+    "virtualPath": "BOOT-INF/lib/spring-boot-jarmode-tools-3.3.0.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "spring.boot.jarmode.tools",
@@ -2161,14 +2161,14 @@
    }
   },
   {
-   "id": "14fee99ec54bf753",
+   "id": "e27d1e19e43126b9",
    "name": "spring-cloud-bindings",
    "version": "2.0.3",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/spring-cloud-bindings-2.0.3.jar"
     }
    ],
    "licenses": [],
@@ -2192,7 +2192,7 @@
    "purl": "pkg:maven/org.springframework.cloud/spring-cloud-bindings@2.0.3",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/spring-cloud-bindings-2.0.3.jar",
+    "virtualPath": "BOOT-INF/lib/spring-cloud-bindings-2.0.3.jar",
     "manifest": {
      "main": {
       "Archiver-Version": "Plexus Archiver",
@@ -2213,14 +2213,14 @@
    }
   },
   {
-   "id": "69949d82b503831e",
+   "id": "1a10d531b8bed75",
    "name": "spring-context",
    "version": "6.1.8",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/spring-context-6.1.8.jar"
     }
    ],
    "licenses": [],
@@ -2236,7 +2236,7 @@
    "purl": "pkg:maven/spring-context/spring-context@6.1.8",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/spring-context-6.1.8.jar",
+    "virtualPath": "BOOT-INF/lib/spring-context-6.1.8.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "spring.context",
@@ -2249,14 +2249,14 @@
    }
   },
   {
-   "id": "d986ba996659334c",
+   "id": "1c7543a224706fad",
    "name": "spring-core",
    "version": "6.1.8",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/spring-core-6.1.8.jar"
     }
    ],
    "licenses": [],
@@ -2306,7 +2306,7 @@
    "purl": "pkg:maven/spring-core/spring-core@6.1.8",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/spring-core-6.1.8.jar",
+    "virtualPath": "BOOT-INF/lib/spring-core-6.1.8.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "spring.core",
@@ -2321,14 +2321,14 @@
    }
   },
   {
-   "id": "ded0f5aba139b6c7",
+   "id": "9de68a11d056762",
    "name": "spring-expression",
    "version": "6.1.8",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/spring-expression-6.1.8.jar"
     }
    ],
    "licenses": [],
@@ -2344,7 +2344,7 @@
    "purl": "pkg:maven/spring-expression/spring-expression@6.1.8",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/spring-expression-6.1.8.jar",
+    "virtualPath": "BOOT-INF/lib/spring-expression-6.1.8.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "spring.expression",
@@ -2357,14 +2357,14 @@
    }
   },
   {
-   "id": "8f4395cc2b048ce7",
+   "id": "20764049474f1a65",
    "name": "spring-jcl",
    "version": "6.1.8",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/spring-jcl-6.1.8.jar"
     }
    ],
    "licenses": [],
@@ -2380,7 +2380,7 @@
    "purl": "pkg:maven/spring-jcl/spring-jcl@6.1.8",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/spring-jcl-6.1.8.jar",
+    "virtualPath": "BOOT-INF/lib/spring-jcl-6.1.8.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "spring.jcl",
@@ -2393,130 +2393,14 @@
    }
   },
   {
-   "id": "a14035610c2cebb2",
-   "name": "spring-smoketest",
-   "version": "0.0.1-SNAPSHOT",
-   "type": "java-archive",
-   "foundBy": "java-cataloger",
-   "locations": [
-    {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
-    }
-   ],
-   "licenses": [],
-   "language": "java",
-   "cpes": [
-    "cpe:2.3:a:spring-smoketest:spring-smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring-smoketest:spring_smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring_smoketest:spring-smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring_smoketest:spring_smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:springframework:spring-smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:springframework:spring_smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:JarLauncher:spring-smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:JarLauncher:spring_smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring-smoketest:JarLauncher:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring_smoketest:JarLauncher:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:springframework:JarLauncher:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:JarLauncher:JarLauncher:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:launch:spring-smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:launch:spring_smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:loader:spring-smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:loader:spring_smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring-smoketest:launch:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring-smoketest:loader:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring:spring-smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring:spring_smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring_smoketest:launch:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring_smoketest:loader:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:springframework:launch:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:springframework:loader:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:boot:spring-smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:boot:spring_smoketest:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring-smoketest:boot:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring_smoketest:boot:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:springframework:boot:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:JarLauncher:launch:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:JarLauncher:loader:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:launch:JarLauncher:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:loader:JarLauncher:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring:JarLauncher:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:JarLauncher:boot:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:boot:JarLauncher:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:launch:launch:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:launch:loader:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:loader:launch:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:loader:loader:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring:launch:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring:loader:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:boot:launch:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:boot:loader:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:launch:boot:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:loader:boot:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring:boot:0.0.1-SNAPSHOT:*:*:*:*:*:*:*",
-    "cpe:2.3:a:boot:boot:0.0.1-SNAPSHOT:*:*:*:*:*:*:*"
-   ],
-   "purl": "pkg:maven/org.springframework.boot.loader.launch.JarLauncher/spring-smoketest@0.0.1-SNAPSHOT",
-   "metadataType": "JavaMetadata",
-   "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar",
-    "manifest": {
-     "main": {
-      "Build-Jdk-Spec": "21",
-      "Implementation-Title": "spring-smoketest",
-      "Implementation-Version": "0.0.1-SNAPSHOT",
-      "Main-Class": "org.springframework.boot.loader.launch.JarLauncher",
-      "Manifest-Version": "1.0",
-      "Spring-Boot-Classes": "BOOT-INF/classes/",
-      "Spring-Boot-Classpath-Index": "BOOT-INF/classpath.idx",
-      "Spring-Boot-Layers-Index": "BOOT-INF/layers.idx",
-      "Spring-Boot-Lib": "BOOT-INF/lib/",
-      "Spring-Boot-Version": "3.3.0",
-      "Start-Class": "com.hyrulelab.spring_smoketest.SpringSmoketestApplication"
-     }
-    }
-   }
-  },
-  {
-   "id": "99876e72d2d4289e",
-   "name": "spring-smoketest",
-   "version": "0.0.1-SNAPSHOT-plain",
-   "type": "java-archive",
-   "foundBy": "java-cataloger",
-   "locations": [
-    {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT-plain.jar"
-    }
-   ],
-   "licenses": [],
-   "language": "java",
-   "cpes": [
-    "cpe:2.3:a:spring-smoketest:spring-smoketest:0.0.1-SNAPSHOT-plain:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring-smoketest:spring_smoketest:0.0.1-SNAPSHOT-plain:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring_smoketest:spring-smoketest:0.0.1-SNAPSHOT-plain:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring_smoketest:spring_smoketest:0.0.1-SNAPSHOT-plain:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring:spring-smoketest:0.0.1-SNAPSHOT-plain:*:*:*:*:*:*:*",
-    "cpe:2.3:a:spring:spring_smoketest:0.0.1-SNAPSHOT-plain:*:*:*:*:*:*:*"
-   ],
-   "purl": "pkg:maven/spring-smoketest/spring-smoketest@0.0.1-SNAPSHOT-plain",
-   "metadataType": "JavaMetadata",
-   "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT-plain.jar",
-    "manifest": {
-     "main": {
-      "Manifest-Version": "1.0"
-     }
-    }
-   }
-  },
-  {
-   "id": "b34de012e9a8e95a",
+   "id": "7411596642259716",
    "name": "spring-web",
    "version": "6.1.8",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/spring-web-6.1.8.jar"
     }
    ],
    "licenses": [],
@@ -2532,7 +2416,7 @@
    "purl": "pkg:maven/spring-web/spring-web@6.1.8",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/spring-web-6.1.8.jar",
+    "virtualPath": "BOOT-INF/lib/spring-web-6.1.8.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "spring.web",
@@ -2545,14 +2429,14 @@
    }
   },
   {
-   "id": "796d272881d9f01c",
+   "id": "5f76c472e6ba9976",
    "name": "spring-webmvc",
    "version": "6.1.8",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/spring-webmvc-6.1.8.jar"
     }
    ],
    "licenses": [],
@@ -2568,7 +2452,7 @@
    "purl": "pkg:maven/spring-webmvc/spring-webmvc@6.1.8",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/spring-webmvc-6.1.8.jar",
+    "virtualPath": "BOOT-INF/lib/spring-webmvc-6.1.8.jar",
     "manifest": {
      "main": {
       "Automatic-Module-Name": "spring.webmvc",
@@ -2581,14 +2465,14 @@
    }
   },
   {
-   "id": "1d3b6038c9446dfd",
+   "id": "4426dc8fa83049aa",
    "name": "tomcat-embed-core",
    "version": "10.1.24",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/tomcat-embed-core-10.1.24.jar"
     }
    ],
    "licenses": [],
@@ -2618,7 +2502,7 @@
    "purl": "pkg:maven/org.apache.tomcat-embed-core/tomcat-embed-core@10.1.24",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/tomcat-embed-core-10.1.24.jar",
+    "virtualPath": "BOOT-INF/lib/tomcat-embed-core-10.1.24.jar",
     "manifest": {
      "main": {
       "Bundle-License": "https://www.apache.org/licenses/LICENSE-2.0.txt",
@@ -2719,14 +2603,14 @@
    }
   },
   {
-   "id": "3691d0835a10460c",
+   "id": "1e4463a491c4a268",
    "name": "tomcat-embed-el",
    "version": "10.1.24",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/tomcat-embed-el-10.1.24.jar"
     }
    ],
    "licenses": [],
@@ -2792,7 +2676,7 @@
    "purl": "pkg:maven/org.apache.tomcat-embed-jasper-el/tomcat-embed-el@10.1.24",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/tomcat-embed-el-10.1.24.jar",
+    "virtualPath": "BOOT-INF/lib/tomcat-embed-el-10.1.24.jar",
     "manifest": {
      "main": {
       "Bundle-License": "https://www.apache.org/licenses/LICENSE-2.0.txt",
@@ -2829,14 +2713,14 @@
    }
   },
   {
-   "id": "99efe86f9aaf1694",
+   "id": "6ef901d736f1be49",
    "name": "tomcat-embed-websocket",
    "version": "10.1.24",
    "type": "java-archive",
    "foundBy": "java-cataloger",
    "locations": [
     {
-     "path": "spring-smoketest-0.0.1-SNAPSHOT.jar"
+     "path": "BOOT-INF/lib/tomcat-embed-websocket-10.1.24.jar"
     }
    ],
    "licenses": [],
@@ -2866,7 +2750,7 @@
    "purl": "pkg:maven/org.apache.tomcat-embed-websocket/tomcat-embed-websocket@10.1.24",
    "metadataType": "JavaMetadata",
    "metadata": {
-    "virtualPath": "spring-smoketest-0.0.1-SNAPSHOT.jar:BOOT-INF/lib/tomcat-embed-websocket-10.1.24.jar",
+    "virtualPath": "BOOT-INF/lib/tomcat-embed-websocket-10.1.24.jar",
     "manifest": {
      "main": {
       "Bundle-License": "https://www.apache.org/licenses/LICENSE-2.0.txt",
