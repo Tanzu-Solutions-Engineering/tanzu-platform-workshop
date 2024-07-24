@@ -4,6 +4,8 @@ title: Prepare a Cluster Group with Capabilities
 
 In a day in the life of a platform engineer, we will start by creating a *Cluster Group*, to structure the underlying Kubernetes infrastructure and define the *Capabilities* we want to install and make available to the application teams.
 
+When you create a project, Tanzu Platform creates a *Cluster Group* with the name `run` for you. This *Cluster Group* makes it easy to just use all the `Capabilities` available by default with Tanzu Platform.
+
 # Create Cluster Group
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html)
 
