@@ -15,7 +15,7 @@ Let's create a *Profile* for our minimal workshop example.
 ## Option 1: Tanzu Platform GUI
 In the Tanzu Platform GUI navigate to `Application Spaces > Profiles` or click [here](https://www.mgmt.cloud.vmware.com/hub/application-engine/profiles/profiles).
 
-Next, click on the button in the upper right corner of the browser window labeled "Create Profile."
+Next, click on the button in the upper right corner of the browser window labeled "Create Profile".
 
 In the resulting dialog, click the "Step by Step" button to get the guided interface for creating the *Profile*.
 
@@ -81,5 +81,3 @@ kubectl apply -f profile.yaml
 kubectl get profiles.spaces.tanzu.vmware.com {{< param  session_name >}} -o yaml
 unset KUBECONFIG  
 ```
-
-Now everything is set-up to create a `Space` for the application team. 
