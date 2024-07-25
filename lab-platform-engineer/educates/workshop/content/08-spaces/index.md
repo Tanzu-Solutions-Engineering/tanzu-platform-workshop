@@ -31,21 +31,12 @@ While in the GUI, click on your newly created *Space* to see details.
 It may take a few seconds for the space to go from `ERROR` (red), through `WARNING` (yellow), to `READY` (green) state. Click on the top-right `Refresh` link to update.
 
 ## Option 2: tanzu CLI
-It's possible to create a *Space* with the tanzu CLI, but unfortunately, it's not possible to configure the replicas for an *Availability Target* (see Tanzu Platform GUI option for more details).
-For this workshop, the defaults are fine, so it's not a restriction for us.
-
-Let's also use the session name as a name for our *Space*, and specify our *Profile* and *Availability Target*.
+It's possible to create a *Space* with the tanzu CLI, but unfortunately, the related CLI plugin doesn't work very well for it yet.
 ```execute
-tanzu space create {{< param  session_name >}} --profile {{< param  session_name >}} --availability-target {{< param  session_name >}} --update-strategy RollingUpdate -y
+tanzu space create --help
 ```
 
-We can also check whether the *Space* is ready with the tanzu CLI. It may take some time, and the space can also be in warning or error state for some time.
-```execute
-tanzu space get {{< param  session_name >}}
-```
-
-## Option 3: kubectl CLI
-To create a *Space* with the kubectl CLI, we have to create a resource file with all the configurations*.
+So, let's again create a resource file with all the configurations.
 ```editor:append-lines-to-file
 file: ~/space.yaml
 description: Add space resource file
@@ -68,9 +59,24 @@ text: |
     updateStrategy:
       type: RollingUpdate
 ```
-As you can see, we also use the session name as a name for our *Space*, and specify our *Profile* and *Availability Target*.
+As you can see, we also use the session name as a name for our *Space* and specify our *Profile* and *Availability Target*.
 
-As a next step, we can apply the resource to UCP.
+For the *Availability Target*, the **"Replica(s)" is set to 1**, which is the default and means that the applications in the space will be deployed to one of the clusters matching the *Availability Target's* rules. As we only have one cluster available, you cannot increase it to deploy the application on multiple clusters for high availability. 
+
+You can also configure the update strategy. Rolling update is the default and fine for this workshop.
+
+You can then create the *Space* with the following command.
+```execute
+tanzu deploy --only space.yaml
+```
+
+We can also check whether the *Space* is ready with the tanzu CLI. It may take some time, and the space can also be in warning or error state for some time.
+```execute
+tanzu space get {{< param  session_name >}}
+```
+
+## Option 3: kubectl CLI
+The resource file we created is in the form of a custom Kubernetes resource definition, which means that we can alternatively also directly manage (create, delete, edit) the *Space* with kubectl.
 ```
 export KUBECONFIG=~/.config/tanzu/kube/config
 kubectl apply -f space.yaml
