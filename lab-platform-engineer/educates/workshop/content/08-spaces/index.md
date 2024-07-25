@@ -79,3 +79,5 @@ unset KUBECONFIG
 
 After you've created the *Space*, it's now time to deploy an example application to it to check whether everything works as expected.
 
+# Check Space setup on the workload cluster
+**TODO**
