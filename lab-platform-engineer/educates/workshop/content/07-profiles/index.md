@@ -29,7 +29,7 @@ As a reminder, *Traits* are collections of Kubernetes resources that are deploye
 
 You can configure the *Trait* by clicking on the **"Configure carvel-package-installer.tanzu.vmware.com"** button. In this case the default value for the "ServiceAccountName" is fine.
 
-After clicking "next", you can select the required *Capabilities*, which is in our case just **container-app.tanzu.vmware.com**.
+After clicking "next", you can select the required *Capabilities*, which is in our case **container-app.tanzu.vmware.com**, and **package-management.tanzu.vmware.com**
 
 With another click on a "next" button, you should see the summary page, where you can finally create the Profile with a click on the "Create" button.
 
@@ -49,6 +49,7 @@ text: |
   spec:
     requiredCapabilities:
       - name: container-app.tanzu.vmware.com
+      - name: package-management.tanzu.vmware.com
     traits:
       - values:
           inline:
