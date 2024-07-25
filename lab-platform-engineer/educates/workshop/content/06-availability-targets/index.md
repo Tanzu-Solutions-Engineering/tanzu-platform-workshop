@@ -25,9 +25,9 @@ Once the rules for selecting clusters into the *Availability Target* are defined
 Let's create an *Availability Target* that selects just your cluster.
 
 ## Option 1: Tanzu Platform GUI
-In the Tanzu Platform GUI navigate to `Application Spaces > *Availability Target*s` or click [here](https://www.mgmt.cloud.vmware.com/hub/application-engine/availability-targets).
+In the Tanzu Platform GUI navigate to `Application Spaces > Availability Targets` or click [here](https://www.mgmt.cloud.vmware.com/hub/application-engine/availability-targets).
 
-Next, click on the button in the upper right corner of the browser window labeled "Create *Availability Targets*."
+Next, click on the button in the upper right corner of the browser window labeled "Create Availability Targets".
 ![Create Availability Targets button](CreateATButton.png)
 
 In the resulting dialog, click the "Step by Step" button to get the guided interface for creating the *Availability Target*.
