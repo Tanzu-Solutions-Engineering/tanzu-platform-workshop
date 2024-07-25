@@ -16,4 +16,7 @@ tanzu context delete space-admin -y
 
 BUILDER=$(echo $TANZU_BUILD_PLAN | jq -r '.spec.buildpacks.builder')
 docker pull $BUILDER
+
+#workaround for the packeto builder _also_ getting pulled for `tanzu build`
+docker pull paketobuildpacks/builder-jammy-base:latest
 fi
