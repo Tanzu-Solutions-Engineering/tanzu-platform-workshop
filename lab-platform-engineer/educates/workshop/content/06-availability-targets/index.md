@@ -70,6 +70,7 @@ text: |
   kind: AvailabilityTarget
   metadata:
     name: {{< param  session_name >}}
+    namespace: default
   spec:
     affinity:
         clusterAffinity:
@@ -86,7 +87,7 @@ Remember back when we **attached our cluster, we added a label to it with the ke
 
 Finally, we can create the *Availability Target*.
 ```execute
-tanzu availability-target create -f availability-target.yaml
+tanzu availability-target create -f availability-target.yaml -y
 ```
 
 Checking whether the *Availability Target* is in `Ready` state and your cluster is listed is also possible with the tanzu CLI.

@@ -61,7 +61,7 @@ As you can see, we are setting the name of cluster like for the `Cluster Group` 
 
 The following command will, based on the configuration in the template file, attach our workload cluster to Tanzu Platform for Kubernetes by installing cluster agent extensions into it.
 ```execute
-tanzu operations cluster attach --file cluster-attach-values.yaml --kubeconfig vcluster-kubeconfig.yaml
+tanzu operations cluster attach --file cluster-attach-values.yaml --kubeconfig vcluster-kubeconfig.yaml --skip-verify
 ```
 
 To verify whether the cluster is successfully onboarded to Tanzu Platform for Kubernetes, you can run the following command (or use to Tanzu Platform GUI).
@@ -69,11 +69,19 @@ To verify whether the cluster is successfully onboarded to Tanzu Platform for Ku
 tanzu operations cluster get {{< param  session_name >}} --cluster-type attached
 ```
 
+{{< note >}}
+It could take some time until the workload cluster is successfully onboarded. Just rerun the `tanzu operations cluster get` command until this is the case.
+{{< /note >}}
+
 # Check whether Capabilities defined in Cluster Group are provided by the Cluster
 You can run the following command to get all `PackageInstalls`, which is the underlying way of installing *Capabilities*.
 ```execute
 kubectl get packageinstalls.packaging.carvel.dev -A
 ```
+
+{{< note >}}
+It could take some time until the `PackageInstalls` are synced to the cluster and reconciled. Just rerun the command until this is the case.
+{{< /note >}}
 
 For the `PackageInstall` of our **Container App** *Capability*, the description should be `Reconcile succeeded` if it was successfully installed.
 ```execute

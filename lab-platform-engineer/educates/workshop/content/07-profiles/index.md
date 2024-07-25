@@ -45,6 +45,7 @@ text: |
   kind: Profile
   metadata:
     name: {{< param  session_name >}}
+    namespace: default
   spec:
     requiredCapabilities:
       - name: container-app.tanzu.vmware.com
@@ -65,7 +66,7 @@ As a reminder, *Traits* are collections of Kubernetes resources that are deploye
 
 Finally, we can create the *Profile*.
 ```execute
-tanzu profile create -f profile.yaml
+tanzu profile create -f profile.yaml -y
 ```
 
 Checking whether the *Profile* is ready is also possible with the tanzu CLI.

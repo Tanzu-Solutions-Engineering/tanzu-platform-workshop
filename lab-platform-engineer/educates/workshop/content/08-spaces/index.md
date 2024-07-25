@@ -36,10 +36,10 @@ For this workshop, the defaults are fine, so it's not a restriction for us.
 
 Let's also use the session name as a name for our *Space*, and specify our *Profile* and *Availability Target*.
 ```execute
-tanzu space create {{< param  session_name >}} --profile {{< param  session_name >}} --availability-target {{< param  session_name >}}
+tanzu space create {{< param  session_name >}} --profile {{< param  session_name >}} --availability-target {{< param  session_name >}} --update-strategy RollingUpdate -y
 ```
 
-We can also check whether the *Space* is ready with the tanzu CLI. It may take some time, and the space can be also be in warning or error state for some time.
+We can also check whether the *Space* is ready with the tanzu CLI. It may take some time, and the space can also be in warning or error state for some time.
 ```execute
 tanzu space get {{< param  session_name >}}
 ```
@@ -54,6 +54,7 @@ text: |
   kind: Space
   metadata:
     name: {{< param  session_name >}}
+    namespace: default
   spec:
     availabilityTargets:
     - name: {{< param  session_name >}}
@@ -77,7 +78,27 @@ kubectl get spaces.spaces.tanzu.vmware.com {{< param  session_name >}} -o yaml
 unset KUBECONFIG  
 ```
 
-After you've created the *Space*, it's now time to deploy an example application to it to check whether everything works as expected.
+# Check resources created in the workload cluster
+1. Let's access our TKGS cluster the same way we did earli
+After the *Space* is ready, we can check what was applied for it on our workload cluster.
 
-# Check Space setup on the workload cluster
-**TODO**
+If you have a look at the Kubernetes namespaces, you should be able to see two namespaces that were created for our *Space*.
+```execute
+kubectl get ns
+```
+
+In the namespaces with the "-internal" suffix the `PackageInstalls` for the *Traits* will be applied, the other namespace is for all the resources running in the *Space*.
+```execute
+SPACE_NS_INTERNAL=$(kubectl get namespaces -o json | jq -r '.items[].metadata.name | select(endswith("-internal"))')
+kubectl get pkgi -n $SPACE_NS_INTERNAL
+```
+In our case, there should be a `PackageInstall`for the "Carvel package installer" *Trait*.
+
+With the kapp CLI, you can see which resources it has created in the *Space* namespace without the suffix.
+
+```execute
+APP_NAME=$(kapp list -n $SPACE_NS_INTERNAL --json | jq -r '.Tables[0].Rows[0].name')
+kapp inspect -a $APP_NAME -n $SPACE_NS_INTERNAL
+```
+
+After you've created the *Space*, it's now time to deploy an example application to it to check whether everything works as expected.

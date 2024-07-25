@@ -46,11 +46,6 @@ tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
 tanzu context current | grep -E "Kube Context"
 ```
 
-```execute
-tanzu space use {{< param  session_name >}}
-tanzu context current | grep -E "Kube Context"
-```
-
 More on this in the [documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-and-manage-cli-contexts.html)
 
 During this workshop, we will also use `kubectl` to access some UCP resources. To be able to do that you can set your `KUBECONFIG` environment variable to point to the `~/.config/tanzu/kube/config` file. 

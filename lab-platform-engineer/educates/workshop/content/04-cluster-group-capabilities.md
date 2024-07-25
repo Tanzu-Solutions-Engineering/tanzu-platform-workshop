@@ -84,12 +84,12 @@ In the end, the installation of a *Capability* is the configuration of a [Packag
 As the Unified Control Plane of Tanzu Platform Kubernetes provides a Kubernetes-style API it's also possible to use `kubectl` or other Kubernetes tools to manage *Capabilities* in *Cluster Groups*.
 
 Ensure the correct project is set and set the context to your *Cluster Group*.
-```execute
+```
 tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
 tanzu operations clustergroup use {{< param  session_name >}}
 ```
 Set the `KUBECONFIG` environment variable to point to the tanzu CLI kubeconfig file.
-```execute
+```
 export KUBECONFIG=~/.config/tanzu/kube/config
 ```
 
@@ -98,16 +98,16 @@ It's possible to install, delete, and update *Capabilities* in *Cluster Groups* 
 {{< /note >}}
 
 Get a list of all installed *Capabilities* in *Cluster Groups*.
-```execute
+```
 kubectl get packageinstalls.packaging.carvel.dev
 ```
 
 Get the `PackageInstall` resource for the **Container App** *Capability*.
-```execute
+```
 kubectl get packageinstalls.packaging.carvel.dev container-apps.tanzu.vmware.com -o yaml
 ```
 
 Switch back to default kubeconfig file.
-```execute
+```
 unset KUBECONFIG
 ```
