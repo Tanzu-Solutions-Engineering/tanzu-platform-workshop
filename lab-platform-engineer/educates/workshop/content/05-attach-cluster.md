@@ -23,9 +23,9 @@ kubectl get pods -A
 As this cluster is not managed by Tanzu Platform for Kubernetes, we have to attach it as a self-managed cluster.
 
 # Attach workload cluster 
-## Option 1: Tanzu Hub GUI
+## Option 1: Tanzu Platform GUI
 
-In the Tanzu Hub GUI navigate to `Infrastructure > Kubernetes Clusters` and select your "{{< param  session_name >}}" *Cluster Group*. 
+In the Tanzu Platform GUI navigate to `Infrastructure > Kubernetes Clusters` and select your "{{< param  session_name >}}" *Cluster Group*. 
 
 Click on the **Add Cluster** button, and select the **Attach self-managed cluster** option.
 
@@ -38,7 +38,7 @@ Add a **label** with the **key "workshop-session"** and **value "{{< param  sess
 
 Click **Next**, **copy the command** to install the cluster agent extensions in the workload cluster, and **run the command in the workshop's upper terminal**.
 
-To verify whether the cluster is successfully onboarded to Tanzu Platform for Kubernetes, you can switch back to Tanzu Hub GUI, click (multiple times) on the **Verify connection** button which will also enable the **View your cluster** button.
+To verify whether the cluster is successfully onboarded to Tanzu Platform for Kubernetes, you can switch back to Tanzu Platform GUI, click (multiple times) on the **Verify connection** button which will also enable the **View your cluster** button.
 
 ## Option 2: tanzu CLI
 To attach our workload cluster to Tanzu Platform for Kubernetes via the tanzu CLI, we first have to create a template file with the required configuration.
@@ -64,7 +64,7 @@ The following command will, based on the configuration in the template file, att
 tanzu operations cluster attach --file cluster-attach-values.yaml --kubeconfig vcluster-kubeconfig.yaml
 ```
 
-To verify whether the cluster is successfully onboarded to Tanzu Platform for Kubernetes, you can run the following command (or use to Tanzu Hub GUI).
+To verify whether the cluster is successfully onboarded to Tanzu Platform for Kubernetes, you can run the following command (or use to Tanzu Platform GUI).
 ```execute
 tanzu operations cluster get {{< param  session_name >}} --cluster-type attached
 ```

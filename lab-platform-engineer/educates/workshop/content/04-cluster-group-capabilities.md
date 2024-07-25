@@ -9,9 +9,9 @@ When you create a project, Tanzu Platform creates a *Cluster Group* with the nam
 # Create Cluster Group
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html)
 
-## Option 1: Tanzu Hub GUI
+## Option 1: Tanzu Platform GUI
 
-In the Tanzu Hub GUI navigate to `Infrastructure > Kubernetes Clusters` and click the `Create Cluster Group` button. 
+In the Tanzu Platform GUI navigate to `Infrastructure > Kubernetes Clusters` and click the `Create Cluster Group` button. 
 
 **Use the workshop session name as the name of the *Cluster Group*.**
 ```copy
@@ -40,9 +40,9 @@ tanzu operations clustergroup create -v cluster-group-values.yaml
 # Add Capabilities to the Cluster Group
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html#add-packages)
 
-## Option 1: Tanzu Hub GUI
+## Option 1: Tanzu Platform GUI
 
-In the Tanzu Hub GUI navigate to `Application Spaces > Capabilities`. 
+In the Tanzu Platform GUI navigate to `Application Spaces > Capabilities`. 
 The **Available** tab provides a list of all available *Capabilities* with the functionality to install them on `Cluster Groups`, and the **Installed** tab provides an overview of the *Capabilities* already installed on the different `Cluster Groups` with the functionality to uninstall and reconfigure them.
 
 Currently, it's only possible to manage (install, uninstall, ...) them one by one, even if in most cases several *Capabilities* are installed at once.
