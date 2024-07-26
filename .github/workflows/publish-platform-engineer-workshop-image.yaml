@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - '**'
+      - '**'
     paths:
-    - 'lab-platform-engineer/educates/Dockerfile'
+      - 'lab-platform-engineer/educates/Dockerfile'
 
 env:
   REGISTRY: ghcr.io
