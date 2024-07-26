@@ -17,20 +17,8 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 kubectl krew install ctx
 kubectl krew install ns
 kubectl krew install konfig
-
-kubectl konfig import --save vcluster-kubeconfig.yaml
+kubectl krew insall eksporter
 
 kubectl konfig import --save vcluster-kubeconfig.yaml
 kubectl ctx $(yq eval '.current-context' vcluster-kubeconfig.yaml)
 kubectl ns default
-
- 
-
-#kubectl konfig import --save .config/tanzu/kube/config
-
-
-#alias k8s_ctx_vcluster="export KUBECONFIG=$HOME/vcluster-kubeconfig.yaml && kubectl config set-context --current --namespace=default"
-#alias k8s_ctx_tp4k8s="export KUBECONFIG=$HOME/.config/tanzu/kube/config && kubectl config set-context --current --namespace=default"
-#alias k8s_ctx_educates="unset KUBECONFIG && kubectl config set-context --current --namespace=$SESSION_NAMESPACE"
-
-

@@ -71,7 +71,7 @@ You can also configure the update strategy. Rolling update is the default and fi
 
 You can then create the *Space* with the following command.
 ```execute
-tanzu deploy --only space.yaml
+tanzu deploy --only space.yaml -y
 ```
 
 We can also check whether the *Space* is ready with the tanzu CLI. It may take some time, and the space can also be in warning or error state for some time.

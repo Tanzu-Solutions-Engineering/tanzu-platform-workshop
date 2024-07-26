@@ -58,6 +58,10 @@ spec:
         value: "Basic REGISTRY_BASIC_AUTH_CREDENTIALS"
       authentication:
         type: none
+    - name: sample-app
+      host: sample-app.$(session_namespace)
+      port: 8080
+      protocol: http
     objects:
       - apiVersion: rbac.authorization.k8s.io/v1
         kind: Role

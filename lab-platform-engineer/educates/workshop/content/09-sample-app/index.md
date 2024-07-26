@@ -48,3 +48,21 @@ tanzu deploy -y
 
 As we don't have added *Capabilities* for Ingress, global load balancing etc. for this simple example, you will not get a URL for your application via your *Space*.
 
+Therefore, let's manually expose it for the workshop.
+```terminal:execute
+description: Expose sample app
+command: |
+  kubectl ctx educates
+  mirrored_inclusion_service=$(kubectl get svc --no-headers -o custom-columns=":metadata.name" | grep '^inclusion-x')
+  kubectl eksporter service $mirrored_inclusion_service | yq e '.metadata.name = "sample-app"' | kubectl apply -f -
+  kubectl ctx $(yq eval '.current-context' vcluster-kubeconfig.yaml)
+  clear
+```
+
+By clicking on the following action, a new tab will open, targeting our sample application.
+```dashboard:create-dashboard
+name: Sample application
+url: https:/sample-app-{{ session_namespace }}.{{ ingress_domain }}
+```
+
+
