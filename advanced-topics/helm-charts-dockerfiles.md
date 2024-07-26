@@ -176,7 +176,7 @@ tanzu operations policy list
 tanzu operations policy get psa-mutation-policy -n {clustergroup name} -s clustergroup
 ```
 
-## Flex-Helm Profile
+## Flux-Helm Profile
 
 We will be reusing profiles created in the earlier modules (`sping-dev-simple-sa.tanzu.vmware.com`) and your custom network profile (`networking.mydomain.com or yourname-customer-networking`).  We will be using an additional profile to add the fluxcd source and fluxcd helm capabilities to our space.  This demonstrates the additive abilty of reusing profiles grouped around an application type or requirement.
 
