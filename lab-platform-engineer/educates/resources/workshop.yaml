@@ -10,14 +10,13 @@ spec:
   publish:
     image: "$(image_repository)/lab-tanzu-platform-lab-platform-engineer-files:$(workshop_version)"
   workshop:
+    image: ghcr.io/timosalm/tanzu-platform-workshop/lab-platform-engineer-image:educates-platform-engineer
     files:
     - git:
         url: https://github.com/Tanzu-Solutions-Engineering/tanzu-platform-workshop
         ref: origin/educates-platform-engineer
       includePaths:
       - /lab-platform-engineer/educates/workshop/**
-      - /lab-platform-engineer/educates/exercises/**
-      - /lab-platform-engineer/educates/README.md
       newRootPath: /lab-platform-engineer/educates
     packages:
     - name: tanzu-cli
