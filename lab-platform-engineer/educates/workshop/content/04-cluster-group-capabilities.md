@@ -20,7 +20,9 @@ In the Tanzu Platform GUI navigate to `Infrastructure > Kubernetes Clusters` and
 
 **Make sure that the checkbox for Tanzu Application Engine is checked.**
 
-## Option 2: tanzu CLI
+```section:begin
+title: Option 2: tanzu CLI
+```
 
 Create a *Cluster Group* template file with the workshop session name as the name of the *Cluster Group*, and the configuration to enable `Tanzu Application Engine` for it.
 ```editor:append-lines-to-file
@@ -36,7 +38,8 @@ Ensure the correct project is set and use the tanzu CLI to create a cluster grou
 tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
 tanzu operations clustergroup create -v cluster-group-values.yaml 
 ```
-
+```section:end
+```
 # Add Capabilities to the Cluster Group
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html#add-packages)
 
@@ -52,8 +55,9 @@ Next, click on the `Install Package` button, use the defaults for the package na
 Click on the `Install Package` button at the top of the form to finally install the *Capability* on the *Cluster Group*.
 
 For those that are familiar with [kapp-controller](https://carvel.dev/kapp-controller/), the installation of a *Capability* is the configuration of a [PackageInstall](https://carvel.dev/kapp-controller/docs/v0.50.x/packaging/#package-install) for a *Cluster Group* that will be synched to all the Kubernetes clusters in it.
-
-## Option 2: tanzu CLI
+```section:begin
+title: Option 2: tanzu CLI
+```
 
 Ensure the correct project is set and set the context to your *Cluster Group*.
 ```execute
@@ -79,8 +83,11 @@ tanzu package install container-apps.tanzu.vmware.com -p container-apps.tanzu.vm
 ```
 
 In the end, the installation of a *Capability* is the configuration of a [PackageInstall](https://carvel.dev/kapp-controller/docs/v0.50.x/packaging/#package-install) for a *Cluster Group* that will be synched to all the Kubernetes clusters in it.
-
-## Option 3 (not recommended): kubectl CLI
+```section:end
+```
+```section:begin
+title: Option 3 (not recommended): kubectl CLI
+```
 As the Unified Control Plane of Tanzu Platform Kubernetes provides a Kubernetes-style API it's also possible to use `kubectl` or other Kubernetes tools to manage *Capabilities* in *Cluster Groups*.
 
 Ensure the correct project is set and set the context to your *Cluster Group*.
@@ -110,4 +117,6 @@ kubectl get packageinstalls.packaging.carvel.dev container-apps.tanzu.vmware.com
 Switch back to default kubeconfig file.
 ```
 unset KUBECONFIG
+```
+```section:end
 ```

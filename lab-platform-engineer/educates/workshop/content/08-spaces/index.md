@@ -30,7 +30,9 @@ Create the *Space* by clicking on the corresponding button.
 While in the GUI, click on your newly created *Space* to see details.
 It may take a few seconds for the space to go from `ERROR` (red), through `WARNING` (yellow), to `READY` (green) state. Click on the top-right `Refresh` link to update.
 
-## Option 2: tanzu CLI
+```section:begin
+title: Option 2: tanzu CLI
+```
 It's possible to create a *Space* with the tanzu CLI, but unfortunately, the related CLI plugin doesn't work very well for it yet.
 ```execute
 tanzu space create --help
@@ -74,8 +76,11 @@ We can also check whether the *Space* is ready with the tanzu CLI. It may take s
 ```execute
 tanzu space get {{< param  session_name >}}
 ```
-
-## Option 3: kubectl CLI
+```section:end
+```
+```section:begin
+title: Option 3: kubectl CLI
+```
 The resource file we created is in the form of a custom Kubernetes resource definition, which means that we can alternatively also directly manage (create, delete, edit) the *Space* with kubectl.
 ```
 export KUBECONFIG=~/.config/tanzu/kube/config
@@ -83,7 +88,8 @@ kubectl apply -f space.yaml
 kubectl get spaces.spaces.tanzu.vmware.com {{< param  session_name >}} -o yaml
 unset KUBECONFIG  
 ```
-
+```section:end
+```
 # Check resources created in the workload cluster
 1. Let's access our TKGS cluster the same way we did earli
 After the *Space* is ready, we can check what was applied for it on our workload cluster.

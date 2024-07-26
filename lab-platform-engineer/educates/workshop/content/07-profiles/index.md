@@ -35,7 +35,9 @@ With another click on a "next" button, you should see the summary page, where yo
 
 You can check whether the *Profile* is ready by navigating to `Application Spaces > Profiles`, searching for your *Profile* in the list and clicking on the "View Details" button.
 
-## Option 2: tanzu (or kubectl) CLI
+```section:begin
+title: Option 2: tanzu (or kubectl) CLI
+```
 To create a *Profile* with the tanzu CLI, we have to create a resource file with all the configurations like for the *Availability Target*.
 ```editor:append-lines-to-file
 file: ~/profile.yaml
@@ -82,4 +84,6 @@ export KUBECONFIG=~/.config/tanzu/kube/config
 kubectl apply -f profile.yaml
 kubectl get profiles.spaces.tanzu.vmware.com {{< param  session_name >}} -o yaml
 unset KUBECONFIG  
+```
+```section:end
 ```

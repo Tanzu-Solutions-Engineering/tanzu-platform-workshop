@@ -60,7 +60,9 @@ Finally, click "Create Availability Target" button.
 
 To validate the *Availability Target* is ready and has selected our cluster, navigate to `Application Spaces > Availability Targets`, search for your *Availability Target* in the list and click on it in Tanzu Platform GUI.
 
-## Option 2: tanzu (or kubectl) CLI
+```section:begin
+title: Option 2: tanzu (or kubectl) CLI
+```
 To create an *Availability Target* with the tanzu CLI, we have to first create a resource file with all the configurations.
 ```editor:append-lines-to-file
 file: ~/availability-target.yaml
@@ -102,6 +104,8 @@ export KUBECONFIG=~/.config/tanzu/kube/config
 kubectl apply -f availability-target.yaml
 kubectl get availabilitytargets.spaces.tanzu.vmware.com {{< param  session_name >}} -o yaml
 unset KUBECONFIG  
+```
+```section:end
 ```
 
 Great! We now have a way for our developers to reference our available clusters that isn't tied to a specific cluster instance. This de-couples our app teams from our currently deployed clusters in a way that gives our team the ability to add and remove clusters without having to have our developers change any of their configurations.
