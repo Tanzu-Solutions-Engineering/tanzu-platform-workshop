@@ -19,9 +19,9 @@ Next, click on the button in the upper right corner of the browser window labele
 
 In the resulting dialog, click the "Step by Step" button to get the guided interface for creating the *Profile*.
 
-Now, let's name our *Profile* the same as our session name by pasting the clipboard into the "Name" field.
+Now, let's name our *Profile* based on our session name by pasting the clipboard into the "Name" field.
 ```copy
-{{< param  session_name >}}
+{{< param  session_name >}}-p
 ```
 
 Click "next", and select the **carvel-package-installer.tanzu.vmware.com *Trait***, which is required to deploy an application as a [kapp-controller Package](https://carvel.dev/kapp-controller/docs/v0.50.x/packaging/#overview) - the default for Tanzu Application Platform.
@@ -38,6 +38,7 @@ You can check whether the *Profile* is ready by navigating to `Application Space
 #### Option 2: tanzu CLI (or kubectl) CLI
 ```section:begin
 title: "Open instructions"
+name: tanzu-cli
 ```
 
 To create a *Profile* with the tanzu CLI, we have to create a resource file with all the configurations like for the *Availability Target*.
@@ -48,7 +49,7 @@ text: |
   apiVersion: spaces.tanzu.vmware.com/v1alpha1
   kind: Profile
   metadata:
-    name: {{< param  session_name >}}
+    name: {{< param  session_name >}}-p
     namespace: default
   spec:
     requiredCapabilities:
@@ -62,9 +63,10 @@ text: |
         excludedKeys: []
         name: carvel-package-installer.tanzu.vmware.com
 ```
-As you can see, we use again the workshop session name for the name of the *Profile*.
+As you can see, the name of the *Profile* is again based on the workshop session.
 
-The only defined required *Capability* is the **Container App**, which is the only one available on our workload cluster.
+
+The only defined required *Capabilities* are **Container App** and **Package Management**. The **Container App** *Capability* is the only one we added to our cluster group. The **Package Management** *Capability* was automatically installed on the cluster when we attached it. To be able to use the APIs of those *Capabilities* in a *Space* it's important to define them in the *Profile*. Otherwise, it's for example not possible to add a Carvel Package resource for an application to the *Space* even if those CRDs are installed on the target cluster.
 
 In addition, there is the **Carvel package installer *Trait*** configured, which is required to deploy an application as a [kapp-controller Package](https://carvel.dev/kapp-controller/docs/v0.50.x/packaging/#overview) - the default for Tanzu Application Platform.
 As a reminder, *Traits* are collections of Kubernetes resources that are deployed into *Spaces* when they are created and usually rely on `Capabilities` available in the cluster. 
@@ -77,16 +79,24 @@ tanzu profile create -f profile.yaml -y
 
 Checking whether the *Profile* is ready is also possible with the tanzu CLI.
 ```execute
-tanzu profile get {{< param  session_name >}}
+tanzu profile get {{< param  session_name >}}-p
 ```
 
 ##### kubectl CLI
+```section:begin
+title: "Open instructions"
+name: kubectl-cli
+```
 The resource file we created is in the form of a custom Kubernetes resource definition, which means that we can alternatively also directly manage (create, delete, edit) the *Profile* with kubectl.
 ```
 export KUBECONFIG=~/.config/tanzu/kube/config
 kubectl apply -f profile.yaml
-kubectl get profiles.spaces.tanzu.vmware.com {{< param  session_name >}} -o yaml
+kubectl get profiles.spaces.tanzu.vmware.com {{< param  session_name >}}-p -o yaml
 unset KUBECONFIG  
 ```
 ```section:end
+name: kubectl-cli
+```
+```section:end
+name: tanzu-cli
 ```

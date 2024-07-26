@@ -25,7 +25,7 @@ As this cluster is not managed by Tanzu Platform for Kubernetes, we have to atta
 ### Attach workload cluster 
 #### Option 1: Tanzu Platform GUI
 
-In the Tanzu Platform GUI navigate to `Infrastructure > Kubernetes Clusters` and select your "{{< param  session_name >}}" *Cluster Group*. 
+In the Tanzu Platform GUI navigate to `Infrastructure > Kubernetes Clusters` and select your "{{< param  session_name >}}-cg" *Cluster Group*. 
 
 Click on the **Add Cluster** button, and select the **Attach self-managed cluster** option.
 
@@ -58,7 +58,7 @@ text: |
     labels:
       workshop-session: {{< param  session_name >}}
   spec:
-    clusterGroupName: {{< param  session_name >}}
+    clusterGroupName: {{< param  session_name >}}-cg
 ```
 As you can see, we are setting the name of cluster like for the `Cluster Group` to our workshop session. We also add a **label** with the key "workshop-session" and the workshop session name as a value. This label will be important for the configuration of the `Availability Target`.
 

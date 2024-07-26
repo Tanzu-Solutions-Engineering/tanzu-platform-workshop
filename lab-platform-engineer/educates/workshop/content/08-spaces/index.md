@@ -14,15 +14,14 @@ Next, click on the button in the upper right corner of the browser window labele
 
 In the resulting dialog, click the "Step by Step" button to get the guided interface for creating the *Space*.
 
-Let's use the **session name with an "-1" suffix as a name** for our *Space* by pasting the clipboard into the "Name" field.
+Copy the generated **name for the *Space*** and paste it into the "Name" field.
 ```copy
-{{< param  session_name >}}-1
+{{< param  session_name >}}-s
 ```
 
-
-Copy/paste the **session name without the "-1" suffix** into the "Space Profiles" and "Availability Targets" filter fields and select the resources you've created.
+Copy/paste also the workshop session name in the filter fields for the **"Profile" and "Availability Targets"** and select the resources you've created.
 ```copy
-{{< param  session_name >}}-1
+{{< param  session_name >}}
 ```
 
 For the *Availability Target*, the **"Replica(s)" is set to 1**, which is the default and means that the applications in the space will be deployed to one of the clusters matching the *Availability Target's* rules. As we only have one cluster available, you cannot increase it to deploy the application on multiple clusters for high availability. 
@@ -52,16 +51,16 @@ text: |
   apiVersion: spaces.tanzu.vmware.com/v1alpha1
   kind: Space
   metadata:
-    name: {{< param  session_name >}}-1
+    name: {{< param  session_name >}}-s
     namespace: default
   spec:
     availabilityTargets:
-    - name: {{< param  session_name >}}
+    - name: {{< param  session_name >}}-at
       replicas: 1
     template:
       spec:
         profiles:
-        - name: {{< param  session_name >}}
+        - name: {{< param  session_name >}}-p
           values:
             inline: null
     updateStrategy:
@@ -81,7 +80,7 @@ tanzu deploy --only space.yaml -y
 
 We can also check whether the *Space* is ready with the tanzu CLI. It may take some time, and the space can also be in warning or error state for some time.
 ```execute
-tanzu space get {{< param  session_name >}}-1
+tanzu space get {{< param  session_name >}}-s
 ```
 ```section:end
 ```
@@ -95,7 +94,7 @@ The resource file we created is in the form of a custom Kubernetes resource defi
 ```
 export KUBECONFIG=~/.config/tanzu/kube/config
 kubectl apply -f space.yaml
-kubectl get spaces.spaces.tanzu.vmware.com {{< param  session_name >}}-1 -o yaml
+kubectl get spaces.spaces.tanzu.vmware.com {{< param  session_name >}}-s -o yaml
 unset KUBECONFIG  
 ```
 ```section:end

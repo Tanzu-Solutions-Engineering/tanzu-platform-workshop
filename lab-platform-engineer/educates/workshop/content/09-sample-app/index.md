@@ -40,7 +40,7 @@ tanzu app config build non-secret-env set BP_JVM_VERSION=17
 Last but not least, we have to target our *Space* ...
 ```execute
 tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
-tanzu space use {{< param  session_name >}}
+tanzu space use {{< param  session_name >}}-s
 ```
 ... and build and deploy our application.s
 ```execute
@@ -63,7 +63,8 @@ command: |
 By clicking on the following action, a new tab will open, targeting our sample application.
 ```dashboard:create-dashboard
 name: Sample application
-url: https:/sample-app-{{ session_namespace }}.{{ ingress_domain }}
+description: Open sample application 
+url: https://sample-app-{{< param  session_namespace >}}.{{< param ingress_domain >}}
 ```
 
 

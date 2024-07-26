@@ -20,7 +20,6 @@ By clicking the "Add Match Expression" button, we can add additional criteria th
 Once the rules for selecting clusters into the *Availability Target* are defined, we can use the "Add Anti-Affinity" button to add criteria that are used to "de-select" clusters based on labels on the clusters that were previously selected. Cluster Anti-Affinity rules are managed similarly to the Cluster Affinity rules, but the result is that they remove clusters that were previously selected for the *Availability Target*.
 
 ### Create Availability Target
-[Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-manage-availability-targets.html)
 
 Let's create an *Availability Target* that selects just your cluster.
 
@@ -33,9 +32,9 @@ Next, click on the button in the upper right corner of the browser window labele
 In the resulting dialog, click the "Step by Step" button to get the guided interface for creating the *Availability Target*.
 ![Step by Step button](StepByStep.png)
 
-Now, let's name our *Availability Target* the same as our session name by pasting the clipboard into the "Name" field.
+Now, let's name our *Availability Target* based on the session name by pasting the clipboard into the "Name" field.
 ```copy
-{{< param  session_name >}}
+{{< param  session_name >}}-at
 ```
 
 Remember back when we **attached our cluster, we added a label to it with the key of "workshop-session"**. We're going to use that label for the "Cluster Affinity" selector for our *Availability Target*.
@@ -63,6 +62,7 @@ To validate the *Availability Target* is ready and has selected our cluster, nav
 #### Option 2: tanzu CLI (or kubectl) CLI
 ```section:begin
 title: "Open instructions"
+name: tanzu-cli
 ```
 
 To create an *Availability Target* with the tanzu CLI, we have to first create a resource file with all the configurations.
@@ -73,7 +73,7 @@ text: |
   apiVersion: spaces.tanzu.vmware.com/v1alpha1
   kind: AvailabilityTarget
   metadata:
-    name: {{< param  session_name >}}
+    name: {{< param  session_name >}}-at
     namespace: default
   spec:
     affinity:
@@ -85,7 +85,7 @@ text: |
                 values:
                     - {{< param  session_name >}}
 ```
-As you can see, we use again the workshop session name for the name of the *Availability Target*.
+As you can see, the name of the *Availability Target* is based on the workshop session.
 
 Remember back when we **attached our cluster, we added a label to it with the key of "workshop-session"**. We use that label for the "Cluster Affinity" selector for our *Availability Target*.
 
@@ -97,10 +97,14 @@ tanzu availability-target create -f availability-target.yaml -y
 
 Checking whether the *Availability Target* is in `Ready` state and your cluster is listed is also possible with the tanzu CLI.
 ```execute
-tanzu availability-target get {{< param  session_name >}}
+tanzu availability-target get {{< param  session_name >}}-at
 ```
 
 ##### kubectl CLI
+```section:begin
+title: "Open instructions"
+name: kubectl-cli
+```
 The resource file we created is in the form of a custom Kubernetes resource definition, which means that we can alternatively also directly manage (create, delete, edit) the *Availability Target* with kubectl.
 ```
 export KUBECONFIG=~/.config/tanzu/kube/config
@@ -109,6 +113,10 @@ kubectl get availabilitytargets.spaces.tanzu.vmware.com {{< param  session_name 
 unset KUBECONFIG  
 ```
 ```section:end
+name: kubectl-cli
+```
+```section:end
+name: tanzu-cli
 ```
 
 Great! We now have a way for our developers to reference our available clusters that isn't tied to a specific cluster instance. This de-couples our app teams from our currently deployed clusters in a way that gives our team the ability to add and remove clusters without having to have our developers change any of their configurations.

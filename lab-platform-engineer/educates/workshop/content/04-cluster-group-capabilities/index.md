@@ -7,16 +7,20 @@ In a day in the life of a platform engineer, we will start by creating a *Cluste
 When you create a project, Tanzu Platform creates a *Cluster Group* with the name `run` for you. This *Cluster Group* makes it easy to just use all the `Capabilities` available by default with Tanzu Platform.
 
 ### Create Cluster Group
-[Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html)
 
 #### Option 1: Tanzu Platform GUI
 
 In the Tanzu Platform GUI navigate to `Infrastructure > Kubernetes Clusters` and click the `Create Cluster Group` button. 
 
-**Use the workshop session name as the name of the *Cluster Group*.**
+
+**Use the workshop session name with a suffix as the name of the *Cluster Group*.**
 ```copy
-{{< param  session_name >}}
+{{< param  session_name >}}-cg
 ```
+
+{{< note >}}
+We are adding a suffix to the name of the different resources we will create because there is a limitation that *Cluster Group* names and *Space* names must not be the same.
+{{< /note >}}
 
 **Make sure that the checkbox for Tanzu Application Engine is checked.**
 
@@ -30,7 +34,7 @@ Create a *Cluster Group* template file with the workshop session name as the nam
 file: ~/cluster-group-values.yaml
 description: Add cluster group template file
 text: |
-  Name: {{< param  session_name >}}
+  Name: {{< param  session_name >}}-cg
   Integrations: TANZU_APPLICATION_ENGINE
 ```
 
@@ -42,7 +46,6 @@ tanzu operations clustergroup create -v cluster-group-values.yaml
 ```section:end
 ```
 ### Add Capabilities to the Cluster Group
-[Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html#add-packages)
 
 #### Option 1: Tanzu Platform GUI
 
@@ -65,7 +68,7 @@ title: "Open instructions"
 Ensure the correct project is set and set the context to your *Cluster Group*.
 ```execute
 tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
-tanzu operations clustergroup use {{< param  session_name >}}
+tanzu operations clustergroup use {{< param  session_name >}}-cg
 ```
 
 You can get a list of all available *Capabilities* (or the underlying [kapp-controller Packages](https://carvel.dev/kapp-controller/docs/v0.50.x/packaging/#overview)) with the following command. 
@@ -98,7 +101,7 @@ As the Unified Control Plane of Tanzu Platform Kubernetes provides a Kubernetes-
 Ensure the correct project is set and set the context to your *Cluster Group*.
 ```
 tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
-tanzu operations clustergroup use {{< param  session_name >}}
+tanzu operations clustergroup use {{< param  session_name >}}-cg
 ```
 Set the `KUBECONFIG` environment variable to point to the tanzu CLI kubeconfig file.
 ```
