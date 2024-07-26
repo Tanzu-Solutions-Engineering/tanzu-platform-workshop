@@ -17,7 +17,7 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 kubectl krew install ctx
 kubectl krew install ns
 kubectl krew install konfig
-kubectl krew insall eksporter
+kubectl krew install eksporter
 
 kubectl konfig import --save vcluster-kubeconfig.yaml
 kubectl ctx $(yq eval '.current-context' vcluster-kubeconfig.yaml)
