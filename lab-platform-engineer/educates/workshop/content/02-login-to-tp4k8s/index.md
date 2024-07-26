@@ -24,7 +24,7 @@ tanzu login
 
 Now, in the terminal session that we ran the login command in, paste your copied token, and press enter.
 
-# tanzu CLI & UCP
+### tanzu CLI & UCP
 The tanzu CLI and the plugins we use interact with the **Tanzu Platform Unified Control Plane (UCP)** via a Kubernetes-style API. The UCP is based on the [kcp](https://github.com/kcp-dev/kcp) open-source project, which is a Kubernetes-like control plane.
 
 The tanzu CLI stores the KUBECONFIG file and context information to interact with the UCP in `~/.config/tanzu/kube/config`. When we run the sub-commands of the project, space and clustergroup plugins, we adjust the context to point to the right level of the hierarchy of resources in UCP:

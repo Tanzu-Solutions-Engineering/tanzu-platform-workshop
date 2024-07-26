@@ -8,11 +8,11 @@ More information on how the scheduling works is available [here](https://docs.vm
 ***Profiles* are reusable building blocks for defining application environment characteristics or in other words required *Capabilities* and *Traits*.** 
 *Profiles* are intended to be reused across *Spaces*. Tanzu Platform for Kubernetes provides for example ootb a "spring-prod.tanzu.vmware.com" *Profile* as a reusable way to create environments for running Spring applications in production. 
 
-# Create a custom Profile
+### Create a custom Profile
 
 Let's create a *Profile* for our minimal workshop example.
 
-## Option 1: Tanzu Platform GUI
+#### Option 1: Tanzu Platform GUI
 In the Tanzu Platform GUI navigate to `Application Spaces > Profiles` or click [here](https://www.mgmt.cloud.vmware.com/hub/application-engine/profiles/profiles).
 
 Next, click on the button in the upper right corner of the browser window labeled "Create Profile".
@@ -35,9 +35,11 @@ With another click on a "next" button, you should see the summary page, where yo
 
 You can check whether the *Profile* is ready by navigating to `Application Spaces > Profiles`, searching for your *Profile* in the list and clicking on the "View Details" button.
 
+#### Option 2: tanzu CLI (or kubectl) CLI
 ```section:begin
-title: Option 2: tanzu (or kubectl) CLI
+title: "Open instructions"
 ```
+
 To create a *Profile* with the tanzu CLI, we have to create a resource file with all the configurations like for the *Availability Target*.
 ```editor:append-lines-to-file
 file: ~/profile.yaml
@@ -77,7 +79,7 @@ Checking whether the *Profile* is ready is also possible with the tanzu CLI.
 tanzu profile get {{< param  session_name >}}
 ```
 
-### kubectl CLI
+##### kubectl CLI
 The resource file we created is in the form of a custom Kubernetes resource definition, which means that we can alternatively also directly manage (create, delete, edit) the *Profile* with kubectl.
 ```
 export KUBECONFIG=~/.config/tanzu/kube/config

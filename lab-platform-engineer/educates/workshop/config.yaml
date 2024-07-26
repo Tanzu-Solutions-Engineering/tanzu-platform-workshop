@@ -6,8 +6,7 @@ pathways:
       title: "Workshop"
 
       steps:
-      - 00-workshop-overview
-      - 01-platform-engineers
+      - 01-workshop-overview
       - 02-login-to-tp4k8s
       - 03-tp-concepts
       - 04-cluster-group-capabilities

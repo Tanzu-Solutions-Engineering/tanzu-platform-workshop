@@ -7,7 +7,7 @@ Earlier in the workshop, we created a *Cluster Group* and specified the *Capabil
 ![Availability Targets compared to Cluster Group](AvailabilityTargets.png)
 
 
-# Cluster Matching
+### Cluster Matching
 *Availability Targets* allow you to define what clusters should be part of the target by **specifying rules on labels**.
 Those rules can be defined via "Cluster Affinity" and "Cluster Anti-affinity" expressions.
 
@@ -19,12 +19,12 @@ By clicking the "Add Match Expression" button, we can add additional criteria th
 
 Once the rules for selecting clusters into the *Availability Target* are defined, we can use the "Add Anti-Affinity" button to add criteria that are used to "de-select" clusters based on labels on the clusters that were previously selected. Cluster Anti-Affinity rules are managed similarly to the Cluster Affinity rules, but the result is that they remove clusters that were previously selected for the *Availability Target*.
 
-# Create Availability Target
+### Create Availability Target
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-manage-availability-targets.html)
 
 Let's create an *Availability Target* that selects just your cluster.
 
-## Option 1: Tanzu Platform GUI
+#### Option 1: Tanzu Platform GUI
 In the Tanzu Platform GUI navigate to `Application Spaces > Availability Targets` or click [here](https://www.mgmt.cloud.vmware.com/hub/application-engine/availability-targets).
 
 Next, click on the button in the upper right corner of the browser window labeled "Create Availability Targets".
@@ -60,9 +60,11 @@ Finally, click "Create Availability Target" button.
 
 To validate the *Availability Target* is ready and has selected our cluster, navigate to `Application Spaces > Availability Targets`, search for your *Availability Target* in the list and click on it in Tanzu Platform GUI.
 
+#### Option 2: tanzu CLI (or kubectl) CLI
 ```section:begin
-title: Option 2: tanzu (or kubectl) CLI
+title: "Open instructions"
 ```
+
 To create an *Availability Target* with the tanzu CLI, we have to first create a resource file with all the configurations.
 ```editor:append-lines-to-file
 file: ~/availability-target.yaml
@@ -97,7 +99,7 @@ Checking whether the *Availability Target* is in `Ready` state and your cluster 
 tanzu availability-target get {{< param  session_name >}}
 ```
 
-### kubectl CLI
+##### kubectl CLI
 The resource file we created is in the form of a custom Kubernetes resource definition, which means that we can alternatively also directly manage (create, delete, edit) the *Availability Target* with kubectl.
 ```
 export KUBECONFIG=~/.config/tanzu/kube/config

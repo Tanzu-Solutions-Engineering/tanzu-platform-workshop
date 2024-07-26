@@ -22,8 +22,8 @@ kubectl get pods -A
 
 As this cluster is not managed by Tanzu Platform for Kubernetes, we have to attach it as a self-managed cluster.
 
-# Attach workload cluster 
-## Option 1: Tanzu Platform GUI
+### Attach workload cluster 
+#### Option 1: Tanzu Platform GUI
 
 In the Tanzu Platform GUI navigate to `Infrastructure > Kubernetes Clusters` and select your "{{< param  session_name >}}" *Cluster Group*. 
 
@@ -39,8 +39,10 @@ Add a **label** with the **key "workshop-session"** and **value "{{< param  sess
 Click **Next**, **copy the command** to install the cluster agent extensions in the workload cluster, and **run the command in the workshop's upper terminal**.
 
 To verify whether the cluster is successfully onboarded to Tanzu Platform for Kubernetes, you can switch back to Tanzu Platform GUI, click (multiple times) on the **Verify connection** button which will also enable the **View your cluster** button.
+
+#### Option 2: tanzu CLI
 ```section:begin
-title: "Option 2: tanzu CLI"
+title: "Open instructions"
 ```
 To attach our workload cluster to Tanzu Platform for Kubernetes via the tanzu CLI, we first have to create a template file with the required configuration.
 ```editor:append-lines-to-file
@@ -77,7 +79,7 @@ It could take some time until the workload cluster is successfully onboarded. Ju
 ```section:end
 ```
 
-# Check whether Capabilities defined in Cluster Group are provided by the Cluster
+### Check whether Capabilities defined in Cluster Group are provided by the Cluster
 You can run the following command to get all `PackageInstalls`, which is the underlying way of installing *Capabilities*.
 ```execute
 kubectl get packageinstalls.packaging.carvel.dev -A

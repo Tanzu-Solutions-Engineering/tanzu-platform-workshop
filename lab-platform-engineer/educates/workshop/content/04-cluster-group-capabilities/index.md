@@ -6,10 +6,10 @@ In a day in the life of a platform engineer, we will start by creating a *Cluste
 
 When you create a project, Tanzu Platform creates a *Cluster Group* with the name `run` for you. This *Cluster Group* makes it easy to just use all the `Capabilities` available by default with Tanzu Platform.
 
-# Create Cluster Group
+### Create Cluster Group
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html)
 
-## Option 1: Tanzu Platform GUI
+#### Option 1: Tanzu Platform GUI
 
 In the Tanzu Platform GUI navigate to `Infrastructure > Kubernetes Clusters` and click the `Create Cluster Group` button. 
 
@@ -20,8 +20,9 @@ In the Tanzu Platform GUI navigate to `Infrastructure > Kubernetes Clusters` and
 
 **Make sure that the checkbox for Tanzu Application Engine is checked.**
 
+#### Option 2: tanzu CLI
 ```section:begin
-title: "Option 2: tanzu CLI"
+title: "Open instructions"
 ```
 
 Create a *Cluster Group* template file with the workshop session name as the name of the *Cluster Group*, and the configuration to enable `Tanzu Application Engine` for it.
@@ -40,10 +41,10 @@ tanzu operations clustergroup create -v cluster-group-values.yaml
 ```
 ```section:end
 ```
-# Add Capabilities to the Cluster Group
+### Add Capabilities to the Cluster Group
 [Official documentation](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-run-cluster-group.html#add-packages)
 
-## Option 1: Tanzu Platform GUI
+#### Option 1: Tanzu Platform GUI
 
 In the Tanzu Platform GUI navigate to `Application Spaces > Capabilities`. 
 The **Available** tab provides a list of all available *Capabilities* with the functionality to install them on `Cluster Groups`, and the **Installed** tab provides an overview of the *Capabilities* already installed on the different `Cluster Groups` with the functionality to uninstall and reconfigure them.
@@ -55,8 +56,10 @@ Next, click on the `Install Package` button, use the defaults for the package na
 Click on the `Install Package` button at the top of the form to finally install the *Capability* on the *Cluster Group*.
 
 For those that are familiar with [kapp-controller](https://carvel.dev/kapp-controller/), the installation of a *Capability* is the configuration of a [PackageInstall](https://carvel.dev/kapp-controller/docs/v0.50.x/packaging/#package-install) for a *Cluster Group* that will be synched to all the Kubernetes clusters in it.
+
+#### Option 2: tanzu CLI
 ```section:begin
-title: "Option 2: tanzu CLI"
+title: "Open instructions"
 ```
 
 Ensure the correct project is set and set the context to your *Cluster Group*.

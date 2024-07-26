@@ -1,8 +1,8 @@
 ---
-title: Remove Cluster and Group
+title:  Cleanup
 ---
 
-Now that we've finished testing, we can remove the space and other resources we created for our sample application.
+Now that we've finished testing, we can remove the *Space* and other resources we created for our sample application.
 
 ```execute
 tanzu space delete {{< param  session_name >}}
