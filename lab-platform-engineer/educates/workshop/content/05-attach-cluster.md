@@ -40,7 +40,7 @@ Click **Next**, **copy the command** to install the cluster agent extensions in 
 
 To verify whether the cluster is successfully onboarded to Tanzu Platform for Kubernetes, you can switch back to Tanzu Platform GUI, click (multiple times) on the **Verify connection** button which will also enable the **View your cluster** button.
 ```section:begin
-title: Option 2: tanzu CLI
+title: "Option 2: tanzu CLI"
 ```
 To attach our workload cluster to Tanzu Platform for Kubernetes via the tanzu CLI, we first have to create a template file with the required configuration.
 ```editor:append-lines-to-file
