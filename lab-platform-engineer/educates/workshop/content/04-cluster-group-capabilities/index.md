@@ -88,8 +88,10 @@ tanzu package install container-apps.tanzu.vmware.com -p container-apps.tanzu.vm
 In the end, the installation of a *Capability* is the configuration of a [PackageInstall](https://carvel.dev/kapp-controller/docs/v0.50.x/packaging/#package-install) for a *Cluster Group* that will be synched to all the Kubernetes clusters in it.
 ```section:end
 ```
+
+#### Option 3 (not recommended): kubectl CLI
 ```section:begin
-title: "Option 3 (not recommended): kubectl CLI"
+title: "Open instructions"
 ```
 As the Unified Control Plane of Tanzu Platform Kubernetes provides a Kubernetes-style API it's also possible to use `kubectl` or other Kubernetes tools to manage *Capabilities* in *Cluster Groups*.
 

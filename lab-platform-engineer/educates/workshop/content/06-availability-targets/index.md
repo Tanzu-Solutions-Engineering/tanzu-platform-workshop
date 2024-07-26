@@ -91,6 +91,7 @@ Remember back when we **attached our cluster, we added a label to it with the ke
 
 Finally, we can create the *Availability Target*.
 ```execute
+tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
 tanzu availability-target create -f availability-target.yaml -y
 ```
 

@@ -71,6 +71,7 @@ You can also configure the update strategy. Rolling update is the default and fi
 
 You can then create the *Space* with the following command.
 ```execute
+tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
 tanzu deploy --only space.yaml -y
 ```
 
