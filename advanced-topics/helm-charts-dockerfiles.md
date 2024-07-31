@@ -166,7 +166,7 @@ spec:
 3. Create the Mutation Policy
 
 ```
-tanzu operations policy create -s clustergroup -f templates/psa-mutating-policy.yaml
+tanzu operations policy create -s clustergroup -f psa-mutating-policy.yaml
 ```
 
 4. You can verify the policy was created using
@@ -226,7 +226,7 @@ Continue? [yN]: y
 5:00:36PM: ---- applying complete [1/1 done] ----
 5:00:36PM: ---- waiting complete [1/1 done] ----
 ```
-3. Verify Policy was created and Ready is True
+3. Verify Profile was created and Ready is True
 
 ```
 tanzu profile list
