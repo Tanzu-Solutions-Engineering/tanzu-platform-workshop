@@ -43,7 +43,7 @@ Once logged in select the Organize supplied for your training using the pull-dow
 
 ![My Services](../images/myservices.png)
 
-Finally select the project your were instructed to use for the workshop from the pull-down in the upper left.
+Finally select the project your were instructed to use for the workshop from the pull-down in the upper left. **Note: your workshop may use a different project than displayed in the example image**
 
 ![Project](../images/project.png)
 
