@@ -16,4 +16,5 @@ tanzu context delete space-admin -y
 
 BUILDER=$(echo $TANZU_BUILD_PLAN | jq -r '.spec.buildpacks.builder')
 docker pull $BUILDER
+
 fi
