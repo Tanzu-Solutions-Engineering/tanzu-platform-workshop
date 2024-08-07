@@ -9,11 +9,13 @@ When you create a project, Tanzu Platform creates a *Cluster Group* with the nam
 ### Create Cluster Group
 
 #### Option 1: Tanzu Platform GUI
+![Infrastructure, Kubernetes Clusters Menu Item](CreateClusterGroupButton.png)
 
 In the Tanzu Platform GUI navigate to `Infrastructure > Kubernetes Clusters` and click the `Create Cluster Group` button. 
 
+![Create Cluster Dialog](CreateClusterGroupDialog.png)
 
-**Use the workshop session name with a suffix as the name of the *Cluster Group*.**
+Next, click the section below to copy the name of the cluster group we will use, and paste it into the "Create Cluster Group" screen as the value for the "Name" field.
 ```copy
 {{< param  session_name >}}-cg
 ```
@@ -22,7 +24,11 @@ In the Tanzu Platform GUI navigate to `Infrastructure > Kubernetes Clusters` and
 We are adding a suffix to the name of the different resources we will create because there is a limitation that *Cluster Group* names and *Space* names must not be the same.
 {{< /note >}}
 
-**Make sure that the checkbox for Tanzu Application Engine is checked.**
+{{< warning >}}
+Make sure that the checkbox for Tanzu Application Engine is checked before continuing.
+{{< /warning >}}
+
+Now, click the "Create" button on the screen to create your new cluster group.
 
 #### Option 2: tanzu CLI
 ```section:begin
@@ -49,14 +55,24 @@ tanzu operations clustergroup create -v cluster-group-values.yaml
 
 #### Option 1: Tanzu Platform GUI
 
+![Capabilities](Capabilities.png)
 In the Tanzu Platform GUI navigate to `Application Spaces > Capabilities`. 
+
 The **Available** tab provides a list of all available *Capabilities* with the functionality to install them on `Cluster Groups`, and the **Installed** tab provides an overview of the *Capabilities* already installed on the different `Cluster Groups` with the functionality to uninstall and reconfigure them.
 
 Currently, it's only possible to manage (install, uninstall, ...) them one by one, even if in most cases several *Capabilities* are installed at once.
 
-Let's select the **Container App** *Capability* in the `Available` tab. 
-Next, click on the `Install Package` button, use the defaults for the package name and version, and select your "{{< param  session_name >}}" *Cluster Group* as a deployment target. Some of the *Capabilities* and related packages also require or provide the option for custom configuration, which can be done in the `Advanced Configuration` section of the form.
-Click on the `Install Package` button at the top of the form to finally install the *Capability* on the *Cluster Group*.
+![Capability Install Menu](CapabilityInstall.png)
+Let's click the three vertical dots next to the **Container App** *Capability* in the `Available` tab. 
+
+Next, click on the `Install` button.
+
+![Cluster Group Install Selection](ClusterGroupInstallSelection.png)
+Use the defaults for the package name and version, and select your "{{< param  session_name >}}" *Cluster Group* as a deployment target.  You can use the search box in the section for selecting a cluster group to find your specific cluster group.
+
+Some of the *Capabilities* and related packages also require or provide the option for custom configuration, which can be done in the `Advanced Configuration` section of the form.  Feel free to open that section, but to examine it, but don't change any of the settings if there are any.
+
+Click on the `Install Package` button at the top right of the screen to finally install the *Capability* on the *Cluster Group*.
 
 For those that are familiar with [kapp-controller](https://carvel.dev/kapp-controller/), the installation of a *Capability* is the configuration of a [PackageInstall](https://carvel.dev/kapp-controller/docs/v0.50.x/packaging/#package-install) for a *Cluster Group* that will be synched to all the Kubernetes clusters in it.
 
@@ -126,5 +142,6 @@ Switch back to default kubeconfig file.
 ```
 unset KUBECONFIG
 ```
+
 ```section:end
 ```
