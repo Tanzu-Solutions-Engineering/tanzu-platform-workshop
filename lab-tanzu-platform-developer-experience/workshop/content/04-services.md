@@ -102,12 +102,12 @@ text: |
             name: shared-postgres
 ```
 
-Now, we could apply those additional resources via `tanzu deploy --from-build ~/build`, but as for any other resources, we can also directly interact with the so-called Tanzu Platform Universal Control Plane (or UCP) via kubectl.
+Now, we could apply those additional resources via `tanzu deploy --from-build ~/build`, but as for any other resources, we can also directly interact with the so-called Tanzu Platform Universal Control Plane (or UCP) via `tanzu deploy --only ...`.
 This is possible thanks to the [kcp project](https://github.com/kcp-dev/kcp), a Kubernetes-like control plane, UCP is based on.
 
-We're able to do this because we've pointed out `KUBE_CONFIG` environment variable in this session to the config file managed by the Tanzu CLI for its use to talk to Tanzu Platform. Tanzu Platform's Spaces are _not_ defined in Kubernetes cluster themselves, but they use the Kubernetes resource model (CRDs, objects, etc) to manage deployments to Availability Target clusters which _are_ real Kubernetes clusters. Our platform engineering team can control what resources we can apply to our Space, and we've been allowed to apply Kubernetes-style *Secret* objects and *PreProvisionedService* objects.  Let's apply the Secret and PreProvisionedService to our space.
+The Tanzu CLI maintains it's own kubeconfig file for its use to talk to Tanzu Platform. Tanzu Platform's Spaces are _not_ directly defined in Kubernetes cluster themselves, but they use the Kubernetes resource model (CRDs, objects, etc) to manage deployments to Availability Target clusters which _select_ real Kubernetes clusters based on our Space configuration. Our platform engineering team can control what resources we can apply to our Space, and we've been allowed to apply Kubernetes-style *Secret* objects and *PreProvisionedService* objects.  Let's apply the Secret and PreProvisionedService to our space.
 ```execute
-kubectl apply -f ~/preprovisioned-db-secret.yaml -f ~/inclusion/.tanzu/config/preprovisioned-db.yaml
+tanzu deploy --only ~/preprovisioned-db-secret.yaml -f ~/inclusion/.tanzu/config/preprovisioned-db.yaml
 ```
 
 {{< note >}}
