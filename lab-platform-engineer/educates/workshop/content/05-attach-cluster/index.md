@@ -7,7 +7,7 @@ Tanzu Platform for Kubernetes currently provides **full lifecycle management** a
 - AWS EKS clusters
 The documentation is available [here](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/how-to-create-clusters.html)
 
-Other Kubernetes distributions are not supported yet, which doesn't mean that Tanzu Platform for Kubernetes isn't working with them.
+Other Kubernetes distributions are not supported for **full lifecycle management** yet, but that doesn't mean that Tanzu Platform for Kubernetes can't work with them.
 
 **For this workshop, we will use a [virtual Kubernetes cluster](https://www.vcluster.com/) that is already provisioned for you.**
 
@@ -20,25 +20,42 @@ kubectl get nodes
 kubectl get pods -A
 ```
 
-As this cluster is not managed by Tanzu Platform for Kubernetes, we have to attach it as a self-managed cluster.
+As this cluster is not lifecycle managed by Tanzu Platform for Kubernetes, we will attach it as a self-managed cluster.
 
 ### Attach workload cluster 
 #### Option 1: Tanzu Platform GUI
+![Select Cluster Group](SelectClusterGroup.png)
+In the Tanzu Platform GUI navigate to `Infrastructure > Kubernetes Clusters` and select your "{{< param  session_name >}}-cg" *Cluster Group* by clicking on its name. 
 
-In the Tanzu Platform GUI navigate to `Infrastructure > Kubernetes Clusters` and select your "{{< param  session_name >}}-cg" *Cluster Group*. 
+![Attach Self Managed Cluster Menu Item](AttachSelfManagedMenuItem.png)
+In the resulting screen, click on the **Add Cluster** button, and select the **Attach self-managed cluster** option.
 
-Click on the **Add Cluster** button, and select the **Attach self-managed cluster** option.
-
-Set the **workshop session name** as the **name of the cluster**, and the ***Cluster Group***.
+![Attach Self Managed Cluster Screen](AttachClusterScreen.png)
+Click the section below to copy the **workshop session name**.
 ```copy
 {{< param  session_name >}}
 ```
+Paste that value as the value for the **Cluster Name** field.
 
-Add a **label** with the **key "workshop-session"** and **value "{{< param  session_name >}}" (the workshop session name)**. This label will be important for the configuration of the `Availability Target`.
+In the **Cluster Group** section of the screen, make sure that the radio button to the left of the "Application Engine groups" label is selected.
 
-Click **Next**, **copy the command** to install the cluster agent extensions in the workload cluster, and **run the command in the workshop's upper terminal**.
+Click the section below to copy the name of the cluster group we created earlier
+```copy
+{{< param  session_name >-cg}}
+```
 
-To verify whether the cluster is successfully onboarded to Tanzu Platform for Kubernetes, you can switch back to Tanzu Platform GUI, click (multiple times) on the **Verify connection** button which will also enable the **View your cluster** button.
+![Deselect the Run Cluster Group](DeselectRunGroup.png)
+Click the **X** button in the box above the "Description" label to deselect the **Run** cluster group, which is selected by default.  Paste the value just copied into the clipboard into the box we just cleared to select the cluster group we created earlier in the workshop.
+
+Add a **label** with the key set to **workshop-session** and value set to **{{< param  session_name >}}**. This label will be important for the configuration of the `Availability Target`.  Click the **Next** button to continue.
+
+![Copy Install Command](CopyInstallString.png)
+Now, click the clipboard icon next to the install command.  Paste this command into the workshop's upper terminal session and press **Enter** to install the cluster agent extensions in the workload cluster.
+
+To verify whether the cluster is successfully onboarded to Tanzu Platform for Kubernetes, you can switch back to Tanzu Platform GUI, click on the **Verify connection** button.  If the cluster doesn't verify when you first click the button, give it a little more time, and then click the button again.  You will need to have a successful verification to proceed.
+
+![View Your Cluster](ViewCluster.png)
+Once your cluster is verified, you can click on the now enabled "View Your Cluster" button to see your attached cluster.
 
 #### Option 2: tanzu CLI
 ```section:begin
