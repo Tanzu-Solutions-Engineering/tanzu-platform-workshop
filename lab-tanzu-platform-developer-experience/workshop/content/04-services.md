@@ -107,7 +107,7 @@ This is possible thanks to the [kcp project](https://github.com/kcp-dev/kcp), a 
 
 The Tanzu CLI maintains it's own kubeconfig file for its use to talk to Tanzu Platform. Tanzu Platform's Spaces are _not_ directly defined in Kubernetes cluster themselves, but they use the Kubernetes resource model (CRDs, objects, etc) to manage deployments to Availability Target clusters which _select_ real Kubernetes clusters based on our Space configuration. Our platform engineering team can control what resources we can apply to our Space, and we've been allowed to apply Kubernetes-style *Secret* objects and *PreProvisionedService* objects.  Let's apply the Secret and PreProvisionedService to our space.
 ```execute
-tanzu deploy --only ~/preprovisioned-db-secret.yaml -f ~/inclusion/.tanzu/config/preprovisioned-db.yaml
+tanzu deploy --only ~/preprovisioned-db-secret.yaml --only ~/inclusion/.tanzu/config/preprovisioned-db.yaml
 ```
 
 {{< note >}}
