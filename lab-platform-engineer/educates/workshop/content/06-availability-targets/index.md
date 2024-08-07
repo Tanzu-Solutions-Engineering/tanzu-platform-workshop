@@ -6,7 +6,6 @@ Earlier in the workshop, we created a *Cluster Group* and specified the *Capabil
 
 ![Availability Targets compared to Cluster Group](AvailabilityTargets.png)
 
-
 ### Cluster Matching
 *Availability Targets* allow you to define what clusters should be part of the target by **specifying rules on labels**.
 Those rules can be defined via "Cluster Affinity" and "Cluster Anti-affinity" expressions.
@@ -24,7 +23,7 @@ Once the rules for selecting clusters into the *Availability Target* are defined
 Let's create an *Availability Target* that selects just your cluster.
 
 #### Option 1: Tanzu Platform GUI
-In the Tanzu Platform GUI navigate to `Application Spaces > Availability Targets` or click [here](https://www.mgmt.cloud.vmware.com/hub/application-engine/availability-targets).
+In the Tanzu Platform GUI navigate to `Application Spaces > Availability Targets`.
 
 Next, click on the button in the upper right corner of the browser window labeled "Create Availability Targets".
 ![Create Availability Targets button](CreateATButton.png)
@@ -32,18 +31,19 @@ Next, click on the button in the upper right corner of the browser window labele
 In the resulting dialog, click the "Step by Step" button to get the guided interface for creating the *Availability Target*.
 ![Step by Step button](StepByStep.png)
 
-Now, let's name our *Availability Target* based on the session name by pasting the clipboard into the "Name" field.
+![Create Availability Screen](CreateATScreen.png)
+Now, let's name our *Availability Target* based on the session name.  Click on the section below.
 ```copy
 {{< param  session_name >}}-at
 ```
+Paste the copied value the **Name** field of the **Create Availability Target** screen.
 
-Remember back when we **attached our cluster, we added a label to it with the key of "workshop-session"**. We're going to use that label for the "Cluster Affinity" selector for our *Availability Target*.
-
-Copy the value below into your clipboard by clicking the box below:
+Remember back when we attached our cluster, we added a label to it with the key of **workshop-session**. We're going to use that label for the "Cluster Affinity" selector for our *Availability Target*. Copy the value below into your clipboard by clicking the box below:
 ```copy
 workshop-session
 ```
 
+![Affinity Rules](AffinityRule.png)
 Next, in the selector section of the *Availability Target* screen, paste the value we just copied into the first text field under the "Selector" subheading of the "Cluster Affinity" section of the screen.
 
 Make sure the middle dropdown list for the expression is set to "In" for the operator, and change it to "In" if it is not.
@@ -55,9 +55,17 @@ Now, copy the name of your workshop session by clicking the box below:
 
 Paste your workshop name into the final text box for the Cluster Affinity expression.
 
-Finally, click "Create Availability Target" button.
+Finally, click **Create Availability Target** button.
 
-To validate the *Availability Target* is ready and has selected our cluster, navigate to `Application Spaces > Availability Targets`, search for your *Availability Target* in the list and click on it in Tanzu Platform GUI.
+![Cluster Name Lozenge in Availability Target tile](ClusterNameLozenge.png)
+To validate the *Availability Target* is ready and has selected our cluster, navigate to `Application Spaces > Availability Targets` section from the left hand menu
+
+Click the section below to copy your availability target name.
+```copy
+{{< param  session_name >}}-at
+```
+
+Paste the copied value into the **Search** text box at the top of the screen to find your *Availability Target*.  You should see a tile that represents your *Availability Target*, and it should contain a single lozenge inside with the name of your attached cluster, **{{< param  session_name >}}**.  If you see no lozenge, multiple lozenges, or a lozenge that doesn't match your attached cluster name, go back to your availability target and edit to to verify the affinity rule is set properly.
 
 #### Option 2: tanzu CLI (or kubectl) CLI
 ```section:begin
