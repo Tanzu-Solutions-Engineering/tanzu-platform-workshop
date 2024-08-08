@@ -4,7 +4,7 @@
 - vSphere environment(s) with vCenter v8.0.2c (8.0.2.00300) or newer.
     - Workload Management enabled with AVI
     - Supervisor cluster v1.27.5+vmware.1-fips.1 or newer.
-    - ContentLibrary synced with TKr 1.28.8 available (1.29.4 should work too)
+    - ContentLibrary synced with TKr 1.28.8 available (1.29.4 or 1.30.1 should work too)
     - Compute capacity for one TKG clusters with 1 CP node and 3 worker nodes with 4VCPU & 16GBRAM per VM per attendee
     - At least 4 VM IPs available for all those k8s nodes per attendee
     - At least 3 AVI VIPs available per attendee: 1 VIP for the cluster CP, 2 VIP for ingress per cluster
@@ -19,7 +19,7 @@
 
 ## Workshop Attendee pre-requisites
 - kubectl CLI v1.28.8 installed in workstation - [kubectl CLI install guide](https://v1-28.docs.kubernetes.io/releases/download/)
-- tanzu CLI v1.3.0 installed in workstation - [tanzu CLI installation guide](https://docs.vmware.com/en/VMware-Tanzu-CLI/1.3/tanzu-cli/index.html)
+- tanzu CLI v1.4.0 installed in workstation - [tanzu CLI installation guide](https://docs.vmware.com/en/VMware-Tanzu-CLI/1.4/tanzu-cli/index.html)
 - tanzu CLI plugins for platform engineer installaed - [tanzu CLI PE plugins installation guide](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/getting-started-create-app-envmt.html#before-you-begin-0)
 ```
 tanzu plugin install --group vmware-tanzu/platform-engineer
