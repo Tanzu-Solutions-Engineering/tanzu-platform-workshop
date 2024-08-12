@@ -53,6 +53,7 @@ Therefore, let's manually expose it for the workshop.
 ```terminal:execute
 description: Expose sample app
 command: |
+  cd ..
   kubectl ctx educates
   mirrored_inclusion_service=$(kubectl get svc --no-headers -o custom-columns=":metadata.name" | grep '^inclusion-x')
   kubectl eksporter service $mirrored_inclusion_service --drop spec.clusterIPs | yq e '.metadata.name = "sample-app"' | kubectl apply -f -
