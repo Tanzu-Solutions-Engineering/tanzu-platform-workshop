@@ -5,9 +5,13 @@ title:  Cleanup
 Now that we've finished testing, we can remove the *Space* and other resources we created for our sample application.
 
 ```execute
-tanzu space delete {{< param  session_name >}}-s
-tanzu availability-target delete {{< param  session_name >}}-at
-tanzu profile delete {{< param  session_name >}}-p
+tanzu space delete {{< param  session_name >}}-s -y
+```
+```execute
+tanzu availability-target delete {{< param  session_name >}}-at -y
+```
+```execute
+tanzu profile delete {{< param  session_name >}}-p -y
 ```
 
 Let's also remove our cluster from the platform, as it was temporary for use with this workshop.
