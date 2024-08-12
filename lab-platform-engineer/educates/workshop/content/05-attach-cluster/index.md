@@ -41,7 +41,7 @@ In the **Cluster Group** section of the screen, make sure that the radio button 
 
 Click the section below to copy the name of the cluster group we created earlier
 ```copy
-{{< param  session_name >-cg}}
+{{< param  session_name >}}-cg
 ```
 
 ![Deselect the Run Cluster Group](DeselectRunGroup.png)
