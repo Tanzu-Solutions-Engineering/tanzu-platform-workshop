@@ -55,7 +55,7 @@ description: Expose sample app
 command: |
   kubectl ctx educates
   mirrored_inclusion_service=$(kubectl get svc --no-headers -o custom-columns=":metadata.name" | grep '^inclusion-x')
-  kubectl eksporter service $mirrored_inclusion_service | yq e '.metadata.name = "sample-app"' | kubectl apply -f -
+  kubectl eksporter service $mirrored_inclusion_service --drop spec.clusterIPs | yq e '.metadata.name = "sample-app"' | kubectl apply -f -
   kubectl ctx $(yq eval '.current-context' vcluster-kubeconfig.yaml)
   clear
 ```
