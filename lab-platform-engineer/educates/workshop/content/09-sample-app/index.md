@@ -82,7 +82,5 @@ By clicking on the following action, a new tab will open, targeting our sample a
 ```dashboard:create-dashboard
 name: Sample application
 description: Open sample application 
-url: http://inclusion-{{< param  session_name >}}.{{< param  ingress_domain >}}
+url: https//tls-inclusion-{{< param  session_name >}}.{{< param  ingress_domain >}}
 ```
-
-
