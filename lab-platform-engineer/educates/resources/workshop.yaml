@@ -10,36 +10,34 @@ spec:
   publish:
     image: "$(image_repository)/lab-tanzu-platform-lab-platform-engineer-files:$(workshop_version)"
   workshop:
-    image: ghcr.io/timosalm/tanzu-platform-workshop/lab-platform-engineer-image:educates-platform-engineer
     files:
     - git:
-        url: https://github.com/Tanzu-Solutions-Engineering/tanzu-platform-workshop
         ref: origin/educates-platform-engineer
+        url: https://github.com/Tanzu-Solutions-Engineering/tanzu-platform-workshop
       includePaths:
       - /lab-platform-engineer/educates/workshop/**
+      - /lab-platform-engineer/educates/exercises/**
+      - /lab-platform-engineer/educates/README.md
       newRootPath: /lab-platform-engineer/educates
-    packages:
-    - name: tanzu-cli
-      files:
-      - image:
-          url: ghcr.io/timosalm/tanzu-platform-workshop/lab-tanzu-platform-developer-experience-tanzu-cli-extension-package:v1.3.0
+      path: .
+    image: ghcr.io/timosalm/tanzu-platform-workshop/lab-platform-engineer-image:educates-platform-engineer
   session:
-    namespaces:
-      budget: custom
-      security:
-        policy: baseline
     applications:
-      terminal:
-        enabled: true
-        layout: split
-      editor:
-        enabled: true
       console:
         enabled: false
       docker:
         enabled: true
+      editor:
+        enabled: true
       registry:
         enabled: true
+      terminal:
+        enabled: true
+        layout: split
+    namespaces:
+      budget: custom
+      security:
+        policy: baseline
     env:
     - name: PUBLIC_REGISTRY_HOST
       value: public-registry-$(session_name).$(ingress_domain)
@@ -57,50 +55,151 @@ spec:
         value: "Basic REGISTRY_BASIC_AUTH_CREDENTIALS"
       authentication:
         type: none
-    - name: sample-app
-      host: sample-app.$(session_namespace)
-      port: 8080
-      protocol: http
+    volumes:
+    - name: admin-credentials-config
+      secret:
+        secretName: $(session_name)-kubeconfig
+    volumeMounts:
+    - name: admin-credentials-config
+      mountPath: /opt/kubeconfig
     objects:
-      - apiVersion: rbac.authorization.k8s.io/v1
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: $(session_name)-vcluster-values
+        namespace: $(workshop_namespace)
+      stringData:
+        values.yaml: |
+          syncer:
+            extraArgs:
+            - --tls-san="vcluster-$(session_namespace).$(ingress_domain)"
+            - --out-kube-config-server="https://vcluster-$(session_namespace).$(ingress_domain)"
+          sync:
+            ingresses:
+              enabled: true
+    - apiVersion: kappctrl.k14s.io/v1alpha1
+      kind: App
+      metadata:
+        name: $(session_name)-vcluster-package
+        namespace: $(workshop_namespace)
+      spec:
+        serviceAccountName: $(service_account)
+        syncPeriod: 720h
+        noopDelete: true
+        fetch:
+        - helmChart:
+            name: vcluster
+            repository:
+              url: https://charts.loft.sh
+        template:
+        - helmTemplate:
+            name: vcluster
+            namespace: $(session_namespace)
+            valuesFrom:
+            - secretRef:
+                name: $(session_name)-vcluster-values
+        - ytt:
+            inline:
+              paths:
+                overlays.yaml: |
+                  #@ load("@ytt:data", "data")
+                  #@ load("@ytt:overlay", "overlay")
+                  #@overlay/match by=overlay.all, expects="1+"
+                  ---
+                  metadata:
+                    #@overlay/match missing_ok=True
+                    ownerReferences:
+                      - apiVersion: training.educates.dev/v1beta1
+                        kind: WorkshopSession
+                        blockOwnerDeletion: true
+                        controller: true
+                        name: $(session_name)
+                        uid: $(workshop_session_uid)
+        deploy:
+        - kapp:
+            rawOptions:
+            - --app-changes-max-to-keep=5
+    - apiVersion: projectcontour.io/v1
+      kind: HTTPProxy
+      metadata:
+        name: vcluster-$(session_namespace)
+        namespace: $(session_namespace)
+      spec:
+        virtualhost:
+          fqdn: vcluster-$(session_namespace).$(ingress_domain)
+          tls:
+            passthrough: true
+        tcpproxy:
+          services:
+          - name: vcluster
+            port: 443
+    - apiVersion: secrets.educates.dev/v1beta1
+      kind: SecretCopier
+      metadata:
+        name: $(session_name)-kubeconfig
+      spec:
+        rules:
+        - sourceSecret:
+            name: vc-vcluster
+            namespace: $(session_namespace)
+          targetNamespaces:
+            nameSelector:
+              matchNames:
+              - $(workshop_namespace)
+          targetSecret:
+            name: $(session_name)-kubeconfig
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: Role
+      metadata:
+        name: $(session_namespace)-session
+        namespace: $(session_namespace)
+      rules:
+      - apiGroups:
+        - '*'
+        resources:
+        - '*'
+        verbs:
+        - '*'
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        name: $(session_namespace)-session-rb
+        namespace: $(session_namespace)
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
         kind: Role
-        metadata:
-          name: $(session_namespace)-session
-          namespace: $(session_namespace)
-        rules:
-        - apiGroups: ['*']
-          resources: ['*']
-          verbs: ['*']
-      - apiVersion: rbac.authorization.k8s.io/v1
-        kind: RoleBinding
-        metadata:
-          name: $(session_namespace)-session-rb
-          namespace: $(session_namespace)
-        roleRef:
-          apiGroup: rbac.authorization.k8s.io
-          kind: Role
-          name: $(session_namespace)-session
-        subjects:
-          - kind: ServiceAccount
-            namespace: $(workshop_namespace)
-            name: $(service_account)
-      - apiVersion: rbac.authorization.k8s.io/v1
+        name: $(session_namespace)-session
+      subjects:
+      - kind: ServiceAccount
+        name: $(service_account)
+        namespace: $(workshop_namespace)
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      metadata:
+        name: $(session_name)-vcluster-deployer
+      rules:
+      - apiGroups:
+        - ""
+        resources:
+        - configmaps
+        verbs:
+        - '*'
+      - apiGroups:
+        - rbac.authorization.k8s.io
+        resources:
+        - clusterroles
+        - clusterrolebindings
+        verbs:
+        - '*'
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        name: $(session_name)-vcluster-deployer-binding
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
         kind: ClusterRole
-        metadata:
-          name: $(session_name)-vcluster-deployer
-        rules:
-        - apiGroups: [rbac.authorization.k8s.io]
-          resources: [clusterroles,clusterrolebindings]
-          verbs: ['*']
-      - apiVersion: rbac.authorization.k8s.io/v1
-        kind: ClusterRoleBinding
-        metadata:
-          name: $(session_name)-vcluster-deployer-binding
-        roleRef:
-          apiGroup: rbac.authorization.k8s.io
-          kind: ClusterRole
-          name: $(session_name)-vcluster-deployer
-        subjects:
-        - kind: ServiceAccount
-          namespace: $(workshop_namespace)
-          name: $(service_account)
+        name: $(session_name)-vcluster-deployer
+      subjects:
+      - kind: ServiceAccount
+        name: $(service_account)
+        namespace: $(workshop_namespace)
