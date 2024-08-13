@@ -10,11 +10,7 @@ The documentation is available [here](https://docs.vmware.com/en/VMware-Tanzu-Pl
 Other Kubernetes distributions are not supported for **full lifecycle management** yet, but that doesn't mean that Tanzu Platform for Kubernetes can't work with them.
 
 **For this workshop, we will use a [virtual Kubernetes cluster](https://www.vcluster.com/) that is already provisioned for you.**
-
-```terminal:execute
-description: Ensure Kubernetes context is set for workload cluster
-command: unset KUBECONFIG && kubectl ctx $(yq eval '.current-context' vcluster-kubeconfig.yaml)
-```
+å
 ```execute
 kubectl get nodes
 kubectl get pods -A
@@ -81,7 +77,7 @@ As you can see, we are setting the name of cluster like for the `Cluster Group` 
 
 The following command will, based on the configuration in the template file, attach our workload cluster to Tanzu Platform for Kubernetes by installing cluster agent extensions into it.
 ```execute
-tanzu operations cluster attach --file cluster-attach-values.yaml --kubeconfig vcluster-kubeconfig.yaml --skip-verify
+tanzu operations cluster attach --file cluster-attach-values.yaml --kubeconfig .kube/config --skip-verify
 ```
 
 To verify whether the cluster is successfully onboarded to Tanzu Platform for Kubernetes, you can run the following command (or use to Tanzu Platform GUI).

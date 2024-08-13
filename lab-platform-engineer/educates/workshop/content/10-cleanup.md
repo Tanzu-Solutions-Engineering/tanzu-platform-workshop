@@ -4,6 +4,10 @@ title:  Cleanup
 
 Now that we've finished testing, we can remove the *Space* and other resources we created for our sample application.
 
+{{< note >}}
+It could take some time until the resources are finally deleted. So just rerun the commands until their preconditions are fulfilled and they succeed.
+{{< /note >}}
+
 ```execute
 tanzu space delete {{< param  session_name >}}-s -y
 ```

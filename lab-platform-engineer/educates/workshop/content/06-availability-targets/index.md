@@ -108,6 +108,10 @@ Checking whether the *Availability Target* is in `Ready` state and your cluster 
 tanzu availability-target get {{< param  session_name >}}-at
 ```
 
+{{< note >}}
+It could take some time until the *Availability Target* is in `Ready` state. Just rerun the command until this is the case.
+{{< /note >}}
+
 ##### kubectl CLI
 ```section:begin
 title: "Open instructions"

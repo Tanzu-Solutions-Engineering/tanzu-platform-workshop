@@ -54,10 +54,27 @@ Therefore, let's manually expose it for the workshop.
 description: Expose sample app
 command: |
   cd ..
-  kubectl ctx educates
-  mirrored_inclusion_service=$(kubectl get svc --no-headers -o custom-columns=":metadata.name" | grep '^inclusion-x')
-  kubectl eksporter service $mirrored_inclusion_service --drop spec.clusterIPs | yq e '.metadata.name = "sample-app"' | kubectl apply -f -
-  kubectl ctx $(yq eval '.current-context' vcluster-kubeconfig.yaml)
+  inclusion_service_ns=$(kubectl get namespace -l spaces.tanzu.vmware.com/name --no-headers -o custom-columns=":metadata.name")
+  unset KUBECONFIG
+  cat <<EOF | kubectl apply -f -
+  apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    name: inclusion
+    namespace: $inclusion_service_ns
+  spec:
+    rules:
+    - host: inclusion-{{< param  session_name >}}.{{< param  ingress_domain >}}
+      http:
+        paths:
+        - backend:
+            service:
+              name: inclusion
+              port:
+                number: 8080
+          path: /
+          pathType: Prefix
+  EOF
   clear
 ```
 
@@ -65,7 +82,7 @@ By clicking on the following action, a new tab will open, targeting our sample a
 ```dashboard:create-dashboard
 name: Sample application
 description: Open sample application 
-url: https://sample-app-{{< param  session_namespace >}}.{{< param ingress_domain >}}
+url: http://inclusion-{{< param  session_name >}}.{{< param  ingress_domain >}}
 ```
 
 
