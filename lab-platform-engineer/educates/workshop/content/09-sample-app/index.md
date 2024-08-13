@@ -79,8 +79,6 @@ command: |
 ```
 
 By clicking on the following action, a new tab will open, targeting our sample application.
-```dashboard:create-dashboard
-name: Sample application
-description: Open sample application 
-url: https//sample-app-{{< param  session_name >}}.{{< param  ingress_domain >}}
+```dashboard:open-url
+url: http://inclusion-{{< param  session_name >}}.{{< param  ingress_domain >}}
 ```

@@ -55,10 +55,6 @@ spec:
         value: "Basic REGISTRY_BASIC_AUTH_CREDENTIALS"
       authentication:
         type: none
-    - host: inclusion-$(session_name).$(ingress_domain)
-      name: sample-app
-      port: 80
-      protocol: http
     volumes:
     - name: admin-credentials-config
       secret:
