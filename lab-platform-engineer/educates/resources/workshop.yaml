@@ -72,8 +72,8 @@ spec:
         values.yaml: |
           syncer:
             extraArgs:
-            - --tls-san="vcluster-$(session_namespace).$(ingress_domain)"
-            - --out-kube-config-server="https://vcluster-$(session_namespace).$(ingress_domain)"
+            - --tls-san=vcluster-$(session_namespace).$(ingress_domain)
+            - --out-kube-config-server=https://vcluster-$(session_namespace).$(ingress_domain)
           sync:
             ingresses:
               enabled: true
