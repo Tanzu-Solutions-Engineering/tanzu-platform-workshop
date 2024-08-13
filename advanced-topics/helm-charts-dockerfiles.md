@@ -151,7 +151,7 @@ tanzu context current
 2. Edit the templates/psa-mutating-policy.yaml file in this repo and replace `{your clustergroup name}` with the  name of the cluster group you are using.  Note: This is an intentionally broad policy (all clusters in the group and all new namespaces)
 
 ```
-vi templates/psa-mutating-policy.yaml
+vi templates/psa-mutating-policy.yaml or vi templates/psa-mutating-policy-filtered.yaml
 
 fullName:
   clusterGroupName: {your clustergroup name}  <---- Replace with your cluster group name
@@ -429,7 +429,7 @@ tanzu operations clustergroup use {yourclustergroup}
 tanzu package install container-apps.tanzu.vmware.com -p container-apps.tanzu.vmware.com -v '>0.0.0'
 tanzu package installed list
 ```
-2. Create containerapp manifest
+2. Create containerapp manifest or use the one located in /templates/containerapp.yaml
 ```
 # containerapp.yaml
 apiVersion: apps.tanzu.vmware.com/v1
