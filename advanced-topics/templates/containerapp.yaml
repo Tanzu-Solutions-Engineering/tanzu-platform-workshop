@@ -1,0 +1,16 @@
+# containerapp.yaml
+apiVersion: apps.tanzu.vmware.com/v1
+kind: ContainerApp
+metadata:
+  name: podinfo
+  annotations:
+    containerapp.apps.tanzu.vmware.com/class: "kubernetes"
+spec:
+  description: Podinfo application from Helm
+  contact:
+    slack: "#my-helm-apps"
+  image: ghcr.io/stefanprodan/podinfo
+  relatedRefs:
+    - for: kubernetes.list-replicas
+      kind: Pod
+      labelSelector: app.kubernetes.io/name=podinfo

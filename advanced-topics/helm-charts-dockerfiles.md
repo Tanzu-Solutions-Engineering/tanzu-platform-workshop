@@ -412,3 +412,64 @@ Navigate to your Space in Tanzu Platform UI (`Application Space -> Spaces -> You
 On the Space you will see a `Space URL: podinfo.fqdn.com` This is where you application is publically available via HTTPRoute.  You can also see this same information undeer Ingress & Egress.  Open this link in your web browser to visit the Podinfo site.
 
 ![Helm Space URL](../images/helm-space-url.png)
+
+### OPTIONAL - Create Containerapp to track application deployed via Helm
+
+You can optionally create a containerapp object to track the helm application we just deployed.  This will allow you to use the `tanzu app list` and `tanzu app get` commands for the PodInfo application.  I will also populuate the application tab of your space with some basic information.
+
+1. Verify you have the container-apps.tanzu.vmware.com capability installed on your cluster group.  This should already be there from your day 1 package install.  You can use the UI by navigating to Application Spaces -> Capabilities -> Installed and selecting your clustergroup.  To verify using the CLI complete the following.
+```
+tanzu operations clustergroup use {yourclustergroup}
+tanzu package installed list
+```
+
+If you don't see the container-apps.tanzu.vmware.com capability do the following to install using the CLI
+```
+tanzu operations clustergroup use {yourclustergroup}
+tanzu package install container-apps.tanzu.vmware.com -p container-apps.tanzu.vmware.com -v '>0.0.0'
+tanzu package installed list
+```
+2. Create containerapp manifest
+```
+# containerapp.yaml
+apiVersion: apps.tanzu.vmware.com/v1
+kind: ContainerApp
+metadata:
+  name: podinfo
+  annotations:
+    containerapp.apps.tanzu.vmware.com/class: "kubernetes"
+spec:
+  description: Podinfo application from Helm
+  contact:
+    slack: "#my-helm-apps"
+  image: ghcr.io/stefanprodan/podinfo
+  relatedRefs:
+    - for: kubernetes.list-replicas
+      kind: Pod
+      labelSelector: app.kubernetes.io/name=podinfo
+```
+3. Select your space
+```
+tanzu space use   #pick your space from the list
+```
+4. Test output of Tanzu app command.  You can also view the Applications section TPK8s UI for your space.  It should show no information.
+```
+tanzu app list
+# Output should be blank
+```
+5. Deploy containerapp.yaml to your space
+```
+tanzu deploy --only containerapp.yaml
+```
+6. Retest Tanzu app command and Applications UI in your space
+```
+tanzu app list
+
+  NAME     CONTENT  INSTANCES(RUNNING/REQUESTED)  CPU  MEM  BINDINGS  STATUS
+  podinfo           3/3                                               Running
+```
+
+UI should now show the Application listed
+![Space Application UI](../images/application-helm-ui.png)
+
+**Note** You cannot use most of the tanzu app cli commands like scale because the helm deployment owns the application.  The containerapp component is mainly to bring additional visisblity to the application.
