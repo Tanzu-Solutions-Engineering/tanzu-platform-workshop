@@ -125,17 +125,22 @@ kubectl get ns
 ```
 
 In the namespaces with the "-internal" suffix the `PackageInstalls` for the *Traits* will be applied, the other namespace is for all the resources running in the *Space*.
-```execute
-SPACE_NS_INTERNAL=$(kubectl get namespaces -o json | jq -r '.items[].metadata.name | select(endswith("-internal"))')
-kubectl get pkgi -n $SPACE_NS_INTERNAL
+```terminal:execute
+description: "kubectl get pkgi -n $SPACE_NS_INTERNAL"
+command: |
+  SPACE_NS_INTERNAL=$(kubectl get namespaces -o json | jq -r '.items[].metadata.name | select(endswith("-internal"))')
+  kubectl get pkgi -n $SPACE_NS_INTERNAL
 ```
+
 In our case, there should be a `PackageInstall`for the "Carvel package installer" *Trait*.
 
 With the kapp CLI, you can see which resources it has created in the *Space* namespace without the suffix.
 
-```execute
-APP_NAME=$(kapp list -n $SPACE_NS_INTERNAL --json | jq -r '.Tables[0].Rows[0].name')
-kapp inspect -a $APP_NAME -n $SPACE_NS_INTERNAL
+```terminal:execute
+description: "kapp inspect -a $APP_NAME -n $SPACE_NS_INTERNAL"
+command: |
+  APP_NAME=$(kapp list -n $SPACE_NS_INTERNAL --json | jq -r '.Tables[0].Rows[0].name')
+  kapp inspect -a $APP_NAME -n $SPACE_NS_INTERNAL
 ```
 
 After you've created the *Space*, it's now time to deploy an example application to it to check whether everything works as expected.
