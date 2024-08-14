@@ -42,9 +42,9 @@ spec:
     - name: PUBLIC_REGISTRY_HOST
       value: public-registry-$(session_name).$(ingress_domain)
     - name: TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID
-      value: #@ data.values.tanzu_platform.org
-    - name: TANZU_PLATFORM_PROJECT
-      value: #@ data.values.tanzu_platform.project
+      value: #@ data.values.tanzu_platform.org.id
+    - name: TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_NAME
+      value: #@ data.values.tanzu_platform.org.name
     ingresses:
     - name: public-registry
       host: $(session_name)-registry

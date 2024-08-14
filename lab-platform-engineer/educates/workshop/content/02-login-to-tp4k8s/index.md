@@ -2,9 +2,14 @@
 title: Log in to Tanzu Platform for Kubernetes 
 ---
 
-Before the login to Tanzu Platform for Kubernetes, it's important to set the organization ID for the tanzu CLI, which is already done for you in this workshop with the `TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID` environment variable.
-```execute
-echo $TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID
+Before the login to Tanzu Platform for Kubernetes, it's important to set the organization ID for the tanzu CLI with the `TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID` environment variable.
+
+As a default, the organization with the name "{{< param TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_NAME >}}" and ID "{{< param TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID >}}" is already set for you in this workshop.
+
+If you like to change this, set the environment variable accordingly in the terminal.
+```terminal:input
+text: export TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID=
+endl: false
 ```
 
 Once that's done, normally, you would just issue a `tanzu login`, let the CLI open a browser window for you, log in to the Cloud Services Platform (CSP), and your browser would redirect you to a local listener that the Tanzu CLI sets up to accept the token generated for your login.  
@@ -36,13 +41,29 @@ Organization
      -- Spaces / Cluster Groups
 ```
 
-Let's check this by setting a Project and a Space.
+Let's check this by having a look at the tanzu CLI context with and without a *Project* set.
 ```execute
 tanzu context current | grep -E "Kube Context"
 ```
 
+Fetch the list of available *Projects* in your organization.
 ```execute
+tanzu project list
+```
+
+Set the *Project* you would like to use for the workshop for later use in an environment variable.
+```terminal:input
+text: export TANZU_PLATFORM_PROJECT=
+endl: false
+```
+
+Change the tanzu CLI context to the *Project*.
+```
 tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
+```
+
+Let's have a look on how the tanzu CLI context changed.
+```execute
 tanzu context current | grep -E "Kube Context"
 ```
 
