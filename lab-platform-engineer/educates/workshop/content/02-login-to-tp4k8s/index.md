@@ -4,7 +4,7 @@ title: Log in to Tanzu Platform for Kubernetes
 
 Before the login to Tanzu Platform for Kubernetes, it's important to set the organization ID for the tanzu CLI with the `TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID` environment variable.
 
-As a default, the organization with the name "{{< param TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_NAME >}}" and ID "{{< param TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID >}}" is already set for you in this workshop.
+As a default, the organization with the name **{{< param TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_NAME >}}** and ID **{{< param TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID >}}** is already set for you in this workshop.
 
 If you like to change this, set the environment variable accordingly in the terminal.
 ```terminal:input
