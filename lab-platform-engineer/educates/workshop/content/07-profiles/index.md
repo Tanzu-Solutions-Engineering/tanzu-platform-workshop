@@ -85,7 +85,7 @@ As a reminder, *Traits* are collections of Kubernetes resources that are deploye
 
 Finally, we can create the *Profile*.
 ```execute
-tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
+tanzu project use $TANZU_PLATFORM_PROJECT
 tanzu profile create -f profile.yaml -y
 ```
 

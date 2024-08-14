@@ -39,7 +39,7 @@ tanzu app config build non-secret-env set BP_JVM_VERSION=17
 
 Last but not least, we have to target our *Space* ...
 ```execute
-tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
+tanzu project use $TANZU_PLATFORM_PROJECT
 tanzu space use {{< param  session_name >}}-s
 ```
 ... and build and deploy our application.s

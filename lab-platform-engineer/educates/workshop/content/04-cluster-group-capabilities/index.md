@@ -46,7 +46,7 @@ text: |
 
 Ensure the correct project is set and use the tanzu CLI to create a cluster group based on the template file.
 ```execute
-tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
+tanzu project use $TANZU_PLATFORM_PROJECT
 tanzu operations clustergroup create -v cluster-group-values.yaml 
 ```
 ```section:end
@@ -83,7 +83,7 @@ title: "Open instructions"
 
 Ensure the correct project is set and set the context to your *Cluster Group*.
 ```execute
-tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
+tanzu project use $TANZU_PLATFORM_PROJECT
 tanzu operations clustergroup use {{< param  session_name >}}-cg
 ```
 
@@ -116,7 +116,7 @@ As the Unified Control Plane of Tanzu Platform Kubernetes provides a Kubernetes-
 
 Ensure the correct project is set and set the context to your *Cluster Group*.
 ```
-tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
+tanzu project use $TANZU_PLATFORM_PROJECT
 tanzu operations clustergroup use {{< param  session_name >}}-cg
 ```
 Set the `KUBECONFIG` environment variable to point to the tanzu CLI kubeconfig file.

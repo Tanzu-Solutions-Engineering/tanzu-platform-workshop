@@ -6,7 +6,7 @@ Before the login to Tanzu Platform for Kubernetes, it's important to set the org
 
 As a default, the organization with the name **{{< param TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_NAME >}}** and ID **{{< param TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID >}}** is already set for you in this workshop.
 
-_If you like to change this_, set the environment variable accordingly in the terminal.
+**If you like to change this**, set the environment variable accordingly in the terminal.
 ```terminal:input
 text: export TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID=
 endl: false
@@ -58,8 +58,8 @@ endl: false
 ```
 
 Change the tanzu CLI context to the *Project*.
-```
-tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
+```execute
+tanzu project use $TANZU_PLATFORM_PROJECT
 ```
 
 Let's have a look on how the tanzu CLI context changed.
