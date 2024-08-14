@@ -1,0 +1,25 @@
+pathways:
+  default: workshop
+
+  paths:
+    workshop:
+      title: "Workshop"
+
+      steps:
+      - 01-workshop-overview
+      - 02-login-to-tp4k8s
+      - 03-tp-concepts
+      - 04-cluster-group-capabilities
+      - 05-attach-cluster
+      - 06-availability-targets
+      - 07-profiles
+      - 08-spaces
+      - 09-sample-app
+      - 10-cleanup
+      - 99-workshop-summary
+params:
+- name: TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID
+  value: undefined
+- name: TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_NAME
+  value: undefined
+

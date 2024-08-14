@@ -1,0 +1,1 @@
+source <(tanzu completion bash)
