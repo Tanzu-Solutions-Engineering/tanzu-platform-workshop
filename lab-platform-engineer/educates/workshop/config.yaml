@@ -18,6 +18,8 @@ pathways:
       - 10-cleanup
       - 99-workshop-summary
 params:
-- name: TANZU_PLATFORM_PROJECT
+- name: TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID
+  value: undefined
+- name: TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_NAME
   value: undefined
 
