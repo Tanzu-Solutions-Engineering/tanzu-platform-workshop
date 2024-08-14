@@ -130,6 +130,8 @@ We need to install all capabilities that we are going to need in the Spaces we w
 	- Tanzu Service Binding
 	- Spring Cloud Gateway (can be skipped if not needed by app)
 	- Crossplane (Bitnami's dependency)
+> Note: Ingress and Service Mesh Observability capabilities are all provided by the same `tcs` package today. To provide those capabilities we will install that `tcs` package as you will see below.
+
 
 To install the necessary capabilities run these commands
 ```
@@ -284,8 +286,8 @@ tk get kubernetesclusters <cluster-name> -oyaml | yq .status.capabilities
 
 ```
 kubectl get ns
-# make sure these namespaces exist - they are the additional namespaces created by UCP/TMC
-# Note that there will likely be more namespaces than what is shown below
+# make sure these namespaces exist - they are the additional namespaces created by by the platform
+# note that there are more namespaces than what is shown below
 
 NAME                           STATUS   AGE
 cert-manager                   Active   15h   # added from capabilities
@@ -305,8 +307,8 @@ vmware-system-tmc              Active   15h   # added from tmc
 3. Check the following packages
 ```
 kubectl get pkgi -A
-
-# There will likely be more packages than what is shown below, and the versions may be different
+# make sure these packages are reconciled - they are the ones added by the platform
+# note that there more packages than what is shown below, and the versions may be different
 
 NAMESPACE                    NAME                                              PACKAGE NAME                                  PACKAGE VERSION                DESCRIPTION           AGE
 tanzu-cluster-group-system   bitnami.services.tanzu.vmware.com                 bitnami.services.tanzu.vmware.com             0.6.0                          Reconcile succeeded   15h   # added from capabilities
