@@ -286,7 +286,7 @@ tk get kubernetesclusters <cluster-name> -oyaml | yq .status.capabilities
 
 ```
 kubectl get ns
-# make sure these namespaces exist - they are the additional namespaces created by UCP/TMC
+# make sure these namespaces exist - they are the additional namespaces created by by the platform
 # note that there are more namespaces than what is shown below
 
 NAME                           STATUS   AGE
