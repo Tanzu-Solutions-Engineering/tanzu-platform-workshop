@@ -12,7 +12,7 @@ spec:
   workshop:
     files:
     - git:
-        ref: origin/educates-platform-engineer
+        ref: origin/main
         url: https://github.com/Tanzu-Solutions-Engineering/tanzu-platform-workshop
       includePaths:
       - /lab-platform-engineer/educates/workshop/**
@@ -20,7 +20,7 @@ spec:
       - /lab-platform-engineer/educates/README.md
       newRootPath: /lab-platform-engineer/educates
       path: .
-    image: ghcr.io/timosalm/tanzu-platform-workshop/lab-platform-engineer-image:educates-platform-engineer
+    image: ghcr.io/tanzu-solutions-engineering/tanzu-platform-workshop/lab-platform-engineer-image:main
   session:
     applications:
       console:
