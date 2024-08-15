@@ -89,6 +89,7 @@ spec:
         fetch:
         - helmChart:
             name: vcluster
+            version: "0.19.7"
             repository:
               url: https://charts.loft.sh
         template:
