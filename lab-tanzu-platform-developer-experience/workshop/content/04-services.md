@@ -26,7 +26,20 @@ Our application can use PostgreSQL databases, and our platform team has made tha
 tanzu service create PostgreSQLInstance/my-db
 ```
 
-Great! Now we can have a look at the list of services in our space. We should only have the one we just created called `my-db`.
+The CLI will prompt you for any additional configuration settings available for that service type.  In the case of our Postgres service, we can see that we're allowed to configure the storage size for the DB.  Since we don't need a lot of storage, we'll just leave the settings at defaults by opting to just finish the configuration.  Press `Enter` or click the section below to accept the defaults.
+```terminal:execute
+description: Accept default service parameters
+command: ""
+```
+
+You can get a listing of the possible parameters for a service type before creating it.  The `tanzu service type get ...` command will give you more details about that service.  Let's investigate the Postgres service type.
+```execute
+tanzu service type get PostgreSQLInstance
+```
+
+In the output, you can see `storageGB` parameter we were prompted for earlier, and some details about it.  These values are configurable items that our platform team allows us to specify when we create the service. These values have some defaults that are applied if we don't specify anything, but we can selectively choose different configurations if we need to.  You can either let the CLI prompt you for these parameters, as we saw earlier, or you can pass in these parameters from the command line via the `--parameter` 
+
+Great we have now created our own, small Postgres instance to work with! Now we can have a look at the list of services in our space. We should only have the one we just created called `my-db`.
 ```execute
 tanzu service list
 ```
@@ -36,9 +49,7 @@ We can get some details about our service by using the `tanzu service get` comma
 tanzu service get PostgreSQLInstance/my-db
 ```
 
-In the output, we can see a section called `PostgreSQLInstance type spec`.  These values are configurable items that our platform team allows us to specify when we create the service. These values have some defaults that are applied if we don't specify anything, but we can selectively choose different configurations if we need to.  
-
-For example, maybe we want to have a database that allows more than 1 GB of storage. We could have called the create command like this (don't execute this) `tanzu service create PostgreSQLInstance/my-db --parameter storageGB=10` to have created a PostgreSQL instance with 10GB of storage. Each service type will have different configuration options exposed, so you might need to talk with your platform team to find out all the options.
+In the output, we can see a section called `PostgreSQLInstance type spec`.  Since we didn't override the defaults, you can see that `storageGB` is `1` for our service.    
 
 ![Image showing a Service binding connected to an application and Postgres service and a set of secret values getting injected into the application](../images/service-binding.png)
 
@@ -57,64 +68,109 @@ If you don't see a change immediately, retry after waiting for 1 minute or so.  
 
 ![Image showing a Service binding connected to an application and PreProvisonedService object and a set of secret values getting injected into the application.  The application is shown connected to an externally managed Postgres database](../images/preprovisioned-service.png)
 
-The PostgreSQL service we are using is provisioned using automation for us in the platform. But what if we have a database that is managed by another team, or an existing database that we need to keep using? Don't worry! We can still use the service binding mechanism to simplify this process. We're going to switch to a shared PostgreSQL database that all the workshop attendees can use together.  If we are careful about how we format the information for the binding, we can even still use the Spring Cloud Bindings library to automatically configure the application for us.
+The PostgreSQL service we are using is provisioned using automation for us in the platform. But what if we have a database that is managed by another team, or an existing database that we need to keep using? Don't worry! We can still use the service binding mechanism to simplify this process. We're going to switch to a shared PostgreSQL database that all the workshop attendees can use together.  To do that, we're going to create a `PreProvisionedService` type service.
 
-If we have a look at the [PostgreSQL section in the Spring Cloud Bindings README.md](https://github.com/spring-cloud/spring-cloud-bindings?tab=readme-ov-file#postgresql-rdbms), we can see that we need to include a `username`, and `password` setting.  We then can either specify a `jdbc-url` setting or the `host`, `port`, `database` values.  We can optionally add in additional configuration with the `sslmode`, `sslrootcert`, and `options` values if we need to fine-tune the connection. 
+If we have a look at the [PostgreSQL section in the Spring Cloud Bindings README.md](https://github.com/spring-cloud/spring-cloud-bindings?tab=readme-ov-file#postgresql-rdbms), we can see that it has a number of parameters that it looks for in a service binding including `username`, `password`, `host`, `port`, `database` values.  We can optionally add in additional configuration with the `sslmode`, `sslrootcert`, and `options` values if we need to fine-tune the connection.  Luckily, the Tanzu Platform already understands these common service types and the expected parameters so we don't have to look them up.
 
-Let's create a secret with the info to connect to the shared database.
-```editor:append-lines-to-file
-file: ~/preprovisioned-db-secret.yaml
-description: Create a secret manifest for the shared database
-text: |
-    apiVersion: v1
-    kind: Secret
-    metadata:
-        name: shared-postgres
-    type: servicebinding.io/postgresql
-    stringData:
-        type: postgresql
-        host: postgres-test-{{< param environment_name >}}.{{< param ingress_domain >}}
-        port: "5432"
-        database: postgres
-        username: postgres
-        password: {{< param DB_PASSWORD >}}
-        provider: oss-helm
-```
-{{< note >}}
-Both `type` and `provider` entries are part of the [ServiceBinding specification](https://github.com/servicebinding/spec?tab=readme-ov-file#provisioned-service) and are used by the Spring Cloud Bindings library to detect for which type of data service the credentials are.
-{{< /note >}}
-
-To bind our application to this secret, we have to configure an additional resource of type [`PreProvisionedService`](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/concepts-about-services.html#pre-provisioned-service) that enables applications within a Space to access services that have been pre-provisioned outside of that Space.  A reference to our Secret is configured as a Binding Connector which allows us to define multiple endpoints for a service, e.g. for a database that provides dedicated endpoints for read-write and read-only access.
-```editor:append-lines-to-file
-file: ~/inclusion/.tanzu/config/preprovisioned-db.yaml
-description: Create a PreProvisionedService resource configuration
-text: |
-    apiVersion: services.tanzu.vmware.com/v1
-    kind: PreProvisionedService
-    metadata:
-        name: shared-postgres
-    spec:
-        bindingConnectors:
-        - name: read-write
-          description: Read-write available in all availability targets
-          type: postgres
-          secretRef:
-            name: shared-postgres
-```
-
-Now, we could apply those additional resources via `tanzu deploy --from-build ~/build`, but as for any other resources, we can also directly interact with the so-called Tanzu Platform Universal Control Plane (or UCP) via `tanzu deploy --only ...`.
-This is possible thanks to the [kcp project](https://github.com/kcp-dev/kcp), a Kubernetes-like control plane, UCP is based on.
-
-The Tanzu CLI maintains it's own kubeconfig file for its use to talk to Tanzu Platform. Tanzu Platform's Spaces are _not_ directly defined in Kubernetes cluster themselves, but they use the Kubernetes resource model (CRDs, objects, etc) to manage deployments to Availability Target clusters which _select_ real Kubernetes clusters based on our Space configuration. Our platform engineering team can control what resources we can apply to our Space, and we've been allowed to apply Kubernetes-style *Secret* objects and *PreProvisionedService* objects.  Let's apply the Secret and PreProvisionedService to our space.
+Let's create a `PreProvisionedService` to connect to the shared database.  First, let's start the creation process by executing the command below by clicking on that section.
 ```execute
-tanzu deploy --only ~/preprovisioned-db-secret.yaml --only ~/inclusion/.tanzu/config/preprovisioned-db.yaml
+tanzu service create PreProvisionedService/shared-postgres
 ```
 
+The CLI will begin prompting us for all the information we need to provide.  Since we passed in the name for the service on the command-line, we can just accept the `Name` value as the default.  Click the section below or press `Enter` in the terminal to continue.
+
+```terminal:execute
+description: Accept default service name
+command: ""
+```
+
+Next, you are prompted to enter a description.  You can click the section below to enter a description, or provide your own and press `Enter` in the terminal.
+```execute
+A shared PostgreSQL database for all workshop attendees.
+```
+
+Next, the CLI will prompt you to enter any contact info that others can use to contact you or your team if they have questions about the service.  Let's say we can be contacted by email by clicking the section below.
+```execute
+email
+```
+
+And then we can provide an email address by clicking the next section.
+```execute
+me@here.com
+```
+
+Next, `PreProvisionedService`'s allow you to specify multiple "Binding Connectors".  Binding connectors allow you to specify multiple sets of values that applications can be bound to.  One example is that you might need to specify one set of values for applications that have full read-write access to a database, and a different set for applications that only need read-only access.  In our case, we'll just use a single "Binding Connector", and we'll accept the default name of `main`.  Click the section below to accept that default connector name.
+```terminal:execute
+description: Accept default binding connector name
+command: ""
+```
+
+Now, we need to specify the type of service binding that we're going to describe.We want to let Spring Cloud Bindings consider this service to be a Postgres DB type service, so we'll type `postgresql` to filter the list to the correct binding type, and then press `Enter`.  Click the section below to do that automatically.
+```execute
+postgresql
+```
 {{< note >}}
-The requirement of having to apply a _Secret_ and _PreProvisionedService_ to your space manually may change in subsequent releases of the Tanzu Platform for Kubernetes. The intent is to give developers support in the CLI to automate the creation of these externally managed services without having to understand what a Kubernetes Secret is.
+The `type` of a service binding is specified in the [Service Binding specification](https://github.com/servicebinding/spec?tab=readme-ov-file#provisioned-service) and is used by the Spring Cloud Bindings library to detect which type of data service the credentials are for.  The Service Binding specification doesn't specify any specific types as part of the standard, but there are some well known values that libraries like [Spring Cloud Bindings](https://github.com/spring-cloud/spring-cloud-bindings) use.  If you specify your own, custom binding type string you would need to either provide plugins to your particular library to handle that binding, or manually parse that binding information in your application.
 {{< /note >}}
 
-Now, let's unbind our application from the small database we provisioned before so that we can bind to the shared database.
+Now, we're entering the home stretch!  We now need to supply all the values for the connection details to our shared Postgres DB.  Click each section **making sure that all sections turn to green**.
+```terminal:execute
+description: Enter the "host" value
+command: |
+  host
+  postgres-test-{{< param environment_name >}}.{{< param ingress_domain >}}
+```
+```terminal:execute
+description: Enter the "port" value
+command: |
+  port
+  5432
+```
+```terminal:execute
+description: Enter the "database" value
+command: |
+  database
+  postgres
+```
+```terminal:execute
+description: Enter the "username" value
+command: |
+  username
+  postgres
+```
+```terminal:execute
+description: Enter the "password" value
+command: |
+  password
+  {{< param DB_PASSWORD >}}
+```
+
+Validate once more that all the sections above that were entering the various values for the binding are green.  Now we can press the `Enter` key to finish out the configuration.
+```terminal:execute
+description: Finish PreProvisionedService configuration
+command: ""
+```
+
+One final thing the platform will prompt for is to ask if you want to automatically configure EgressPoints for the service binding.  EgressPoints allow you to specify the connections your application needs outside of the cluster that it is running on.  This enables your space to have a "deny by default" posture for external connections, but easily enables developers and app operators to specify external services the applications should be allowed to connect to.  Let's select yes by entering `y` and pressing `Enter` by clicking the section below.
+```execute
+y
+```
+Then, we need to enter the host name of our shared Postgres DB again.
+```execute
+postgres-test-{{< param environment_name >}}.{{< param ingress_domain >}}
+```
+
+This is a `TCP` type connection, so let's select that.
+```execute
+TCP
+```
+
+And finally, we need to specify the port for our database server.
+```execute
+5432
+```
+
+We now have all the information needed for our application to bind to the external Postgres DB and we've made sure we communicated to the platform that we need to be able to make a network connection to this external service.  Let's unbind our application from the small database we provisioned before so that we can bind to the shared database.
 ```execute
 tanzu service unbind PostgreSQLInstance/my-db ContainerApp/inclusion
 ```
