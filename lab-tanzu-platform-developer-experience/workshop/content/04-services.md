@@ -141,7 +141,6 @@ command: postgres
 ```terminal:execute
 description: Enter the "username" key
 command: username
-    postgres
 ```
 ```terminal:execute
 description: Enter the "username" value
