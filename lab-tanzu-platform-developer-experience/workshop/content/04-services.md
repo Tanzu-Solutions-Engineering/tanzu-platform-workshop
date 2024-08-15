@@ -115,34 +115,45 @@ The `type` of a service binding is specified in the [Service Binding specificati
 
 Now, we're entering the home stretch!  We now need to supply all the values for the connection details to our shared Postgres DB.  Click each section **making sure that all sections turn to green**.
 ```terminal:execute
+description: Select the "host" key
+command: host
+```
+```terminal:execute
 description: Enter the "host" value
-command: |
-    host
-    postgres-test-{{< param environment_name >}}.{{< param ingress_domain >}}
+command: postgres-test-{{< param environment_name >}}.{{< param ingress_domain >}}
+```
+```terminal:execute
+description: Enter the "port" key
+command: port
 ```
 ```terminal:execute
 description: Enter the "port" value
-command: |
-    port
-    5432
+command: 5432
+```
+```terminal:execute
+description: Enter the "database" key
+command: database
 ```
 ```terminal:execute
 description: Enter the "database" value
-command: |
-    database
+command: postgres
+```
+```terminal:execute
+description: Enter the "username" key
+command: username
     postgres
 ```
 ```terminal:execute
 description: Enter the "username" value
-command: |
-    username
-    postgres
+command: postgres
+```
+```terminal:execute
+description: Enter the "password" key
+command: password
 ```
 ```terminal:execute
 description: Enter the "password" value
-command: |
-    password
-    {{< param DB_PASSWORD >}}
+command: {{< param DB_PASSWORD >}}
 ```
 
 Validate once more that all the sections above that were entering the various values for the binding are green.  Now we can press the `Enter` key to finish out the configuration.
