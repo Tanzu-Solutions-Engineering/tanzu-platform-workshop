@@ -9,11 +9,16 @@
     - At least 4 VM IPs available for all those k8s nodes per attendee
     - At least 3 AVI VIPs available per attendee: 1 VIP for the cluster CP, 2 VIP for ingress per cluster
     - Supervisor Namespace created with Storage Policy and VM Classes associated to it
-- AWS Route53 Zone
+- AWS Setup
     - Domain registered/delegated to Route53 zone
+    - If you haven't created a VPC for EKS yet, follow the instructions here: https://docs.aws.amazon.com/eks/latest/userguide/creating-a-vpc.html - use the instructions for public and private subnets
 - Tanzu Platform for Kubernetes Org + Group + Project
-    - AWS Account, EKS Credential and GSLB Credential configured
-    - AWS EKS Overflow Clusters (labeled with `workshop-overflow: true`)
+    - AWS Account, EKS Lifecycle Management Credential and Route 53 GSLB Credential configured
+    - AWS EKS Overflow Cluster(s) (labeled with `workshop-overflow: true`)
+      - Recommended cluster node pool size is 5 t3.xlarge
+      - The cluster must have public and private endpoint access (Network Advanced Settings in TPK8S). CIDR 0.0.0.0/0
+        will work.  
+      - The cluster must have a default storage class for eduk8s. To verify or change this, access the EKS cluster using the kubeconfig file obtained from Tanzu Platform. If no default storage class is set, then execute this command (changing the storageclass name as appropriate) `kubectl patch storageclass gp2 -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}`
     - AT for Overflow Clusters
 - Onboard all attendees on designated Tanzu Platform for k8s CSP org and project
 

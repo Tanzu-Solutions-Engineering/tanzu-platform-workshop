@@ -6,7 +6,7 @@ The workshop owner should share with the attendees:
 - vSphere environment url, credentials, Supervisor name used to register in Tanzu Platform, and Supervisor namespace name.
 - Route53 Credential ID, Hosted Zone ID, and designated subdomain.
 
-All workshop participants to verify they are all set with steps in [Workshop Attendee pre-requisites](../lab-platform-engineer/00-prerequisites.md#workshop-attendee-pre-requisites)
+All workshop participants must verify they are all set with steps in [Workshop Attendee pre-requisites](../lab-platform-engineer/00-prerequisites.md#workshop-attendee-pre-requisites)
 
 ## Log in the Tanzu Platform for Kubernetes 
 On the browser, open a new tab/window and go to the Tanzu Platform for k8s URL you've been given at the begining of the workshop. Log in. Then make sure to select the Organization, and later the Project you've been assigned.
@@ -17,7 +17,7 @@ export TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID=XXXX
 tanzu login
 ```
 
-The Tanzu CLI and the plugins we use interact with the Tanzu Platform Unified Control Plane as a K8s API. The the CLI keeps the KUBECONFIG configuration and the contexts to interact with the UCP in `~/.config/tanzu/kube/config`. When we run the the use sub-commands of project, space and clustergroup plugins, we are adjusting the context to point to the right level of the hierarchy of resources in UCP:
+The Tanzu CLI and the plugins we use interact with the Tanzu Platform Unified Control Plane as a K8s API. The the CLI keeps the KUBECONFIG configuration and the contexts to interact with the UCP in `~/.config/tanzu/kube/config`. When we run the "use" sub-commands of the project, space and clustergroup plugins, we are adjusting the context to point to the right level of the hierarchy of resources in UCP:
 ```
 Organization
 |
@@ -34,7 +34,7 @@ tanzu context current | grep -E "Kube Context"
 #  Kube Context:    tanzu-cli-sa-tanzu-platform:workshop01
 ```
 
-If there are spaces available, check what happens with the Tanzu CLI context when yu target a space. If there are no spaces available in the project yet, come back here once you create a space.
+If there are spaces available, check what happens with the Tanzu CLI context when you target a space. If there are no spaces available in the project yet, come back here once you create a space.
 ```
 tanzu space use
 # choose a valid space from the list
@@ -65,10 +65,10 @@ Process:
 - Step 1: Access the Hub GUI: `Setup & Configuration > Kubernetes Management > TKG Registrations > Register TKG Instance` to get the registration url
 - Step 2: Go to VCenter: `workload management > Supervisors > Configure > Tanzu Mission Control Registration`, and add that registration url.
 
-There is an alternative process to be followed via CLI, which you can find in the focicial documentation linked above.
+There is an alternative process to be followed via CLI, which you can find in the official documentation linked above.
 
 ## Tanzu Platform Concepts and Relationships to keep handy
-As a Platform Engineer we need to be able to configure the Platform and prepare repeatable and configurable environmments for the application team to deploy applications into. These are the Spaces. But they are not the only construct that Platform Engineers need to get familiar with. Throughout this lab we will get introuced to all of them through the lens of the Platform Engineer. At a high level we need to know what these are:
+As a Platform Engineer we need to be able to configure the Platform and prepare repeatable and configurable environmments for the application team to deploy applications into. These are the Spaces. But they are not the only construct that Platform Engineers need to get familiar with. Throughout this lab we will get introduced to all of them through the lens of the Platform Engineer. At a high level we need to know what these are:
 - Cluster Groups: are groupings of Kubernetes Clusters with provided Software (Capabilities) installed on those Clusters. They enable platform engineers to curate what combination of Capabilities will be provided by their platform.
 - Capabilities: are named groups that describe the APIs and features available from the Platform.
     - In order to curate the APIs available to users, Spaces require Capabilities (indirectly, via profiles). This has the effect of determining precisely which Kubernetes APIs will be exposed to users and their tools in a given Space.
@@ -77,7 +77,7 @@ As a Platform Engineer we need to be able to configure the Platform and prepare 
     - Spaces include Availability Targets to describe where they should be scheduled. This has the effect of determining which clusters, in a specific physical or logical location, should be used as a target for the Space.
 - Profiles: are groupings of required Capabilities that have a consistent, semantic meaning within an organization. They enable platform builders to curate what workload characteristics will be supported by their platform and for users to reference those characteristics without knowing details about how they are implemented.
     - Spaces include Profiles to describe the characteristics (in the form of Capabilities) of the Space. This has the effect of adding required Capabilities to the Space and influencing where it is scheduled; Spaces transitively require all Capabilities that are required by any Profiles a Space includes.
-    - The Profiles included in a Space also have an impact in the Space scheduling: only clusters from Cluster Groups that provide all rerequired capabilities in the Profiles will be candidates to be used as a target for the Space.
+    - The Profiles included in a Space also have an impact in the Space scheduling: only clusters from Cluster Groups that provide all required capabilities in the Profiles will be candidates to be used as a target for the Space.
 - Traits: are collections of Kubernetes resources that are deployed into Spaces when they are created. They deliver required, pre-configured, and consistent content to Spaces.
     - Profiles include Traits to deploy reusable content into Spaces when they are scheduled. This has the effect of automating the configuration and creation of Kubernetes resources, for users.
 
@@ -394,7 +394,7 @@ Here's the Ingress and GSLB Architecture:
 
 Access the Hub GUI: `Application Spaces > Profiles > Create Profile > Step by Step`:
 - Step 1: Name your Profile
-    - Choose a uniuque name, distinctive from other networking profiles configured for other domain names. Example `networking.mydomain.com`:
+    - Choose a unique name, distinctive from other networking profiles configured for other domain names. Example `networking.mydomain.com`:
 - Step 2: Choose required traits:
     - `egress.tanzu.vmware.com`, `multicloud-cert-manager.tanzu.vmware.com`, and `multicloud-ingress.tanzu.vmware.com`. This will allow us to deploy the related packages in the k8s clusters with specific configuration for the Spaces that use this profile. More on this when we create a Space.
 - Step 3: Configure the `egress` trait:
@@ -448,7 +448,7 @@ Alternatively you can create the Profile via CLI.
 
 Access the Hub GUI: `Application Spaces > Spaces > Create Space > Step by Step`:
 - Step 1: Name your Space:
-    - Choose a uniuque name, the convention we will use in this workshop is to provide some notion of the apps lifecycle. Example `yourname-demo`:
+    - Choose a unique name, the convention we will use in this workshop is to provide some notion of the apps lifecycle. Example `yourname-demo`:
     - Make sure the name is under 27 characters to avoid hitting an issue with the DNS record creation process.
 - Step 2: Select the Profiles:
     - Choose the Custom Networking Profile you have created earlier
