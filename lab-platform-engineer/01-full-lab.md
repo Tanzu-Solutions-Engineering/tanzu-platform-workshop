@@ -17,7 +17,7 @@ export TANZU_CLI_CLOUD_SERVICES_ORGANIZATION_ID=XXXX
 tanzu login
 ```
 
-The Tanzu CLI and the plugins we use interact with the Tanzu Platform Unified Control Plane as a K8s API. The the CLI keeps the KUBECONFIG configuration and the contexts to interact with the UCP in `~/.config/tanzu/kube/config`. When we use the sub-commands of project, space and clustergroup plugins, we are adjusting the context to point to the right level of the hierarchy of resources in UCP:
+The Tanzu CLI and the plugins we use interact with the Tanzu Platform Unified Control Plane as a K8s API. The the CLI keeps the KUBECONFIG configuration and the contexts to interact with the UCP in `~/.config/tanzu/kube/config`. When we run the "use" sub-commands of the project, space and clustergroup plugins, we are adjusting the context to point to the right level of the hierarchy of resources in UCP:
 ```
 Organization
 |
