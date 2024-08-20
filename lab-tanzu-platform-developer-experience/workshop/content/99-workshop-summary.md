@@ -16,5 +16,5 @@ In this session, we explored the developer experience with Tanzu Platform and co
 Please don't forget to delete the automatically created Space now or as soon as you don't need it anymore.
 {{< /note >}}
 ```execute
-tanzu space delete {{< param  session_name >}}
+tanzu space delete {{< param  session_name >}} -y
 ```
