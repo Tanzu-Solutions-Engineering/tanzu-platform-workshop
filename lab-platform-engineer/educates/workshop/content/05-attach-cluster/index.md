@@ -43,7 +43,7 @@ Click the section below to copy the name of the cluster group we created earlier
 ![Deselect the Run Cluster Group](DeselectRunGroup.png)
 Click the **X** button in the box above the "Description" label to deselect the **Run** cluster group, which is selected by default.  Paste the value just copied into the clipboard into the box we just cleared to select the cluster group we created earlier in the workshop.
 
-Add a **label** with the key set to **workshop-session** and value set to **{{< param  session_name >}}**. This label will be important for the configuration of the `Availability Target`.  Click the **Next** button to continue.
+**Add a *label* with the key set to `workshop-session` and value set to `{{< param  session_name >}}`**. This label will be important for the configuration of the `Availability Target`.  Click the **Next** button to continue.
 
 ![Copy Install Command](CopyInstallString.png)
 Now, click the clipboard icon next to the install command.  Paste this command into the workshop's upper terminal session and press **Enter** to install the cluster agent extensions in the workload cluster.
@@ -99,7 +99,7 @@ kubectl get packageinstalls.packaging.carvel.dev -A
 ```
 
 {{< note >}}
-It could take some time until the `PackageInstalls` are synced to the cluster and reconciled. Just rerun the command until this is the case.
+It could take several minutes until the `PackageInstalls` are synced to the cluster and reconciled. Feel free to move on with the workshop or take a coffee break and rerun the command.
 {{< /note >}}
 
 For the `PackageInstall` of our **Container App** *Capability*, the description should be `Reconcile succeeded` if it was successfully installed.

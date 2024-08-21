@@ -65,7 +65,11 @@ Click the section below to copy your availability target name.
 {{< param  session_name >}}-at
 ```
 
-Paste the copied value into the **Search** text box at the top of the screen to find your *Availability Target*.  You should see a tile that represents your *Availability Target*, and it should contain a single lozenge inside with the name of your attached cluster, **{{< param  session_name >}}**.  If you see no lozenge, multiple lozenges, or a lozenge that doesn't match your attached cluster name, go back to your availability target and edit to to verify the affinity rule is set properly.
+Paste the copied value into the **Search** text box at the top of the screen to find your *Availability Target*.  You should see a tile that represents your *Availability Target*, and it should contain a single lozenge inside with the name of your attached cluster, **{{< param  session_name >}}**. 
+
+{{< note >}}
+It could take up to 15 minutes for the *Availability Target* to detect the cluster. Feel free to move on with the workshop or take a coffee break.
+{{< /note >}}
 
 #### Option 2: tanzu CLI (or kubectl) CLI
 ```section:begin
@@ -109,7 +113,7 @@ tanzu availability-target get {{< param  session_name >}}-at
 ```
 
 {{< note >}}
-It could take some time until the *Availability Target* is in `Ready` state. Just rerun the command until this is the case.
+It could take up to 15 minutes for the *Availability Target* to detect the cluster. Feel free to move on with the workshop or take a coffee break and rerun the command.
 {{< /note >}}
 
 ##### kubectl CLI
