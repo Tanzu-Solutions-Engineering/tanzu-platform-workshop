@@ -29,7 +29,7 @@ Paste this value into the **Space Profiles** field, and mark the checkbox next t
 
 Click the section below to copy the value for your availability target into your clipboard.
 ```copy
-{{< param  session_name >}}
+{{< param  session_name >}}-at
 ```
 Paste this value into the Availability Target **Name** field.  
 
