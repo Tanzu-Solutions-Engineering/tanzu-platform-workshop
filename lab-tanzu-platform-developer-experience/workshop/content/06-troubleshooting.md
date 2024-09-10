@@ -2,46 +2,37 @@
 title: Troubleshooting
 ---
 {{< note >}}
-Troubleshooting and debugging is an area of the platform undergoing changes and enhancement, and so the process detailed in this section is a workaround until changes stabilize.  Today, what you can see from the platform about the running application is limited, but R&D has plans to add metric and log viewing from the platform UI, live debugging for running applications, and other troubleshooting features.
+Troubleshooting and debugging is an area of the platform undergoing changes and enhancement.  Today, what you can see from the platform about the running application is limited to log viewing, but R&D has plans to add actuator metric viewing from the platform UI, live debugging for running applications, and other troubleshooting features.
 {{< /note >}}
 
-If your application is having trouble, we can access the cluster hosting your application to view its logs.  To do this, we need to determine which cluster or clusters your application is running on.  To do that, we can find the Availability Targets defined for your space, and then examine what clusters are matched for that Availability Target.
+If your application is having trouble, you will want to be able to see the logs for your app.  But as a developer, you can see what availability target your app is running in.  However, the specific cluster your app is running on might not be directly accessible to you for security or policy reasons.
 
-First, let's view the configuration for your space.
+That's alright, though!  The Tanzu Platform CLI and UI allow you to view and stream logs for your application instances, no matter what clusters they happen to land on.  Viewing the logs for our application is very simple.
+
+Let's use the `tanzu` CLI to view our application logs.  Click the section below to start the process.
 ```execute
-tanzu space get {{< param  session_name >}}
+tanzu app logs -recent
 ```
 
-In the output, we can see the names of the availability targets for your space.  As a developer, you might not be able to see what specific clusters your application is running on or you may not be allowed to access those clusters directly.  In our environment, our platform team has given us the ability to access the clusters our application is running on for troubleshooting purposes.  To access the logs for our application, we'll need to get a Kubernetes configuration file and use that to access our cluster.  Because our clusters are registered with Tanzu Platform, we can use our access rights in Tanzu Platform to access the clusters.
-
-Click on this command to download a Kubernetes config file for our cluster.
-```terminal:execute
-description: Download a Kubernetes config file for our workload cluster
-command: |
-  AT_NAME=$(tanzu space get {{< param  session_name >}} -o json | jq -r ".status.availabilityTargets[0].name")
-  CLUSTER_NAME=$(tanzu availability-target get $AT_NAME -o json | jq -r ".status.clusters[0].name")
-  tanzu operations cluster kubeconfig get $CLUSTER_NAME -t eks > $HOME/at-cluster-kube.config
-```
-
-Instead, we can navigate to the Tanzu Platform UI, go to the "Infrastructure" -> "Kubernetes Clusters" section, and then choose the "Clusters" tab to view the clusters we have access to. Then we can click on the name of the cluster we want to access, the "Actions" button in the upper right side of the window, and choose "Access this cluster". That would allow us to download a Kubernetes config file to access our cluster.
-
-We also don't know what the namespace is for our application since the platform manages all that for us. We'll execute the following command to get the namespace.
-```terminal:execute
-description: Get application namespace in workload cluster
-command: |
-  tanzu project use {{< param TANZU_PLATFORM_PROJECT >}}
-  MANAGED_NAMESPACE=$(KUBECONFIG=$HOME/.config/tanzu/kube/config k get ManagedNamespace -l spaces.tanzu.vmware.com/space-name={{< param  session_name >}} -o json | jq -r ".items[0].status.placement.namespace")
-  tanzu space use {{< param  session_name >}}
-```
-
-Now that we have a Kubernetes configuration file to access our workload cluster, we can view the logs for our application.
+The CLI presents a list of all the deployed applications in the space you are currently targeted at.  We only have one application deployed in our space, but if you had many you could filter the list by typing a few characters.  Our "inclusion" application is already selected so just click the section below or press the `Enter` key to select it.
 ```execute
-kubectl --kubeconfig $HOME/at-cluster-kube.config logs deployment/inclusion -n $MANAGED_NAMESPACE -f
 ```
 
-And we can stop viewing the logs by pressing Ctrl-C.
+Next, we're presented with a list of instances of our application.  Since we scaled our instance to 2 pods, you should see two instaces in the list.  Notice, the CLI also shows you information about the space replica the pod is running in, and what availability target that replica is on.  Click the section below or press the `Enter` key to select the first instance in the list.
+
+You should see the last 50 lines of the logs for the inclusion app.  But what if we have some issue that we need to replicate to see the error occur live?  Tanzu Platform has agents deployed to all the clusters it is managing that is resposible for communicating with the platform.  One of the functions of the agent is to scrape logs for deployed applications, and stream them back to Tanzu Platform.
+
+We can get a live stream of log entries by leaving the `--recent` parameter off the command.  Let's start that live stream of log entries by clicking the section below.
 ```execute
-<ctrl+c>
+tanzu app logs inclusion
 ```
 
-Let's view a summary of what we've covered in the next section.
+Select the first instance of our "inclusion" by pressing the `Enter` key to select it.
+```execute
+```
+
+Now, we'll see a list of recent log entries, as well as new entries that show up.  You can validate this by noting the time of the last log entry, and then refreshing the browser tab for your application.  If you closed the tab to your application, you can go back to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology, and then click on the "Space URL" shown for your app.  As you refresh the application page, you should be able to compare the timestamps on the logs to the timestamp you noted earlier to see that new entries are getting added.
+
+Great!  We were able to view the logs for our application without having to have access to the clusters that our application happend to land on.
+
+Let's view a summary of what we've covered in the workshop in the next section.
