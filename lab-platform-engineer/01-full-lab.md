@@ -455,7 +455,7 @@ Access the Hub GUI: `Application Spaces > Spaces > Create Space > Step by Step`:
     - Notice that we can configure each AT in Active or Passive mode. We will leave both in Active mode so that the Space is scheduled in both Fault Domains and the Route53 records for both Fault Domains are also created 
 - Step 4: Click on Create Space.
 
-While in the GUI, click on your newly created space to see details: It may take a few seconds for the space to go from `ERROR` (red), through `WARNING` (yellow), to `READY` (green). Click on the top-right `Refresh` link to update. It should look like this:
+While in the GUI, click on your newly created space to see details: It may take a few seconds for the space to go from `NOT READY` to `READY`. Click on the top-right `Refresh` link to update. It should look like this:
 ![Space Healthy](./img/space-healthy.png)
 
 More information will be added once apps are deployed.
