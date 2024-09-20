@@ -6,8 +6,6 @@ metadata:
 spec:
   description: "My custom networking setup"
   traits:
-  - name: egress.tanzu.vmware.com
-    alias: egress
   - name: multicloud-cert-manager.tanzu.vmware.com
     alias: multicloud-cert-manager
   - name: multicloud-ingress.tanzu.vmware.com

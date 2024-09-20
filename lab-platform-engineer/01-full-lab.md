@@ -170,18 +170,18 @@ Via command line you can check all the Packages (pkgi resource) for those Capabi
 alias tk='KUBECONFIG=~/.config/tanzu/kube/config kubectl'
 tk get pkgi
 NAME                                    PACKAGE NAME                            PACKAGE VERSION   DESCRIPTION   AGE
-cert-manager.tanzu.vmware.com           cert-manager.tanzu.vmware.com                                           2m8s
-k8sgateway.tanzu.vmware.com             k8sgateway.tanzu.vmware.com                                             2m7s
-tcs.tanzu.vmware.com                    tcs.tanzu.vmware.com                                                    2m5s
-egress.tanzu.vmware.com                 egress.tanzu.vmware.com                                                 2m5s
-observability.tanzu.vmware.com          observability.tanzu.vmware.com                                          2m4s
-mtls.tanzu.vmware.com                   mtls.tanzu.vmware.com                                                   2m4s
-crossplane.tanzu.vmware.com             crossplane.tanzu.vmware.com                                             2m2s
-bitnami.services.tanzu.vmware.com       bitnami.services.tanzu.vmware.com                                       2m2s
-container-apps.tanzu.vmware.com         container-apps.tanzu.vmware.com                                         2m
-servicebinding.tanzu.vmware.com         servicebinding.tanzu.vmware.com                                         119s
-tanzu-servicebinding.tanzu.vmware.com   tanzu-servicebinding.tanzu.vmware.com                                   118s
-spring-cloud-gateway.tanzu.vmware.com   spring-cloud-gateway.tanzu.vmware.com                                   117s
+cert-manager.tanzu.vmware.com           cert-manager.tanzu.vmware.com                                           3m17s
+k8sgateway.tanzu.vmware.com             k8sgateway.tanzu.vmware.com                                             3m16s
+tcs.tanzu.vmware.com                    tcs.tanzu.vmware.com                                                    3m15s
+egress.tanzu.vmware.com                 egress.tanzu.vmware.com                                                 3m14s
+observability.tanzu.vmware.com          observability.tanzu.vmware.com                                          3m13s
+mtls.tanzu.vmware.com                   mtls.tanzu.vmware.com                                                   3m12s
+crossplane.tanzu.vmware.com             crossplane.tanzu.vmware.com                                             3m10s
+bitnami.services.tanzu.vmware.com       bitnami.services.tanzu.vmware.com                                       3m9s
+container-apps.tanzu.vmware.com         container-apps.tanzu.vmware.com                                         3m8s
+servicebinding.tanzu.vmware.com         servicebinding.tanzu.vmware.com                                         3m7s
+tanzu-servicebinding.tanzu.vmware.com   tanzu-servicebinding.tanzu.vmware.com                                   3m6s
+spring-cloud-gateway.tanzu.vmware.com   spring-cloud-gateway.tanzu.vmware.com                                   3m5s
 ```
 
 #### (Optional) Remove needed capability to test error scenario
@@ -310,22 +310,22 @@ kubectl get pkgi -A
 # make sure these packages are reconciled - they are the ones added by the platform
 # note that there more packages than what is shown below, and the versions may be different
 
-NAMESPACE                    NAME                                              PACKAGE NAME                                  PACKAGE VERSION                DESCRIPTION           AGE
-tanzu-cluster-group-system   bitnami.services.tanzu.vmware.com                 bitnami.services.tanzu.vmware.com             0.6.0                          Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   cert-manager.tanzu.vmware.com                     cert-manager.tanzu.vmware.com                 2.9.1                          Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   container-apps.tanzu.vmware.com                   container-apps.tanzu.vmware.com               0.0.5+1718364253.b6bb7e71      Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   crossplane.tanzu.vmware.com                       crossplane.tanzu.vmware.com                   0.7.0                          Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   egress.tanzu.vmware.com                           egress.tanzu.vmware.com                       1.1.3                          Reconcile succeeded   15h  # added from capabilities
-tanzu-cluster-group-system   k8sgateway.tanzu.vmware.com                       k8sgateway.tanzu.vmware.com                   0.0.7                          Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   mtls.tanzu.vmware.com                             mtls.tanzu.vmware.com                         0.0.1                          Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   observability.tanzu.vmware.com                    observability.tanzu.vmware.com                1.0.15                         Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   servicebinding.tanzu.vmware.com                   servicebinding.tanzu.vmware.com               0.13.0                         Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   spring-cloud-gateway.tanzu.vmware.com             spring-cloud-gateway.tanzu.vmware.com         2.2.4                          Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   tanzu-servicebinding.tanzu.vmware.com             tanzu-servicebinding.tanzu.vmware.com         1.1.0+1718281466.c3437892      Reconcile succeeded   15h   # added from capabilities
-tanzu-cluster-group-system   tcs.tanzu.vmware.com                              tcs.tanzu.vmware.com                          2.2.14                         Reconcile succeeded   15h   # added from capabilities
-tanzu-system                 capabilities-controller                           capabilities-controller.tanzu.vmware.com      1.0.1+release.test             Reconcile succeeded   15h   # added from ucp
-tanzu-system                 syncer                                            syncer.ucp.tanzu.vmware.com                   1.0.1+release.15.180eca5c3     Reconcile succeeded   15h   # added from ucp
-tanzu-system                 vss-k8s-collector                                 vss-k8s-collector.tanzu.vmware.com            3.18.3                         Reconcile succeeded   15h   # added from ucp
+NAMESPACE                            NAME                                              PACKAGE NAME                                PACKAGE VERSION              DESCRIPTION           AGE
+tanzu-cluster-group-system           bitnami.services.tanzu.vmware.com                 bitnami.services.tanzu.vmware.com           0.8.0                        Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system           cert-manager.tanzu.vmware.com                     cert-manager.tanzu.vmware.com               2.10.0                       Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system           container-apps.tanzu.vmware.com                   container-apps.tanzu.vmware.com             0.0.8+1722931722.e9f0ea78    Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system           crossplane.tanzu.vmware.com                       crossplane.tanzu.vmware.com                 0.8.1                        Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system           egress.tanzu.vmware.com                           egress.tanzu.vmware.com                     1.3.0                        Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system           k8sgateway.tanzu.vmware.com                       k8sgateway.tanzu.vmware.com                 0.0.7                        Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system           mtls.tanzu.vmware.com                             mtls.tanzu.vmware.com                       0.0.1                        Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system           observability.tanzu.vmware.com                    observability.tanzu.vmware.com              1.0.17                       Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system           servicebinding.tanzu.vmware.com                   servicebinding.tanzu.vmware.com             0.13.0                       Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system           spring-cloud-gateway.tanzu.vmware.com             spring-cloud-gateway.tanzu.vmware.com       2.2.5                        Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system           tanzu-servicebinding.tanzu.vmware.com             tanzu-servicebinding.tanzu.vmware.com       1.1.1+1721405964.ac5b3964    Reconcile succeeded   15h   # added from capabilities
+tanzu-cluster-group-system           tcs.tanzu.vmware.com                              tcs.tanzu.vmware.com                        2.3.3                        Reconcile succeeded   15h   # added from capabilities
+tanzu-system                         capabilities-controller                           capabilities-controller.tanzu.vmware.com    1.0.3+release.21.4cc4f2fac   Reconcile succeeded   15h   # added from ucp
+tanzu-system                         syncer                                            syncer.ucp.tanzu.vmware.com                 1.0.3+release.21.4cc4f2fac   Reconcile succeeded   15h   # added from ucp
+tanzu-system                         vss-k8s-collector                                 vss-k8s-collector.tanzu.vmware.com          3.20.0                       Reconcile succeeded   15h   # added from ucp
 ```
 
 
@@ -396,12 +396,8 @@ Access the Hub GUI: `Application Spaces > Profiles > Create Profile > Step by St
 - Step 1: Name your Profile
     - Choose a unique name, distinctive from other networking profiles configured for other domain names. Example `networking.mydomain.com`:
 - Step 2: Choose required traits:
-    - `egress.tanzu.vmware.com`, `multicloud-cert-manager.tanzu.vmware.com`, and `multicloud-ingress.tanzu.vmware.com`. This will allow us to deploy the related packages in the k8s clusters with specific configuration for the Spaces that use this profile. More on this when we create a Space.
-- Step 3: Configure the `egress` trait:
-    - Click on the `Configure egress.tanzu.vmware.com`
-    - This step is optional but to ensure that the applications in the Spaces we are going to create with this Profile can call external services, we are going to open egress, which by default is closed.
-    - Set `Open` to `True`.
-- Step 4: Configure the `multicloud-ingress` trait:
+    - `multicloud-cert-manager.tanzu.vmware.com`, and `multicloud-ingress.tanzu.vmware.com`. This will allow us to deploy the related packages in the k8s clusters with specific configuration for the Spaces that use this profile. More on this when we create a Space.
+- Step 3: Configure the `multicloud-ingress` trait:
     - Click on the `Configure multicloud-ingress.tanzu.vmware.com`
     - The Listeners define the prefixes we can use later in the HTTPRoute resources to define HTTP, HTTPS, or other listener with corresponding ports and secrets if required.
     - Set the `Gslb Dns ZoneId` using the Route53 Zone ID you've been given at the beginning of the workshop.
@@ -409,9 +405,9 @@ Access the Hub GUI: `Application Spaces > Profiles > Create Profile > Step by St
     - Set the `Domain` to the domain name assigned as well.
     - The `Name` is used to name the IstioGatewway CRD that will be created in your Space. The HttpRoute (that needs to be created for each application we want to expose) references this name; so if you change this Istio Gateway ressource `Name` at Profile level, you will also have to change it in the HttpRoute object, which in this lab is provided for the smoke test app [here](./spring-smoketest/.tanzu/config/k8sGatewayRoutes.yaml)
     - You can leave all other defaults unchanged. More on ClusterIssuer in the advanced topics.
-- Step 5: Configure Additional Capabilities:
+- Step 4: Configure Additional Capabilities:
     - We don't need to do anything here for this specific profile, since the Capabilities required by the traits we selected are already pre-selected. But if we required additional capabiities on our custom profiles, this is the place where we will select them.
-- Step 6: Review Summary and Create
+- Step 5: Review Summary and Create
 
 
 Alternatively you can create the Profile via CLI.
@@ -543,8 +539,7 @@ Alternatively you can create the Space via CLI.
     kubectl get pkgi -n jaime-demo-58d6c9cf7d-wkbk9-internal
     # we should see all namespace-bound packages specific to the traits we selected in all Profiles of our Space
     NAME                                              PACKAGE NAME                                PACKAGE VERSION   DESCRIPTION           AGE
-    carvel-package-installer.tanzu.vmware.com-9b887   carvel-package-installer.tanzu.vmware.com   0.1.10            Reconcile succeeded   8m3s
-    egress.tanzu.vmware.com-6d9f5                     egress.tanzu.vmware.com                     0.0.5             Reconcile succeeded   8m3s
+    carvel-package-installer.tanzu.vmware.com-9b887   carvel-package-installer.tanzu.vmware.com   0.1.15            Reconcile succeeded   8m3s
     multicloud-cert-manager.tanzu.vmware.com-86446    multicloud-cert-manager.tanzu.vmware.com    2.0.0             Reconcile succeeded   8m3s
     multicloud-ingress.tanzu.vmware.com-8948f         multicloud-ingress.tanzu.vmware.com         0.1.5             Reconcile succeeded   8m2s
     observability.tanzu.vmware.com-6d469              observability-traits.tanzu.vmware.com       1.0.2             Reconcile succeeded   8m2s
@@ -558,6 +553,25 @@ Additional details in the [Increase Application Resilience docs](https://docs.vm
 
 
 ## Deploy a simple application to the Space to smoke-test our setup
+
+#### Create EgressPoint to allow egress traffic to external service
+Egress traffic is blocked by default but with the new egress capability we can allow traffic tocertain external destinations by creating EgressPoint resources in the space. Since the smoke-test app we are going to deploy makes call to https://api.ipify.org we need to configure an EgressPoint that allows for that fqdn, protcol and port.
+Access the Hub GUI: `Application Spaces > Spaces > Select your space > Ingress & Egress > Create Egress Point`:
+- Name the EgressPoint (e.g: ipify)
+- Set Host to: api.ipify.org
+- Set port to: 443
+- Set protocol to: https
+- Click on `Create Egress Point`
+The UI will show a screen like this confirming the configuration:
+![EgressPoint](./img/egresspoint.png)
+
+Alternatively you can create the EgressPoint via CLI.
+- Use the `egresspoint.yaml` sample template file included in the "templates" folder of this repo and.
+- Then run the following commands:
+    ```
+    tanzu project use <project-name>
+    tanzu deploy --only templates/egresspoint.yaml
+    ```
 
 #### Deploy pre-built application
 As a Platform Engineer I want to deploy an application to validate that all the setup we've prepared so far (cluster group, cluster, profile, space) is properly configured and ready for application development teams to use.
@@ -574,7 +588,7 @@ tanzu deploy --from-build ./pre-built
 Access the Hub GUI: `Application Spaces > Spaces > Click in your space to view details`. The space will now show gradually:
 - Applications: the `spring-smoketest` application you just deployed
     ![Space App](./img/spaceapp.png)
-    - Click on the Space URL to access the UI and see something similar to this:
+    - Open a new Browser tab and type the URL of your app. This should be `http` for the protocul and for the domain name concatenate `spring-smoketest.` with the domain value you used in the custom networking profile. E.g: `http://spring.moketest.tpk8s.hyrulelab.com. You should see something similar to this:
         ![App](./img/smoketestapp.png)
 - Kubernetes Services: `spring-smoketest` service and `default-gateway-istio` service for each cluster
     ![Space K8s Services](./img/spacek8sservices.png)
