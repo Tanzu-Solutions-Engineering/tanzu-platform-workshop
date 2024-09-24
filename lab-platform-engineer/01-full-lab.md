@@ -406,7 +406,8 @@ Access the Hub GUI: `Application Spaces > Profiles > Create Profile > Step by St
     - The `Name` is used to name the IstioGatewway CRD that will be created in your Space. The HttpRoute (that needs to be created for each application we want to expose) references this name; so if you change this Istio Gateway ressource `Name` at Profile level, you will also have to change it in the HttpRoute object, which in this lab is provided for the smoke test app [here](./spring-smoketest/.tanzu/config/k8sGatewayRoutes.yaml)
     - You can leave all other defaults unchanged. More on ClusterIssuer in the advanced topics.
 - Step 4: Configure Additional Capabilities:
-    - We don't need to do anything here for this specific profile, since the Capabilities required by the traits we selected are already pre-selected. But if we required additional capabiities on our custom profiles, this is the place where we will select them.
+    - Select the `egress.tanzu.vmware.com` Capability.
+    - The other Capabilities required by the traits we selected are already pre-selected.
 - Step 5: Review Summary and Create
 
 
