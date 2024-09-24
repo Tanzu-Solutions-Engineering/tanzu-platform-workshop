@@ -568,8 +568,10 @@ The UI will show a screen like this confirming the configuration:
 
 Alternatively you can create the EgressPoint via CLI.
 - Use the `egresspoint.yaml` sample template file included in the "templates" folder of this repo and.
-- Then run the following commands:
+- Then run the following commands using the project name you were given and the name of the space you created:
     ```
+    tanzu project use <project-name>
+    tanzu space use <space-name>
     tanzu project use <project-name>
     tanzu deploy --only templates/egresspoint.yaml
     ```
