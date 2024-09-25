@@ -9,6 +9,7 @@ In this session, we explored the developer experience with Tanzu Platform and co
 - Mapping a public route to an application
 - Creating and Binding a service to an application
 - Scaling an application
+- Viewing logs for application Instances
 
 [Creating and Managing Applications on Tanzu Platform for Kubernetes](https://docs.vmware.com/en/VMware-Tanzu-Platform/services/create-manage-apps-tanzu-platform-k8s/index.html)
 

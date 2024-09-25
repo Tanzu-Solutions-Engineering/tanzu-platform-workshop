@@ -4,6 +4,7 @@ set -x
 set -eo pipefail
 
 if [ -n "$TANZU_CLI_SPACE_CREATE_TOKEN" ]; then
+export TANZU_CLI_USE_TANZU_CLOUD_SERVICE_PROVIDER=true
 TANZU_API_TOKEN=$TANZU_CLI_SPACE_CREATE_TOKEN tanzu context create space-admin --type tanzu --endpoint https://api.tanzu.cloud.vmware.com
 
 tanzu project use $TANZU_PLATFORM_PROJECT
