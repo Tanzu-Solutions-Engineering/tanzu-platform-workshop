@@ -9,7 +9,7 @@ Finally, everything is set up to create a `Space` for the application team.
 
 #### Option 1: Tanzu Platform GUI
 ![Create Space Button](CreateSpace.png)
-In the Tanzu Platform GUI navigate to `Application Spaces > Spaces` or click [here](https://www.mgmt.cloud.vmware.com/hub/application-engine/spaces).  Next, click on the button in the upper right corner of the browser window labeled **Create Space**.
+In the Tanzu Platform GUI navigate to `Application Spaces > Spaces` or click [here](https://www.platform.tanzu.broadcom.com/hub/application-engine/spaces).  Next, click on the button in the upper right corner of the browser window labeled **Create Space**.
 
 ![Step By Step Button](StepByStep.png)
 In the resulting dialog, click the "Step by Step" button to get the guided interface for creating the space.

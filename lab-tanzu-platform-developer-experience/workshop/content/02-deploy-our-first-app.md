@@ -102,7 +102,7 @@ After the container image for our app is built, you can see `tanzu build` is goi
 If you get a "Space not found error when you click the link below, make sure you have the {{< param TANZU_PLATFORM_PROJECT >}} project selected in the dropdown list right next to the "Tanzu Platform" logo in the upper left of the browser window.
 {{< /note >}}
 
-Once the deployment is completed, you can navigate to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see information about your deployed application.  
+Once the deployment is completed, you can navigate to https://www.platform.tanzu.broadcom.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see information about your deployed application.  
 
 The *Applications* tab shows a list of all the application services we have deployed to our space. You can click on the name of the "inclusion" application to see some more details about the application. That view will be sparse for now, but we'll look at it again when we work with services later on.  
 
