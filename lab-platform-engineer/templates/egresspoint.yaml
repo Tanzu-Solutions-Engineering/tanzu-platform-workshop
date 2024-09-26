@@ -1,0 +1,12 @@
+apiVersion: networking.tanzu.vmware.com/v1alpha1
+kind: EgressPoint
+metadata:
+  name: ipify
+  namespace: default
+spec:
+  targets:
+  - hosts:
+    - api.ipify.org
+    port:
+      number: 443
+      protocol: HTTPS
