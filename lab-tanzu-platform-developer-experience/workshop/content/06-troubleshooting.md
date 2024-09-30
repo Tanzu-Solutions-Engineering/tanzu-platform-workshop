@@ -11,7 +11,7 @@ That's alright, though!  The Tanzu Platform CLI and UI allow you to view and str
 
 Let's use the `tanzu` CLI to view our application logs.  Click the section below to start the process.
 ```execute
-tanzu app logs -recent
+tanzu app logs --recent
 ```
 
 The CLI presents a list of all the deployed applications in the space you are currently targeted at.  We only have one application deployed in our space, but if you had many you could filter the list by typing a few characters.  Our "inclusion" application is already selected so just click the section below or press the `Enter` key to select it.

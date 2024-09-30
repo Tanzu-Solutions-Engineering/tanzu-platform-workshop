@@ -17,7 +17,7 @@ The units for memory are Megabytes, and the units for CPU are "[millicores](http
 {{< /note >}}
 
 
-Let's vertically scale our application by requesting more CPU and memory resources to be allocated for our application container in the "on-disk" configuration for our application.
+Let's vertically scale the running application by requesting more CPU and memory resources to be allocated for our application container.
 ```execute
 tanzu app scale inclusion --cpu=400m --memory=678Mi -y
 ```

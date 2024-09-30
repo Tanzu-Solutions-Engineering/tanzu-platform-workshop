@@ -32,6 +32,12 @@ description: Accept default service parameters
 command: ""
 ```
 
+The CLI will also prompt you to automatically bind the service to an app.  Let's skip that step for now and come back to that in a bit by answering `N` to the prompt, or clicking the section below.
+```terminal:execute
+description: Don't bind the service yet
+command: "N"
+```
+
 You can get a listing of the possible parameters for a service type before creating it.  The `tanzu service type get ...` command will give you more details about that service.  Let's investigate the Postgres service type.
 ```execute
 tanzu service type get PostgreSQLInstance
@@ -178,6 +184,12 @@ TCP
 And finally, we need to specify the port for our database server.
 ```execute
 5432
+```
+
+As before, let's skip binding the service to our app just yet by entering `N` or clicking the section below when the CLI prompts us to bind.
+```terminal:execute
+description: Don't bind the service yet
+command: 'N'
 ```
 
 We now have all the information needed for our application to bind to the external Postgres DB and we've made sure we communicated to the platform that we need to be able to make a network connection to this external service.  Let's unbind our application from the small database we provisioned before so that we can bind to the shared database.
