@@ -38,7 +38,14 @@ Now, we need to target a space.  You can list out the spaces available with the 
 tanzu space list
 ```
 
-Your platform engineering team has already created a space for you as well.  That space is called *{{< param  session_name >}}*.  Let's target that space:
+Let's create a space with the name *{{< param  session_name >}}* for this workshop. This is usually something done by the platform engineering team for you.
+
+```terminal:execute
+description: Create space
+command: tanzu space create $SESSION_NAME $(echo $TANZU_PLATFORM_PROFILES | tr , '\n' | awk '{print "--profile " $1}' | tr '\n' ' ') $(echo $TANZU_PLATFORM_AVAILABILITY_TARGETS | tr , '\n' | awk '{print "--availability-target " $1}' | tr '\n' ' ') --update-strategy RollingUpdate -y --no-color
+```
+
+Let's target that space:
 ```execute
 tanzu space use {{< param  session_name >}}
 ```
