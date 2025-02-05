@@ -68,8 +68,8 @@ spec:
                   host_suffix: -$(environment_name)
         deploy:
         - kapp: {}
-
   workshop:
+    image: "ghcr.io/tanzu-solutions-engineering/tanzu-platform-workshop/lab-devx-image:main"
     files:
     - git:
         url: https://github.com/Tanzu-Solutions-Engineering/tanzu-platform-workshop
@@ -79,11 +79,6 @@ spec:
       - /lab-tanzu-platform-developer-experience/exercises/**
       - /lab-tanzu-platform-developer-experience/README.md
       newRootPath: lab-tanzu-platform-developer-experience
-    packages:
-    - name: tanzu-cli
-      files:
-      - image:
-          url: ghcr.io/tanzu-solutions-engineering/tanzu-platform-workshop/lab-tanzu-platform-developer-experience-tanzu-cli-extension-package:v1.4.1
   session:
     namespaces:
       budget: large
