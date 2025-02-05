@@ -9,65 +9,6 @@ spec:
   description: "The workshop covers the developer experience of deploying applications to the Tanzu Platform."
   publish:
     image: "$(image_repository)/lab-tanzu-platform-developer-experience-files:$(workshop_version)"
-  environment:
-    objects:
-    - apiVersion: v1
-      kind: ServiceAccount
-      metadata:
-        name: kapp-installer
-    - apiVersion: rbac.authorization.k8s.io/v1
-      kind: Role
-      metadata:
-        name: kapp-installer-role
-      rules:
-      - apiGroups: ['*']
-        resources: ['*']
-        verbs: ['*']
-    - apiVersion: rbac.authorization.k8s.io/v1
-      kind: RoleBinding
-      metadata:
-        name: kapp-installer-role-rolebinding
-      roleRef:
-        apiGroup: rbac.authorization.k8s.io
-        kind: Role
-        name: kapp-installer-role
-      subjects:
-      - kind: ServiceAccount
-        name: kapp-installer
-        namespace: $(workshop_namespace)
-    - apiVersion: v1
-      kind: Secret
-      metadata:
-        name: postgres-existing-secret
-      type: Opaque
-      stringData:
-        postgres-password: #@ data.values.tanzu_platform.db_password
-        password: #@ data.values.tanzu_platform.db_password
-        replication-password: #@ data.values.tanzu_platform.db_password
-    - apiVersion: kappctrl.k14s.io/v1alpha1
-      kind: App
-      metadata:
-        name: postgres
-      spec:
-        serviceAccountName: kapp-installer
-        syncPeriod: 720h
-        noopDelete: true
-        fetch:
-        - git:
-            url: https://github.com/Tanzu-Solutions-Engineering/tanzu-platform-workshop
-            ref: origin/main
-            subPath: lab-tanzu-platform-developer-experience/carvel-packages/postgres-package
-        template:
-        - ytt: 
-            inline:
-              paths:
-                values.yaml: |
-                  #@data/values
-                  ---
-                  ingress_domain: $(ingress_domain)
-                  host_suffix: -$(environment_name)
-        deploy:
-        - kapp: {}
   workshop:
     image: "ghcr.io/tanzu-solutions-engineering/tanzu-platform-workshop/lab-devx-image:main"
     files:
@@ -112,8 +53,12 @@ spec:
       value: #@ data.values.tanzu_platform.profiles
     - name: TANZU_PLATFORM_AVAILABILITY_TARGETS
       value: #@ data.values.tanzu_platform.availability_targets
+    - name: TANZU_PLATFORM_DOMAIN
+      value: #@ data.values.tanzu_platform.domain
     - name: TANZU_CLI_SPACE_CREATE_TOKEN
       value: #@ data.values.tanzu_platform.space_creation_token
+    - name: DB_HOST
+      value: #@ data.values.tanzu_platform.db_host
     - name: DB_PASSWORD
       value: #@ data.values.tanzu_platform.db_password
     ingresses:

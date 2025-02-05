@@ -31,7 +31,7 @@ Select the first instance of our "inclusion" by pressing the `Enter` key to sele
 ```execute
 ```
 
-Now, we'll see a list of recent log entries, as well as new entries that show up.  You can validate this by noting the time of the last log entry, and then refreshing the browser tab for your application.  If you closed the tab to your application, you can go back to https://www.mgmt.cloud.vmware.com/hub/application-engine/space/details/{{< param  session_name >}}/topology, and then click on the "Space URL" shown for your app.  As you refresh the application page, you should be able to compare the timestamps on the logs to the timestamp you noted earlier to see that new entries are getting added.
+Now, we'll see a list of recent log entries, as well as new entries that show up.  You can validate this by noting the time of the last log entry, and then refreshing the browser tab for your application. If you closed the tab to your application, you can go to https://www.platform.tanzu.broadcom.com/application-engine/space/details/{{< param  session_name >}}/ingress to see the URL for your application. As you refresh the application page, you should be able to compare the timestamps on the logs to the timestamp you noted earlier to see that new entries are getting added.
 
 Great!  We were able to view the logs for our application without having to have access to the clusters that our application happend to land on.
 

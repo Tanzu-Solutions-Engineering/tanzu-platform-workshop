@@ -64,22 +64,7 @@ before: 0
 after: 1
 ```
 
-![Image showing ContainerApp lifecycle](../images/containerapp-lifecyle.png)
-
 Remember, all we have done at this point is just update our on-disk configuration files.  We could make these changes take effect by building and deploying a new container for our application with the `tanzu deploy` command like we did at the begining of the workshop.
-
-We can also break up that flow into **two separate steps** if we wish.  We can call a `tanzu build` and then deploy the built application with `tanzu deploy` without building it again. This can be extremely useful if we want to integrate this build process into our own CI pipeline tools.
-
-Let's kick off just the build for our container in our second terminal window.
-```terminal:execute
-command: |
-  cd inclusion
-  tanzu build --output-dir ~/build
-session: 2
-```
-
-You can see that `tanzu build` is invoking the Cloud Native Buildpacks, and you should be able to see in the output that version 21 of the Java Virtual Machine was installed instead of version 17.  The line in the output you are looking for contains the text `BellSoft Liberica JDK 21.0.3`.
-
 
 We can also specify contact information about your application that is included with your deployment.  This information currently isn't used by the platform, but some of this information may be surfaced in the future.  It's a great way to communicate to application operators how to get in contact with the development team if they have questions or issues when deploying.
 
@@ -116,20 +101,25 @@ text: "tanzu app get "
 endl: false
 ```
 
-Notice in the output there is a "Source Image" listed. This is a container image that was built for our application by `tanzu build` and then pushed to the registry we specified back in the first section automatically. 
+Notice in the output there is a "Source Image" listed. This is a container image that was built and pushed to a defined registry for our application by `tanzu deploy`. 
 
 Also, notice that we see an environment variable set for our app, but we don't see the environment variable named `LOGGING_LEVEL_COM_EXAMPLE_EMOJIINCLUSION` that we set for logging earlier in this section.
 
-Although we have built a new version of our application with those values set, we haven't deployed it to the platform yet.  We've only modified the configuration for the application locally. We can apply the updated container image and manifests now using a modified form of the `tanzu deploy` command.
+We've only modified the configuration for the application locally. We can apply the updated container image and manifests now using the `tanzu deploy` command.
 ```execute
-tanzu deploy --from-build ~/build -y
+tanzu deploy
 ```
-
-Notice anything different about this flow?  We already had a built container image, so we didn't need to run that step again. We simply need to update the configurations in our space, and the platform will roll out our updates to our cluster. If we look at the details for our application again, we should see all the changes we had made are now applied to our running application.
+If we look at the details for our application again, we should see all the changes we had made are now applied to our running application.
 ```execute
 tanzu app get inclusion
 ```
 
-Fantastic!  We explored in more detail how the CLI manages on-disk configurations for our application, allows us to split up the build and deploy steps if desired, allows us to configure the way the container image is built, and allows us to set environment variables for the running application container.
+We can also add manifests for resources that will be deployed along with our application. As we configured our application to be accessible via HTTP, an `HTTPRoute` resource was generated for us in the background. 
+```editor:open-file
+file: ~/inclusion/.tanzu/config/httproute.yaml
+```
+If you don't want to rebuild and deploy your entire application to apply an updated or new resource, it's also possible to just apply this resource via e.g. `tanzu deploy --only ~/inclusion/.tanzu/config/httproute.yaml`.
+
+Fantastic! We explored in more detail how the CLI manages on-disk configurations for our application, and how to apply them.
 
 An application is rarely solely made up of just your custom code.  Applications often need access to pre-built services like messaging servers, and databases.  In the next section, we'll explore how Tanzu Platform for Kubernetes makes it easy for you to use these types of services and others that your platform team and service providers have curated for you.

@@ -70,7 +70,7 @@ tanzu service bind PostgreSQLInstance/my-db ContainerApp/inclusion --as db
 
 Let's refresh our application and see that the emoji and the text in the header have changed for our app (from "powered by H2" to "powered by POSTGRESQL"). ![Image showing change to Inclusion app to show "powered by PostgreSQL" instead of "powered by H2"](../images/inclusion-postgres-binding.png)
 
-If you don't see a change immediately, retry after waiting for 1 minute or so.  Changes to the application are rolled out gracefully, and load is not shifted to the new version of your application until it is healthy.  You can go to https://www.platform.tanzu.broadcom.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see the URL for your application if you accidentally closed the tab for it.  Click on the "Space URL" link at the upper middle of the page.
+If you don't see a change immediately, retry after waiting for 1 minute or so.  Changes to the application are rolled out gracefully, and load is not shifted to the new version of your application until it is healthy. You can go to https://www.platform.tanzu.broadcom.com/application-engine/space/details/{{< param  session_name >}}/ingress to see the URL for your application if you accidentally closed the tab for it.
 
 ![Image showing a Service binding connected to an application and PreProvisonedService object and a set of secret values getting injected into the application.  The application is shown connected to an externally managed Postgres database](../images/preprovisioned-service.png)
 
@@ -126,7 +126,7 @@ command: host
 ```
 ```terminal:execute
 description: Enter the "host" value
-command: postgres-test-{{< param environment_name >}}.{{< param ingress_domain >}}
+command: {{< param DB_URL >}}
 ```
 ```terminal:execute
 description: Enter the "port" key
@@ -173,7 +173,7 @@ y
 ```
 Then, we need to enter the host name of our shared Postgres DB again.
 ```execute
-postgres-test-{{< param environment_name >}}.{{< param ingress_domain >}}
+{{< param DB_URL >}}
 ```
 
 This is a `TCP` type connection, so let's select that.
@@ -207,7 +207,7 @@ Now, we can bind our application to the secret of the shared database we applied
 tanzu service bind PreProvisionedService/shared-postgres ContainerApp/inclusion --as db
 ```
 
-Great! The platform will restart our application to get it to pick up on the new binding. Let's refresh our application and see that the emoji has changed again for our app.  And as other users use the shared database, you'll start to see more emojis show up. You can go to https://www.platform.tanzu.broadcom.com/hub/application-engine/space/details/{{< param  session_name >}}/topology to see the URL for your application if you accidentally closed the tab for it. Click on the "Space URL" link at the upper middle of the page.
+Great! The platform will restart our application to get it to pick up on the new binding. Let's refresh our application and see that the emoji has changed again for our app.  And as other users use the shared database, you'll start to see more emojis show up. You can go to https://www.platform.tanzu.broadcom.com/application-engine/space/details/{{< param  session_name >}}/ingress to see the URL for your application if you accidentally closed the tab for it.
 
 Remember in the section where we dove deeper into the application configuration and added contact metadata to our app?  We can also add information for application operators who need to deploy our app to other environments about the service bindings our application supports.  We can use `tanzu app config servicebinding` command to add information about the name of the binding and the types of services we support. First, let's display the service catalog on our platform again.
 
