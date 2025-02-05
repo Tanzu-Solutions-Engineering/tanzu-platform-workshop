@@ -28,4 +28,6 @@ params:
   value: undefined
 - name: DB_PASSWORD
   value: undefined
+- name: TANZU_PLATFORM_DOMAIN
+  value: undefined
 
