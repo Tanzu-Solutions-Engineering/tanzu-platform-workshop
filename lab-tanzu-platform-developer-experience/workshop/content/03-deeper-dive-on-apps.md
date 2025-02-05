@@ -116,9 +116,9 @@ tanzu app get inclusion
 
 We can also add manifests for resources that will be deployed along with our application. As we configured our application to be accessible via HTTP, an `HTTPRoute` resource was generated for us in the background. 
 ```editor:open-file
-file: ~/inclusion/.tanzu/config/httproute.yaml
+file: ~/inclusion/.tanzu/config/httproute-inclusion.yml
 ```
-If you don't want to rebuild and deploy your entire application to apply an updated or new resource, it's also possible to just apply this resource via e.g. `tanzu deploy --only ~/inclusion/.tanzu/config/httproute.yaml`.
+If you don't want to rebuild and deploy your entire application to apply an updated or new resource, it's also possible to just apply this resource via e.g. `tanzu deploy --only ~/inclusion/.tanzu/config/httproute-inclusion.yml`.
 
 Fantastic! We explored in more detail how the CLI manages on-disk configurations for our application, and how to apply them.
 

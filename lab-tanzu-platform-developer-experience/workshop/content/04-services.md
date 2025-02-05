@@ -126,7 +126,7 @@ command: host
 ```
 ```terminal:execute
 description: Enter the "host" value
-command: {{< param DB_URL >}}
+command: {{< param DB_HOST >}}
 ```
 ```terminal:execute
 description: Enter the "port" key
@@ -173,7 +173,7 @@ y
 ```
 Then, we need to enter the host name of our shared Postgres DB again.
 ```execute
-{{< param DB_URL >}}
+{{< param DB_HOST >}}
 ```
 
 This is a `TCP` type connection, so let's select that.

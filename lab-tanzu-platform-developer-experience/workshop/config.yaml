@@ -26,7 +26,7 @@ pathways:
 params:
 - name: TANZU_PLATFORM_PROJECT
   value: undefined
-- name: DB_URL
+- name: DB_HOST
   value: undefined
 - name: DB_PASSWORD
   value: undefined
